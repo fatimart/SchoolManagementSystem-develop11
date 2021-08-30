@@ -1,0 +1,32 @@
+﻿<Page x:Class="SchoolManagementSystem.Views.StudentManageScreen"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolManagementSystem.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StudentManageScreen">
+
+    
+    <Grid>
+        <TabControl SelectedIndex="{Binding Mode=OneWay}">
+
+            <TabItem Header=" Students">
+                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0"/>
+            </TabItem>
+            <TabItem Header="Teachers">
+                <Frame Name="teachers" Source="StudentsListScreen.xaml" Margin="0,0,0,0"/>
+            </TabItem>
+            <TabItem Header="RoomScreen">
+                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0"/>
+            </TabItem>
+
+            <TabItem Header="StudentGrade">
+                <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0"/>
+            </TabItem>
+
+
+        </TabControl>
+    </Grid>
+</Page>

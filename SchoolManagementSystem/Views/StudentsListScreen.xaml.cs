@@ -23,14 +23,16 @@ namespace SchoolManagementSystem.Views
     /// <summary>
     /// Interaction logic for StudentsListScreen.xaml
     /// </summary>
-    public partial class StudentsListScreen : Window
+    public partial class StudentsListScreen : Page
     {
         StudentListViewModel _userViewModel = new StudentListViewModel();
 
         public StudentsListScreen ()
         {
             InitializeComponent();
-            DataContext = _userViewModel;
+            //DataContext = _userViewModel;
+
+            FillDataGrid();
         }
 
         public void Load ()
@@ -43,10 +45,6 @@ namespace SchoolManagementSystem.Views
         private void Window_Loaded ( object sender, RoutedEventArgs e )
         {
             usersDataGrid.Items.Refresh();
-            //DataContext = _userViewModel;
-
-
-
         }
 
         private void FillDataGrid ()
@@ -66,10 +64,7 @@ namespace SchoolManagementSystem.Views
 
                 sda.Fill(dt);
                 usersDataGrid.ItemsSource = dt.DefaultView;
-
                 usersDataGrid.Items.Refresh();
-
-
 
             }
 
@@ -91,7 +86,7 @@ namespace SchoolManagementSystem.Views
                                       contactNoTextBox.Text.Trim()
                                   );
 
-            Load();
+            FillDataGrid();
         }
 
         private void UpdateStudent_Click ( object sender, RoutedEventArgs e )
@@ -107,32 +102,14 @@ namespace SchoolManagementSystem.Views
                                       passwordTextBox.Text.Trim(),
                                       contactNoTextBox.Text.Trim()
                                   );
-            Load();
+            FillDataGrid();
         }
 
-
-
-        public void Clear ()
-        {
-
-
-            // _userViewModel.ResetData();
-
-            userIDTextBox.Text = "";
-            userNameTextBox.Text = "";
-            nameTextBox.Text = "";
-            emailTextBox.Text = "";
-            cPRTextBox.Text = "";
-            addressTextBox.Text = "";
-            dOBDatePicker.Text = "";
-            passwordTextBox.Text = "";
-            contactNoTextBox.Text = "";
-        }
 
         private void DeleteStudent_Click ( object sender, RoutedEventArgs e )
         {
             _userViewModel.DeleteUser(Convert.ToInt32(userIDTextBox.Text.Trim()));
-            Load();
+            FillDataGrid();
         }
 
 
@@ -163,12 +140,6 @@ namespace SchoolManagementSystem.Views
         private void Reset_Click ( object sender, RoutedEventArgs e )
         {
             _userViewModel.ResetData();
-            Clear();
-            /** foreach (var user in _userViewModel.GetAll())
-             {
-                 MessageBox.Show(user.Address);
-
-             }**/
         }
 
         public void getUserByID ()
@@ -186,8 +157,6 @@ namespace SchoolManagementSystem.Views
                 SqlCommand cmd = new SqlCommand("SELECT * from Users WHERE UserID='" + userIDTextBox.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable(); //store data in dt
-
-                //MessageBox.Show("CHECK");
 
                 da.Fill(dt);
 
@@ -214,15 +183,11 @@ namespace SchoolManagementSystem.Views
             }
 
             catch (Exception ex)
-            {
+            { 
                 MessageBox.Show(ex.Message);
 
             }
         }
 
-        private void usersDataGrid_Loaded ( object sender, RoutedEventArgs e )
-        {
-
-        }
     }
 }

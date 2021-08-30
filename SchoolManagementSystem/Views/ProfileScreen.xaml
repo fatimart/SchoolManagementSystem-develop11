@@ -68,7 +68,7 @@
 
                     <Label x:Name="old_pass_label" Content="New Password:" Grid.Column="1" HorizontalAlignment="Left" Margin="140,26,0,0" Grid.Row="9" VerticalAlignment="Top" Width="94"/>
                     <TextBox x:Name="txtnewPass" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="234,26,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
-                    <Image x:Name="userImg" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="236,-76,0,0" VerticalAlignment="Top" Width="100" Source="generaluser.png" Stretch="Fill" OpacityMask="#FF131111"/>
+                    <Image x:Name="userImg" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="236,-76,0,0" VerticalAlignment="Top" Width="100" Source="Imgs/generaluser.png" Stretch="Fill" OpacityMask="#FF131111"/>
                     <Button x:Name="update_profile" Content="UPDATE" Grid.Column="1" HorizontalAlignment="Left" Margin="101,91,0,0" Grid.Row="9" VerticalAlignment="Top" Width="76" Height="22" Click="update_profile_Click"/>
 
                 </Grid>

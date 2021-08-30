@@ -6,175 +6,30 @@
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
         xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.RegisterUsers"
         mc:Ignorable="d"
-        Title="RegisterUsers" Height="515" Width="800" Loaded="Window_Loaded">
+        Title="RegisterUsers" Height="600" Width="800" Loaded="Window_Loaded">
     <Page.Resources>
         <SchoolManagementSystem:SchoolMSDataSet x:Key="schoolMSDataSet"/>
         <CollectionViewSource x:Key="usersViewSource" Source="{Binding Users, Source={StaticResource schoolMSDataSet}}"/>
     </Page.Resources>
+    
     <Grid DataContext="{StaticResource usersViewSource}">
         <TabControl SelectedIndex="{Binding Mode=OneWay}">
+
             <TabItem Header=" Students">
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="92*"/>
-                        <ColumnDefinition Width="21*"/>
-                        <ColumnDefinition Width="24*"/>
-                        <ColumnDefinition Width="18*"/>
-                        <ColumnDefinition Width="631*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="grid1" VerticalAlignment="Top" Grid.Row="2" Margin="84,24,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="134"/>
-                            <ColumnDefinition Width="53"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label VerticalAlignment="Center" Grid.Row="1" Margin="-10,16,0,18" HorizontalAlignment="Left" Grid.Column="0" Content="User ID:" Height="26"/>
-                        <TextBox x:Name="userIDTextBox" Width="120" VerticalAlignment="Bottom" Text="{Binding UserID, Mode=OneWay}" Grid.Row="1" Margin="67,0,0,26" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="1" Margin="-10,42,0,25" HorizontalAlignment="Left" Grid.Column="0" Content="User Name:" Grid.RowSpan="2" Height="25"/>
-                        <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="67,42,0,27" Height="23" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="2" Margin="-10,20,0,18" HorizontalAlignment="Left" Grid.Column="0" Content="Name:" Grid.RowSpan="2" Height="26"/>
-                        <TextBox x:Name="nameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="67,21,0,19" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="4" Margin="-10,14,0,57" HorizontalAlignment="Left" Grid.Column="0" Content="Email:" Height="26"/>
-                        <TextBox x:Name="emailTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="67,12,0,61" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="4" Margin="-10,48,0,24" HorizontalAlignment="Left" Grid.Column="0" Content="CPR:" Height="25"/>
-                        <TextBox x:Name="cPRTextBox" Width="120" VerticalAlignment="Center" Text="{Binding CPR, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="67,52,0,22" Height="23" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="6" Margin="-10,5,0,46" HorizontalAlignment="Left" Grid.Column="0" Content="Address:" Height="25"/>
-                        <TextBox x:Name="addressTextBox" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="67,93,0,37" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
-                        <Label VerticalAlignment="Center" Grid.Row="6" Margin="-10,50,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="DOB:" Height="26"/>
-                        <DatePicker x:Name="dOBDatePicker" VerticalAlignment="Center" SelectedDate="{Binding DOB, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="67,52,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="120" Height="24"/>
-                        <Label VerticalAlignment="Center" Grid.Row="9" Margin="-10,9,0,22" HorizontalAlignment="Left" Grid.Column="0" Content="Password:" Height="25"/>
-                        <TextBox x:Name="passwordTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="67,9,0,24" Height="23" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="9" Margin="-10,38,0,-8" HorizontalAlignment="Left" Grid.Column="0" Content="Contact No:" Height="26"/>
-                        <TextBox x:Name="contactNoTextBox" Width="120" VerticalAlignment="Center" Text="{Binding ContactNo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="67,38,0,-6" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-                    </Grid>
-
-                    <DataGrid x:Name="usersDataGrid" DataContext="{StaticResource usersViewSource}" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="139,33,10,21" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="4" SelectionChanged="usersDataGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="userIDColumn" Binding="{Binding UserID, UpdateSourceTrigger=PropertyChanged}" Header="User ID" IsReadOnly="True" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="userNameColumn" Binding="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Header="User Name" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Header="Email" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="cPRColumn" Binding="{Binding CPR, UpdateSourceTrigger=PropertyChanged}" Header="CPR" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="addressColumn" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Header="Address" Width="SizeToHeader"/>
-                            <DataGridTemplateColumn x:Name="dOBColumn" Header="DOB" Width="SizeToHeader">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding DOB, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="typeColumn" Binding="{Binding Type}" Header="Type" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="passwordColumn" Binding="{Binding Password}" Header="Password" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="contactNoColumn" Binding="{Binding ContactNo}" Header="Contact No" Width="SizeToHeader"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button x:Name="DeleteStudent" Content="DELETE" Margin="55,0,0,54" Grid.Row="2" RenderTransformOrigin="1.426,1" HorizontalAlignment="Left" Width="62" Grid.Column="4" Height="26" VerticalAlignment="Bottom" Click="DeleteStudent_Click"/>
-                    <Button x:Name="UpdateStudent" Content="UPDATE" Margin="18,407,587,54" Grid.Row="2" RenderTransformOrigin="1.426,1" Grid.Column="2" Click="UpdateStudent_Click" Grid.ColumnSpan="3"/>
-                    <Button x:Name="AddNewStudent" Content="INSERT" Margin="58,407,0,54" Grid.Row="2" RenderTransformOrigin="1.426,1" Click="AddNewStudent_Click" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="68"/>
-                </Grid>
-
+                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0"/>
             </TabItem>
             <TabItem Header="Teachers">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="23*"/>
-                        <ColumnDefinition Width="105*"/>
-                        <ColumnDefinition Width="658*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="gridt" VerticalAlignment="Top" Grid.Row="2" Margin="47,42,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="User ID:"/>
-                        <TextBox x:Name="tuserIDTextBox" Text="{Binding UserID, Mode=OneWay}" Grid.Row="0" Margin="3,4" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="User Name:"/>
-                        <TextBox x:Name="tuserNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
-                        <TextBox x:Name="tnameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>
-                        <TextBox x:Name="temailTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="CPR:"/>
-                        <TextBox x:Name="tcPRTextBox" Width="120" VerticalAlignment="Center" Text="{Binding CPR, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Address:"/>
-                        <TextBox x:Name="taddressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="6" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="DOB:"/>
-                        <DatePicker x:Name="tdOBDatePicker" SelectedDate="{Binding DOB, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="0,4,3,4" Grid.Column="1" HorizontalAlignment="Right" Width="120"/>
-                        <Label VerticalAlignment="Center" Grid.Row="7" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Type:"/>
-                        <TextBox x:Name="ttypeTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="8" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Password:"/>
-                        <TextBox x:Name="tpasswordTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-                        <Label VerticalAlignment="Center" Grid.Row="9" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Contact No:"/>
-                        <TextBox x:Name="tcontactNoTextBox" Width="120" VerticalAlignment="Center" Text="{Binding ContactNo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="9" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-
-                    </Grid>
-                    <DataGrid x:Name="tusersDataGrid" DataContext="{StaticResource usersViewSource}" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="165,27,10,47" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="2">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="tuserIDColumn" Binding="{Binding UserID}" Header="User ID" IsReadOnly="True" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="tuserNameColumn" Binding="{Binding UserName}" Header="User Name" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="tnameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="temailColumn" Binding="{Binding Email}" Header="Email" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="tcPRColumn" Binding="{Binding CPR}" Header="CPR" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="taddressColumn" Binding="{Binding Address}" Header="Address" Width="SizeToHeader"/>
-                            <DataGridTemplateColumn x:Name="tdOBColumn" Header="DOB" Width="SizeToHeader">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding DOB, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="ttypeColumn" Binding="{Binding Type}" Header="Type" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="tpasswordColumn" Binding="{Binding Password}" Header="Password" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="tcontactNoColumn" Binding="{Binding ContactNo}" Header="Contact No" Width="SizeToHeader"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <Button x:Name="AddNewTeacher" Content="INSERT" Margin="63,382,642,47" Grid.Row="2" RenderTransformOrigin="1.426,1" Grid.Column="1" Click="AddNewTeacher_Click" Grid.ColumnSpan="2"/>
-                    <Button x:Name="UpdateTeacher" Content="UPDATE" Margin="21,382,579,47" Grid.Row="2" RenderTransformOrigin="1.426,1" Grid.Column="2" Click="UpdateTeacher_Click"/>
-                    <Button x:Name="AddNewTeacher_Copy" Content="INSERT" Margin="86,382,514,47" Grid.Row="2" RenderTransformOrigin="1.426,1" Grid.Column="2" Click="AddNewTeacher_Click"/>
-
-                </Grid>
-
+                <Frame Name="teachers" Source="TeacherListScreen.xaml" Margin="0,0,0,0"/>
             </TabItem>
+
+            <TabItem Header="Profile">
+                <Frame Name="Profile" Source="ProfileScreen.xaml" Margin="0,0,0,0"/>
+            </TabItem>
+            
             <TabItem Header="RoomScreen">
                 <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0"/>
             </TabItem>
-            
+
             <TabItem Header="StudentGrade">
                 <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0"/>
             </TabItem>

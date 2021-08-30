@@ -259,6 +259,7 @@ namespace SchoolManagementSystem.ViewModels
                         //  MessageBox.Show(Application.Current.Resources["UserName"].ToString());
                         //  MessageBox.Show(Usersession.UserName);
                         MessageBox.Show(userSession.UserName);
+                        MessageBox.Show("edit" + UserViewModel.userSession.UserID.ToString());
 
                         reader.Close();
                         //MessageBox.Show(userSession.UserName);

@@ -120,6 +120,7 @@
     <Compile Include="ViewModels\SectionViewModel.cs" />
     <Compile Include="ViewModels\StudentGradeViewModel.cs" />
     <Compile Include="ViewModels\StudentListViewModel.cs" />
+    <Compile Include="ViewModels\TeacherListViewModel.cs" />
     <Compile Include="ViewModels\TimeTableViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\YearViewModel.cs" />
@@ -137,6 +138,9 @@
     </Compile>
     <Compile Include="Views\RegisterUsers.xaml.cs">
       <DependentUpon>RegisterUsers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StudentManageScreen.xaml.cs">
+      <DependentUpon>StudentManageScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StudentsListScreen.xaml.cs">
       <DependentUpon>StudentsListScreen.xaml</DependentUpon>
@@ -202,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StudentManageScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,7 +49,7 @@ namespace SchoolManagementSystem.Views
             UserViewModel.userSession = user;
 
 
-            MessageBox.Show(UserViewModel.userSession.UserID.ToString());
+            //MessageBox.Show(UserViewModel.userSession.UserID.ToString());
             LoginScreen dashboard = new LoginScreen();
             dashboard.Show();
             //this.Close();
@@ -82,8 +82,8 @@ namespace SchoolManagementSystem.Views
 
         private void Button_Click ( object sender, RoutedEventArgs e )
         {
-            StudentsListScreen dashboard = new StudentsListScreen();
-            dashboard.Show();
+            //StudentsListScreen dashboard = new StudentsListScreen();
+            //dashboard.Show();
         }
 
         /**
