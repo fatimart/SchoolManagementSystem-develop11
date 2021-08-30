@@ -1,0 +1,41 @@
+﻿<Page x:Class="SchoolManagementSystem.Views.CourseRegistrationScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolManagementSystem.Views"
+        mc:Ignorable="d"
+        Title="CourseRegistrationScreen" Height="500" Width="900">
+    <Grid>
+        <GroupBox HorizontalAlignment="Left" Background="#FFF9F9F9" Height="263" Margin="30,27,0,0" VerticalAlignment="Top" Width="733" FontSize="14" BorderBrush="#FF8B8F91">
+            <GroupBox.Header>
+                Registration
+            </GroupBox.Header>
+            <Grid>
+
+                <ComboBox x:Name="course_combo_box" ItemsSource="{Binding CourseID}"  HorizontalAlignment="Left" Margin="162,25,0,0" VerticalAlignment="Top" Width="178" Height="22"/>
+                <ComboBox x:Name="course_combo_box1" HorizontalAlignment="Left" Margin="461,25,0,0" VerticalAlignment="Top" Width="160" Height="22"/>
+                <Button x:Name="go" Content="Go" HorizontalAlignment="Left" Margin="651,25,0,0" VerticalAlignment="Top" Width="35" Height="22" FontSize="12"/>
+                <GroupBox x:Name="course_details_groupbox" Header="Course Details" HorizontalAlignment="Left" Height="126" Margin="55,66,0,0" VerticalAlignment="Top" Width="635" FontSize="12">
+                    <Grid>
+                        <Label Content="Teacher Name:" HorizontalAlignment="Left" Margin="40,12,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Exam Date:" HorizontalAlignment="Left" Margin="40,43,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Time:" HorizontalAlignment="Left" Margin="40,69,0,0" VerticalAlignment="Top" Width="69"/>
+                        <Label Content="Room No:" HorizontalAlignment="Left" Margin="316,12,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Label" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Label" HorizontalAlignment="Left" Margin="316,69,0,0" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="154,12,0,0" TextWrapping="Wrap" Text="{Binding courseID}" VerticalAlignment="Top"/>
+
+                    </Grid>
+                </GroupBox>
+
+                <Button x:Name="register" Content="Register" HorizontalAlignment="Left" Margin="262,206,0,0" VerticalAlignment="Top" Width="74" Click="Register_Click"/>
+                <Label Content="Course Name:" HorizontalAlignment="Left" Margin="57,20,0,0" VerticalAlignment="Top"/>
+                <Label Content="Section No:" HorizontalAlignment="Left" Margin="370,21,0,0" VerticalAlignment="Top" Width="86"/>
+                <Button x:Name="cancel" Content="Cancel" HorizontalAlignment="Left" Margin="363,206,0,0" VerticalAlignment="Top" Width="75"/>
+
+            </Grid>
+        </GroupBox>
+        <DataGrid HorizontalAlignment="Left" Height="100" Margin="30,295,0,0" VerticalAlignment="Top" Width="733"/>
+    </Grid>
+</Page>
