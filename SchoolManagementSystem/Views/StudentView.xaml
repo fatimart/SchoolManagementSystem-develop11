@@ -16,7 +16,7 @@
             </TabItem>
 
             <TabItem Header=" Students">
-                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="students" Height="Auto" Width="Auto" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Profile">

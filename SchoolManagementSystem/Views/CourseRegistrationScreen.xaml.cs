@@ -30,22 +30,22 @@ namespace SchoolManagementSystem.Views
         {
             InitializeComponent();
             FillDataGrid();
-            Fillcombobox();
+            fillCourseBox();
+
         }
 
         private void Register_Click ( object sender, RoutedEventArgs e )
         {
             DateTime now = DateTime.Now;
 
-            /**table.AddTimeTable(
-                                Convert.ToInt32(UserViewModel.userSession.UserID),
-                                CourseID.Text.Trim(),
-                                SectionID.Text.Trim(),
-                                emailTextBox.Text.Trim(),
-                                RoomID.Text.Trim(),
-                                now,
-                                TeacherName.Text.Trim()
-                               );**/
+            table.AddTimeTable(
+                0,
+                                10,
+                                10,
+                                10,
+                                100,
+                                "aa"
+                               );
         }
 
         private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
@@ -69,19 +69,20 @@ namespace SchoolManagementSystem.Views
                 DataTable dt = new DataTable("TimeTable");
 
                 sda.Fill(dt);
-                tableDataGrid.ItemsSource = dt.DefaultView;
 
+                tableDataGrid.ItemsSource = dt.DefaultView;
                 tableDataGrid.Items.Refresh();
 
             }
 
         }
 
-        /**
+        
         public void fillCourseBox ()
         {
             try
             {
+                course_combo_box.Items.Clear();
                 string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
                 SqlConnection con = new SqlConnection(strcon);
@@ -96,7 +97,12 @@ namespace SchoolManagementSystem.Views
                 da.Fill(dt); //db have all the courses names
 
                 course_combo_box.ItemsSource = dt.DefaultView;
+                course_combo_box.SelectedIndex = -1;
+                course_combo_box.DisplayMemberPath = "CourseCode";
+                course_combo_box.SelectedValuePath = "CourseCode";
 
+
+                con.Close();
             }
 
             catch (Exception ex)
@@ -105,28 +111,61 @@ namespace SchoolManagementSystem.Views
 
             }
         }
-        **/
 
-        public void Fillcombobox ()
+        private void course_combo_box_SelectionChanged ( object sender, SelectionChangedEventArgs e )
         {
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+          
+        }
 
-            SqlConnection con = new SqlConnection(strcon);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select CourseCode From Course", con);
-            SqlDataReader Sdr = cmd.ExecuteReader();
-            while (Sdr.Read())
+
+        public void fillCourseDetails ()
+        {
+            try
             {
-                for (int i = 0; i < Sdr.FieldCount; i++)
-                {
-                    course_combo_box.Items.Add(Sdr.GetString(i));
 
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                using (SqlConnection connection = new SqlConnection(strcon))
+                {
+                    SqlCommand cmd = new SqlCommand("select * from Course where CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+
+                    if (dt.Rows.Count > 0)
+                    {
+                            coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
+                            examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString(); 
+                    }
+                    connection.Close();
                 }
             }
-            course_combo_box.DisplayMemberPath = "contactname";
 
-            Sdr.Close();
-            con.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
+       
+
+        private void cancel_Click ( object sender, RoutedEventArgs e )
+        {
+            course_combo_box.SelectedItem = "";
+            course_combo_box.Text = "";
+            course_details_groupbox.Visibility = Visibility.Hidden;
+
+
+
+        }
+
+        private void course_combo_box_DropDownClosed ( object sender, EventArgs e )
+        {
+            fillCourseDetails();
+            course_details_groupbox.Visibility = Visibility.Visible;
+
 
         }
     }

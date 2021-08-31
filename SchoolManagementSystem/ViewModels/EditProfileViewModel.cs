@@ -52,6 +52,9 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
+
+
+
         public void UpdateUser ( int userID, string name, string email, decimal cpr, string address, DateTime dob, string password, string contactNo )
         {
 
@@ -68,6 +71,9 @@ namespace SchoolManagementSystem.ViewModels
                     updateUser.DOB = dob;
                     updateUser.Password = password;
                     updateUser.ContactNo = contactNo;
+
+
+                    MessageBox.Show("Profile updated.");
 
                     ty.SaveChanges();
 

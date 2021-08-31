@@ -9,8 +9,8 @@
         xmlns:Views="clr-namespace:SchoolManagementSystem.Views"
         mc:Ignorable="d"
                 Title="MainWindow" 
-        Height="600" 
-        Width="800"
+        Height="800" 
+        Width="900"
         Topmost="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"   Loaded="Window_Loaded_1">
@@ -431,7 +431,7 @@
         <Grid Height="80"
                   VerticalAlignment="Bottom"
                   Background="#233C4F"/>
-        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated" />
+        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated"  NavigationUIVisibility="Hidden" />
 
 
     </Grid>

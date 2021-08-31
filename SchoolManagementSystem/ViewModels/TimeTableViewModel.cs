@@ -103,18 +103,29 @@ namespace SchoolManagementSystem.ViewModels
 
         public void AddTimeTable(int userID, int CourseID, int SectionID, int RoomID, int YearID,  string TeacherName)
         {
+            try
 
-            TimeTable TTable = new TimeTable();
-            TTable.UserID = userID;
-            TTable.CourseID = CourseID;
-            TTable.SectionID = SectionID;
-            TTable.RoomID = RoomID;
-            TTable.YearID = YearID;
-            TTable.TeacherName = TeacherName;
-       
 
-            ty.TimeTables.Add(TTable);
-            ty.SaveChanges();
+            {
+                TimeTable TTable = new TimeTable();
+                TTable.UserID = userID;
+                TTable.CourseID = CourseID;
+                TTable.SectionID = SectionID;
+                TTable.RoomID = RoomID;
+                TTable.YearID = YearID;
+                TTable.TeacherName = TeacherName;
+
+
+                ty.TimeTables.Add(TTable);
+                ty.SaveChanges();
+                MessageBox.Show("Course Added.");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
 
         }
 
