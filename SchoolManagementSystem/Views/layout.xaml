@@ -246,7 +246,7 @@
 
                         <StackPanel Orientation="Horizontal"
                                         Width="230">
-                            <Button  Click="Button_Click3">
+                            <Button x:Name="homeButton"  Click="Home_Click">
                                 <Image Source="/Assets/img_home.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
@@ -277,7 +277,7 @@
 
                         <StackPanel Orientation="Horizontal"
                                         Width="230">
-                            <!--add an exit button-->
+                            <!--add profile button-->
                             <Button  Click="Button_Click3">
 
                                 <Image x:Name="profile" Source="/Assets/img_contact.png"
@@ -285,7 +285,7 @@
                                        Margin="12,0,0,0"/>
                             </Button>
 
-                            <TextBlock Text="Contacts"
+                            <TextBlock Text="Profile"
                                            Margin="25,0,0,0"
                                           FontFamily="open sans condensed"/>
 
@@ -402,13 +402,17 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <StackPanel x:Name="logout_pink_button" Orientation="Horizontal"
                                         Width="230">
+                            
+                            <!--add logout button-->
+                            <Button  Click="Button_Click3">
 
-                            <Image Source="/Assets/img_signout.png"
+                                <Image Source="/Assets/img_signout.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
+                            </Button>
                             <TextBlock Text="Sign Out"
                                            Margin="25,0,0,0"
                                      FontFamily="open sans condensed"     />
@@ -427,7 +431,7 @@
         <Grid Height="80"
                   VerticalAlignment="Bottom"
                   Background="#233C4F"/>
-        <Frame  HorizontalAlignment="Left" Height="422" Margin="70,85,0,0" VerticalAlignment="Top" Width="722" Name="pages" Navigated="pages_Navigated" />
+        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated" />
 
 
     </Grid>

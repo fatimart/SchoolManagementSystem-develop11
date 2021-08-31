@@ -13,6 +13,19 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public TimeTable timeTable;
 
+       public int UserID
+       {
+           get { return timeTable.UserID; }
+           set
+           {
+               if (timeTable.UserID != value)
+               {
+                   timeTable.UserID = value;
+                   OnPropertyChanged("UserID");
+               }
+           }
+       }
+
         public int CourseID
         {
             get { return timeTable.CourseID; }
@@ -88,10 +101,11 @@ namespace SchoolManagementSystem.ViewModels
         }
 
 
-        public void AddTimeTable(int CourseID, int SectionID, int RoomID, int YearID,  string TeacherName)
+        public void AddTimeTable(int userID, int CourseID, int SectionID, int RoomID, int YearID,  string TeacherName)
         {
 
             TimeTable TTable = new TimeTable();
+            TTable.UserID = userID;
             TTable.CourseID = CourseID;
             TTable.SectionID = SectionID;
             TTable.RoomID = RoomID;
@@ -132,6 +146,8 @@ namespace SchoolManagementSystem.ViewModels
             try
             {
                 var TTableID = ty.TimeTables.Where(m => m.TimeTableID == TimeTableID).Single();
+                //var TTable = ty.TimeTables.Where(m => m.UserID == UserID).Single();
+
                 return true;
             }
             catch (Exception ex)

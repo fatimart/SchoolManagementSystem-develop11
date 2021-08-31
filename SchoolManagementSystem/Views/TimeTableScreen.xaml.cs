@@ -44,7 +44,7 @@ namespace SchoolManagementSystem.Views
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
             //add
-            TimeTable.AddTimeTable(Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(sectionIDTextBox.Text), Convert.ToInt32(roomIDTextBox.Text), Convert.ToInt32(yearIDTextBox.Text), teacherNameTextBox.Text.Trim());
+            //TimeTable.AddTimeTable(Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(sectionIDTextBox.Text), Convert.ToInt32(roomIDTextBox.Text), Convert.ToInt32(yearIDTextBox.Text), teacherNameTextBox.Text.Trim());
             Load();
         }
 

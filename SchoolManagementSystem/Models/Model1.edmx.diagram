@@ -21,6 +21,8 @@
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_User" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_Year" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Year" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_TimeTable" />
+        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

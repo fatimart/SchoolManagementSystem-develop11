@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,21 +73,54 @@ namespace SchoolManagementSystem.Views
             Tg_Btn.IsChecked = false;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //Logout Button
+        private void Button_Click ( object sender, RoutedEventArgs e )
         {
+
+            User user = new User();
+            UserViewModel.userSession = user;
+
+
+            MessageBox.Show(UserViewModel.userSession.UserID.ToString());
+            LoginScreen dashboard = new LoginScreen();
+            dashboard.Show();
+
             this.Close();
         }
-        private void Button_Click3(object sender, RoutedEventArgs e)
+
+        
+
+        private void Home_Click ( object sender, RoutedEventArgs e )
         {
-            pages.Source = new Uri("RegisterUsers.xaml", UriKind.Relative);
-            //   pages.Navigate(new Uri("RegisterUsers.xaml", UriKind.Relative));
-            //  RegisterUsers dashboard = new RegisterUsers()
-            //   dashboard.Show();
 
+            string type = UserViewModel.userSession.Type.ToString();
 
+            if (type == "Admin" || type == "Admin")
+            {
+                pages.Source = new Uri("RegisterUsers.xaml", UriKind.Relative);
+            }
+            else if (type == "Student" || type == "student")
+            {
+                pages.Source = new Uri("StudentView.xaml", UriKind.Relative);
+
+            }
+            else if (type == "Teacher" || type == "teacher")
+            {
+                //add teacher view
+                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+
+            }
         }
 
-       
+        //User tabs 
+        private void Button_Click3 ( object sender, RoutedEventArgs e )
+        {
+
+            pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+            
+        }
+
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

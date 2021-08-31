@@ -4,35 +4,104 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
-        mc:Ignorable="d"
-        Title="CourseRegistrationScreen" Height="500" Width="900">
+        mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
+        Title="CourseRegistrationScreen">
     <Grid>
-        <GroupBox HorizontalAlignment="Left" Background="#FFF9F9F9" Height="263" Margin="30,27,0,0" VerticalAlignment="Top" Width="733" FontSize="14" BorderBrush="#FF8B8F91">
+        <GroupBox HorizontalAlignment="Left" Background="#FFF9F9F9" Height="263" Margin="30,27,0,0" VerticalAlignment="Top" Width="694" FontSize="14" BorderBrush="#FF8B8F91">
             <GroupBox.Header>
                 Registration
             </GroupBox.Header>
             <Grid>
 
-                <ComboBox x:Name="course_combo_box" ItemsSource="{Binding CourseCode}"  HorizontalAlignment="Left" Margin="162,25,0,0" VerticalAlignment="Top" Width="178" Height="22"/>
-                <GroupBox x:Name="course_details_groupbox" Header="Course Details" HorizontalAlignment="Left" Height="126" Margin="55,66,0,0" VerticalAlignment="Top" Width="635" FontSize="12">
-                    <Grid>
-                        <Label Content="Teacher Name:" HorizontalAlignment="Left" Margin="40,12,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Exam Date:" HorizontalAlignment="Left" Margin="40,43,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Time:" HorizontalAlignment="Left" Margin="40,69,0,0" VerticalAlignment="Top" Width="69"/>
-                        <Label Content="Room No:" HorizontalAlignment="Left" Margin="316,12,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Label" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Label" HorizontalAlignment="Left" Margin="316,69,0,0" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="154,12,0,0" TextWrapping="Wrap" Text="{Binding courseID}" VerticalAlignment="Top"/>
+                <ComboBox x:Name="course_combo_box"
+                          HorizontalAlignment="Left"
+                          Margin="162,25,0,0"
+                          VerticalAlignment="Top"
+                          Width="178"
+                          Height="22"
+                          DisplayMemberPath="Name">
+                    <ComboBox.Background>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                            <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                        </LinearGradientBrush>
+                    </ComboBox.Background>
+                </ComboBox>
 
+                <Button x:Name="find"
+                        Content="Find"
+                        HorizontalAlignment="Left"
+                        Margin="609,25,0,0"
+                        VerticalAlignment="Top"
+                        Width="35" Height="22"
+                        FontSize="12"/>
+
+                <GroupBox x:Name="course_details_groupbox" Header="Course Details" HorizontalAlignment="Left" Height="126" Margin="55,66,0,0" VerticalAlignment="Top" Width="591" FontSize="12">
+                    <Grid>
+                        <Label Content="Teacher Name:"
+                               HorizontalAlignment="Left"
+                               Margin="40,12,0,0"
+                               VerticalAlignment="Top"/>
+
+                        <Label Content="Exam Date:"
+                               HorizontalAlignment="Left"
+                               Margin="40,43,0,0"
+                               VerticalAlignment="Top"/>
+
+                        <Label Content="Time:"
+                               HorizontalAlignment="Left"
+                               Margin="40,69,0,0"
+                               VerticalAlignment="Top"
+                               Width="69"/>
+
+                        <Label Content="Room No:"
+                               HorizontalAlignment="Left"
+                               Margin="316,12,0,0"
+                               VerticalAlignment="Top"/>
+
+                        <Label Content="Year"
+                               HorizontalAlignment="Left"
+                               Margin="316,43,0,0"
+                               VerticalAlignment="Top"/>
+
+                        <Label Content="Section No"
+                               HorizontalAlignment="Left"
+                               Margin="316,69,0,0"
+                               VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>
 
                 <Button x:Name="register" Content="Register" HorizontalAlignment="Left" Margin="262,206,0,0" VerticalAlignment="Top" Width="74" Click="Register_Click"/>
-                <Label Content="Course Code:" HorizontalAlignment="Left" Margin="57,20,0,0" VerticalAlignment="Top"/>
+                <Label Content="Course Name:" HorizontalAlignment="Left" Margin="57,20,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="cancel" Content="Cancel" HorizontalAlignment="Left" Margin="363,206,0,0" VerticalAlignment="Top" Width="75"/>
 
             </Grid>
         </GroupBox>
-        <DataGrid HorizontalAlignment="Left" Height="100" Margin="30,295,0,0" VerticalAlignment="Top" Width="733"/>
+        <DataGrid x:Name="tableDataGrid"
+                  HorizontalAlignment="Left"
+                  Height="100" Margin="30,295,0,0"
+                  VerticalAlignment="Top"
+                  Width="694">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Course Code"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Course Name" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Time " Width="180" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Exam Date" Width="125" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Teacher Name" Width="125" IsReadOnly="True"/>
+
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DeleteCourse" Content="Remove" RenderTransformOrigin="1.426,1"
+                                        Height="22" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                        Width="86" Margin="0,461,10,0" Grid.RowSpan="3" Grid.ColumnSpan="3" Click="DeleteCourse_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+       
     </Grid>
 </Page>
