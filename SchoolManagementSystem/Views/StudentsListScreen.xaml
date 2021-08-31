@@ -97,10 +97,10 @@
                     <DataGridTextColumn x:Name="contactNoColumn" Binding="{Binding ContactNo}" Header="Contact No" Width="SizeToHeader"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="DeleteStudent" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,422,0,0" Grid.RowSpan="3" Grid.ColumnSpan="4" Click="DeleteStudent_Click"/>
+            <Button x:Name="DeleteStudent" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,416,0,0" Grid.RowSpan="3" Grid.ColumnSpan="4" Click="DeleteStudent_Click"/>
             <Button x:Name="UpdateStudent" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Left" Width="88" Height="21" VerticalAlignment="Bottom" Margin="10,0,0,147" Grid.Column="4" Grid.RowSpan="3" Click="UpdateStudent_Click" />
             <Button x:Name="AddNewStudent" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="21" VerticalAlignment="Bottom" Margin="0,0,0,147" Grid.ColumnSpan="4" Grid.RowSpan="3" Click="AddNewStudent_Click"/>
-            <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="11,421,21,0" Grid.Column="4" Grid.RowSpan="3" Height="22" VerticalAlignment="Top" Click="Reset_Click"/>
+            <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="11,415,21,0" Grid.Column="4" Grid.RowSpan="3" Height="22" VerticalAlignment="Top" Click="Reset_Click"/>
         </Grid>
     </Grid>
 </Page>

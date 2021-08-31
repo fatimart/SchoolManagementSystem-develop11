@@ -87,9 +87,9 @@
                                    Text="{Binding ExamDate, Mode=OneWay}" 
                                    VerticalAlignment="Top"/>
 
-                        <TextBlock x:Name="teachernametxt" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="teachernametxt" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                         <TextBlock x:Name="roomNotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" Text="{Binding RoomNo, Mode=OneWay}"  VerticalAlignment="Top"/>
-                        <TextBlock x:Name="timetxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="timetxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                         <TextBlock x:Name="sectionnotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>

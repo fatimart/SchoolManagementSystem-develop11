@@ -36,7 +36,16 @@ namespace SchoolManagementSystem.Views
 
         }
 
-        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
+            // Load data into the table Course. You can modify this code as needed.
+           // SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter schoolMSDataSetCourseTableAdapter = new SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter();
+            //schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.Course);
+
+
+
+        }
         public void Load()
         {
             SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
