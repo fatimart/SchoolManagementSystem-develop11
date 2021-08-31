@@ -10,7 +10,7 @@
         mc:Ignorable="d"
                 Title="MainWindow" 
         Height="800" 
-        Width="900"
+        Width="1000"
         Topmost="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"   Loaded="Window_Loaded_1">
@@ -277,8 +277,8 @@
 
                         <StackPanel Orientation="Horizontal"
                                         Width="230">
-                            <!--add profile button-->
-                            <Button  Click="Button_Click3">
+                            <!--profile button-->
+                            <Button  Click="Button_Click2">
 
                                 <Image x:Name="profile" Source="/Assets/img_contact.png"
                                        Stretch="None"
@@ -319,7 +319,7 @@
                             <TextBlock Text="Messages"
                                            Margin="25,0,0,0"
                                          FontFamily="open sans condensed" />
-                           
+
                         </StackPanel>
 
                     </ListViewItem>
@@ -340,16 +340,20 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <StackPanel x:Name="logout_pink_button" Orientation="Horizontal"
                                         Width="230">
 
-                            <Image Source="/Assets/img_map.png"
+                            <!--add logout button-->
+                            <Button  Click="Button_Click3">
+
+                                <Image Source="/Assets/img_signout.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
-                            <TextBlock Text="Maps"
+                            </Button>
+                            <TextBlock Text="Sign Out"
                                            Margin="25,0,0,0"
-                                         FontFamily="open sans condensed"  />
+                                     FontFamily="open sans condensed"     />
 
                         </StackPanel>
 
@@ -371,7 +375,7 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <!--<StackPanel Orientation="Horizontal"
                                         Width="230">
 
                             <Image Source="/Assets/img_setting.png"
@@ -382,11 +386,10 @@
                                            Margin="25,0,0,0"
                                          FontFamily="open sans condensed"  />
 
-                        </StackPanel>
+                        </StackPanel>-->
 
                     </ListViewItem>
 
-                    <!--// Sign Out //-->
 
                     <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter"
@@ -402,22 +405,7 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel x:Name="logout_pink_button" Orientation="Horizontal"
-                                        Width="230">
-                            
-                            <!--add logout button-->
-                            <Button  Click="Button_Click3">
 
-                                <Image Source="/Assets/img_signout.png"
-                                       Stretch="None"
-                                       Margin="12,0,0,0"/>
-
-                            </Button>
-                            <TextBlock Text="Sign Out"
-                                           Margin="25,0,0,0"
-                                     FontFamily="open sans condensed"     />
-
-                        </StackPanel>
 
                     </ListViewItem>
 
@@ -431,7 +419,7 @@
         <Grid Height="80"
                   VerticalAlignment="Bottom"
                   Background="#233C4F"/>
-        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated"  NavigationUIVisibility="Hidden" />
+        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated" NavigationUIVisibility="Hidden" />
 
 
     </Grid>

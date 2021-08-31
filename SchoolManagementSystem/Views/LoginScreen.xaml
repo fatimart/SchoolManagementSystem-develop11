@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagementSystem"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="451.318" Width="803.9">
+        Title="LoginScreen" Height="451.318" Width="803.9" WindowStartupLocation="CenterScreen">
 
 
     <Grid>
@@ -33,6 +33,3 @@
     </Grid>
 
 </Window>
-    
-    
-    

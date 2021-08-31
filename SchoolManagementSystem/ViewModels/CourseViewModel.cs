@@ -86,7 +86,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
-        public int SectionID
+      /**  public int SectionID
         {
             get { return course.SectionID; }
             set
@@ -97,8 +97,8 @@ namespace SchoolManagementSystem.ViewModels
                     OnPropertyChanged("SectionID");
                 }
             }
-        }
-       public void AddCourse( string courseName, string courseCode, string description, DateTime examDate, int sectionID)
+        }**/
+       public void AddCourse( string courseName, string courseCode, string description, DateTime examDate)
         {
 
             Course course = new Course();
@@ -106,7 +106,7 @@ namespace SchoolManagementSystem.ViewModels
             course.CourseCode = courseCode;
             course.Description = description;
             course.ExamDate = examDate;
-            course.SectionID = sectionID;
+            //course.SectionID = sectionID;
 
             ty.Courses.Add(course);
             ty.SaveChanges();
@@ -114,7 +114,7 @@ namespace SchoolManagementSystem.ViewModels
         }
    
 
-        public void UpdateCourse(int courseID,string courseName, string courseCode, string description, DateTime examDate, int sectionID)
+        public void UpdateCourse(int courseID,string courseName, string courseCode, string description, DateTime examDate)
         {
      
             Course updateCourse = (from m in ty.Courses where m.CourseID == courseID select m).Single();
@@ -122,7 +122,7 @@ namespace SchoolManagementSystem.ViewModels
             updateCourse.CourseCode = courseCode;
             updateCourse.Description = description;
             updateCourse.ExamDate = examDate;
-            updateCourse.SectionID = sectionID;
+            //updateCourse.SectionID = sectionID;
             ty.SaveChanges();
 
         }
@@ -182,7 +182,7 @@ namespace SchoolManagementSystem.ViewModels
                 CourseCode = data.CourseCode,
                 Description = data.Description,
                 ExamDate = Convert.ToDateTime(data.ExamDate),
-                SectionID = data.SectionID
+                //SectionID = data.SectionID
 
             }));
             //return AllUsers;

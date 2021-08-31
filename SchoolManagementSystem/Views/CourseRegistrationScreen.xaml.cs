@@ -39,14 +39,16 @@ namespace SchoolManagementSystem.Views
             DateTime now = DateTime.Now;
 
             table.AddTimeTable(
-                11,
-                                1,
-                                "10",
-                                10,
-                                
-                                "aa",
+                                Convert.ToInt32(UserViewModel.userSession.UserID),
+                                Convert.ToInt32(course_combo_box.Text),
+                                roomNotxt.Text,
+                                2021,
+                                teachernametxt.Text,
                                 coursenametxt.Text
                                );
+            FillDataGrid();
+
+
         }
 
         private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
@@ -128,7 +130,7 @@ namespace SchoolManagementSystem.Views
 
                 using (SqlConnection connection = new SqlConnection(strcon))
                 {
-                    SqlCommand cmd = new SqlCommand("select * from Course where CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                    SqlCommand cmd = new SqlCommand("select Course.CourseCode,Course.CourseName,Course.ExamDate, Section.SectionNum from Course, Section where Section.CourseID= Course.CourseID AND CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -138,7 +140,7 @@ namespace SchoolManagementSystem.Views
                     {
                         coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
                         examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString();
-                        sectionnotxt.Text = dt.Rows[0]["ExamDate"].ToString();
+                        sectionnotxt.Text = dt.Rows[0]["SectionNum"].ToString();
 
                     }
                     connection.Close();

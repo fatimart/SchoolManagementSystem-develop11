@@ -14,7 +14,6 @@
           <Property Name="CourseCode" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="ExamDate" Type="date" Nullable="false" />
-          <Property Name="SectionID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Room">
           <Key>
@@ -218,7 +217,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="CourseCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ExamDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SectionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Course" FromRole="Course" ToRole="Section" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_Course" FromRole="Course" ToRole="StudentGrade" />
           <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Course1" FromRole="Course" ToRole="TimeTable" />
@@ -431,7 +429,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
-                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

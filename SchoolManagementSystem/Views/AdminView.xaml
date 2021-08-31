@@ -10,9 +10,7 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="Register Users Screen">
-                <Frame Name="registerUser" Source="RegisterUsers.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"></Frame>
-            </TabItem>
+          
             <TabItem Header="Courses Screen">
                 <Frame Name="course" Source="CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>

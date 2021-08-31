@@ -36,16 +36,7 @@ namespace SchoolManagementSystem.Views
 
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
-            // Load data into the table Course. You can modify this code as needed.
-            SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter schoolMSDataSetCourseTableAdapter = new SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter();
-            schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.Course);
-
-
-
-        }
+        
         public void Load()
         {
             SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
@@ -56,15 +47,15 @@ namespace SchoolManagementSystem.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //   System.Windows.Data.CollectionViewSource courseViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("courseViewSource")));
-            //  courseViewSource.View.MoveCurrentToFirst();
+               System.Windows.Data.CollectionViewSource courseViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("courseViewSource")));
+              courseViewSource.View.MoveCurrentToFirst();
 
         }
 
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
             //add button 
-            course.AddCourse(courseNameTextBox.Text.Trim(), courseCodeTextBox.Text.Trim(), descriptionTextBox.Text.Trim(), Convert.ToDateTime(examDateDatePicker.Text), Convert.ToInt32(sectionIDTextBox.Text.Trim()));
+            course.AddCourse(courseNameTextBox.Text.Trim(), courseCodeTextBox.Text.Trim(), descriptionTextBox.Text.Trim(), Convert.ToDateTime(examDateDatePicker.Text));
             Load();
         }
         public void Clear()
@@ -81,7 +72,7 @@ namespace SchoolManagementSystem.Views
             if (course.CheckCourseID(Convert.ToInt32(courseIDTextBox.Text)))
             {
 
-                course.UpdateCourse(Convert.ToInt32(courseIDTextBox.Text.Trim()), courseNameTextBox.Text.Trim(), courseCodeTextBox.Text.Trim(), descriptionTextBox.Text.Trim(), Convert.ToDateTime(examDateDatePicker.Text), Convert.ToInt32(sectionIDTextBox.Text.Trim()));
+                course.UpdateCourse(Convert.ToInt32(courseIDTextBox.Text.Trim()), courseNameTextBox.Text.Trim(), courseCodeTextBox.Text.Trim(), descriptionTextBox.Text.Trim(), Convert.ToDateTime(examDateDatePicker.Text));
                 Load();
 
             }
