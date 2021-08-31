@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
@@ -47,19 +47,19 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="Score" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
           <Property Name="Done" Type="bit" Nullable="false" />
-          <Property Name="yearID" Type="int" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
             <PropertyRef Name="TimeTableID" />
           </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
-          <Property Name="SectionID" Type="int" Nullable="false" />
-          <Property Name="RoomID" Type="int" Nullable="false" />
-          <Property Name="YearID" Type="int" Nullable="false" />
+          <Property Name="RoomNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="TimeTableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -131,18 +131,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentGrade_Year">
-          <End Role="Year" Type="Self.Year" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Year">
-              <PropertyRef Name="YearID" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="yearID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TimeTable_Course1">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
@@ -152,30 +140,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Principal>
             <Dependent Role="TimeTable">
               <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TimeTable_Room">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Room">
-              <PropertyRef Name="RoomID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="RoomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TimeTable_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="SectionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -203,18 +167,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TimeTable_Year">
-          <End Role="Year" Type="Self.Year" Multiplicity="1" />
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Year">
-              <PropertyRef Name="YearID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="YearID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SchoolMSModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
@@ -239,20 +191,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrade" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentGrade_Year" Association="Self.FK_StudentGrade_Year">
-            <End Role="Year" EntitySet="Year" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
-          </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Course1" Association="Self.FK_TimeTable_Course1">
             <End Role="Course" EntitySet="Course" />
-            <End Role="TimeTable" EntitySet="TimeTable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Room" Association="Self.FK_TimeTable_Room">
-            <End Role="Room" EntitySet="Room" />
-            <End Role="TimeTable" EntitySet="TimeTable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Section" Association="Self.FK_TimeTable_Section">
-            <End Role="Section" EntitySet="Section" />
             <End Role="TimeTable" EntitySet="TimeTable" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_TimeTable" Association="Self.FK_TimeTable_TimeTable">
@@ -263,12 +203,9 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="Users" EntitySet="Users" />
             <End Role="TimeTable" EntitySet="TimeTable" />
           </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Year" Association="Self.FK_TimeTable_Year">
-            <End Role="Year" EntitySet="Year" />
-            <End Role="TimeTable" EntitySet="TimeTable" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -293,7 +230,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="RoomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoomNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Room" FromRole="Room" ToRole="Section" />
-          <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Room" FromRole="Room" ToRole="TimeTable" />
         </EntityType>
         <EntityType Name="Section">
           <Key>
@@ -305,7 +241,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="RoomID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Section_Course" FromRole="Section" ToRole="Course" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Section_Room" FromRole="Section" ToRole="Room" />
-          <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Section" FromRole="Section" ToRole="TimeTable" />
         </EntityType>
         <EntityType Name="StudentGrade">
           <Key>
@@ -317,29 +252,25 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="Score" Type="Int32" Nullable="false" />
           <Property Name="Attendance" Type="Int32" Nullable="false" />
           <Property Name="Done" Type="Boolean" Nullable="false" />
-          <Property Name="yearID" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_StudentGrade_Course" FromRole="StudentGrade" ToRole="Course" />
           <NavigationProperty Name="User" Relationship="Self.FK_StudentGrade_User" FromRole="StudentGrade" ToRole="Users" />
-          <NavigationProperty Name="Year" Relationship="Self.FK_StudentGrade_Year" FromRole="StudentGrade" ToRole="Year" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
             <PropertyRef Name="TimeTableID" />
           </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
-          <Property Name="SectionID" Type="Int32" Nullable="false" />
-          <Property Name="RoomID" Type="Int32" Nullable="false" />
-          <Property Name="YearID" Type="Int32" Nullable="false" />
+          <Property Name="RoomNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
           <Property Name="TimeTableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_TimeTable_Course1" FromRole="TimeTable" ToRole="Course" />
-          <NavigationProperty Name="Room" Relationship="Self.FK_TimeTable_Room" FromRole="TimeTable" ToRole="Room" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_TimeTable_Section" FromRole="TimeTable" ToRole="Section" />
-          <NavigationProperty Name="Year" Relationship="Self.FK_TimeTable_Year" FromRole="TimeTable" ToRole="Year" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TimeTable1" Relationship="SchoolMSModel.FK_TimeTable_TimeTable" FromRole="TimeTable" ToRole="TimeTable1" />
-          <NavigationProperty Name="TimeTable2" Relationship="SchoolMSModel.FK_TimeTable_TimeTable" FromRole="TimeTable1" ToRole="TimeTable" />
-          <NavigationProperty Name="User" Relationship="SchoolMSModel.FK_TimeTable_Users" FromRole="TimeTable" ToRole="User" />
+          <NavigationProperty Name="TimeTable1" Relationship="Self.FK_TimeTable_TimeTable" FromRole="TimeTable" ToRole="TimeTable1" />
+          <NavigationProperty Name="TimeTable2" Relationship="Self.FK_TimeTable_TimeTable" FromRole="TimeTable1" ToRole="TimeTable" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TimeTable_Users" FromRole="TimeTable" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -356,7 +287,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_User" FromRole="Users" ToRole="StudentGrade" />
-          <NavigationProperty Name="TimeTables" Relationship="SchoolMSModel.FK_TimeTable_Users" FromRole="User" ToRole="TimeTable" />
+          <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Users" FromRole="Users" ToRole="TimeTable" />
         </EntityType>
         <EntityType Name="Year">
           <Key>
@@ -364,8 +295,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           </Key>
           <Property Name="YearID" Type="Int32" Nullable="false" />
           <Property Name="YearNum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_Year" FromRole="Year" ToRole="StudentGrade" />
-          <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Year" FromRole="Year" ToRole="TimeTable" />
         </EntityType>
         <Association Name="FK_Section_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
@@ -415,30 +344,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TimeTable_Room">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Room">
-              <PropertyRef Name="RoomID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="RoomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TimeTable_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="SectionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StudentGrade_User">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
@@ -451,27 +356,27 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentGrade_Year">
-          <End Role="Year" Type="Self.Year" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+        <Association Name="FK_TimeTable_TimeTable">
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="1" />
+          <End Role="TimeTable1" Type="Self.TimeTable" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Year">
-              <PropertyRef Name="YearID" />
+            <Principal Role="TimeTable">
+              <PropertyRef Name="TimeTableID" />
             </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="yearID" />
+            <Dependent Role="TimeTable1">
+              <PropertyRef Name="TimeTableID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TimeTable_Year">
-          <End Role="Year" Type="Self.Year" Multiplicity="1" />
+        <Association Name="FK_TimeTable_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Year">
-              <PropertyRef Name="YearID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="TimeTable">
-              <PropertyRef Name="YearID" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -499,59 +404,19 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Room" Association="Self.FK_TimeTable_Room">
-            <End Role="Room" EntitySet="Rooms" />
-            <End Role="TimeTable" EntitySet="TimeTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Section" Association="Self.FK_TimeTable_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="TimeTable" EntitySet="TimeTables" />
-          </AssociationSet>
           <AssociationSet Name="FK_StudentGrade_User" Association="Self.FK_StudentGrade_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrades" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentGrade_Year" Association="Self.FK_StudentGrade_Year">
-            <End Role="Year" EntitySet="Years" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Year" Association="Self.FK_TimeTable_Year">
-            <End Role="Year" EntitySet="Years" />
-            <End Role="TimeTable" EntitySet="TimeTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_TimeTable" Association="SchoolMSModel.FK_TimeTable_TimeTable">
+          <AssociationSet Name="FK_TimeTable_TimeTable" Association="Self.FK_TimeTable_TimeTable">
             <End Role="TimeTable" EntitySet="TimeTables" />
             <End Role="TimeTable1" EntitySet="TimeTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Users" Association="SchoolMSModel.FK_TimeTable_Users">
-            <End Role="User" EntitySet="Users" />
+          <AssociationSet Name="FK_TimeTable_Users" Association="Self.FK_TimeTable_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="TimeTable" EntitySet="TimeTables" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_TimeTable_TimeTable">
-          <End Type="SchoolMSModel.TimeTable" Role="TimeTable" Multiplicity="1" />
-          <End Type="SchoolMSModel.TimeTable" Role="TimeTable1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TimeTable">
-              <PropertyRef Name="TimeTableID" />
-            </Principal>
-            <Dependent Role="TimeTable1">
-              <PropertyRef Name="TimeTableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TimeTable_Users">
-          <End Type="SchoolMSModel.User" Role="User" Multiplicity="1" />
-          <End Type="SchoolMSModel.TimeTable" Role="TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -597,7 +462,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
                 <ScalarProperty Name="Done" ColumnName="Done" />
-                <ScalarProperty Name="yearID" ColumnName="yearID" />
+                <ScalarProperty Name="year" ColumnName="year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -606,11 +471,11 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
               <MappingFragment StoreEntitySet="TimeTable">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="YearID" ColumnName="YearID" />
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

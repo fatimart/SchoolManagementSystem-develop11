@@ -28,7 +28,24 @@ namespace SchoolManagementSystem.Views
         public layout()
         {
             InitializeComponent();
-           // pages.Content = RScreen;
+
+            string type = UserViewModel.userSession.Type.ToString();
+
+            if (type == "Admin" || type == "Admin")
+            {
+                pages.Source = new Uri("RegisterUsers.xaml", UriKind.Relative);
+            }
+            else if (type == "Student" || type == "student")
+            {
+                pages.Source = new Uri("StudentView.xaml", UriKind.Relative);
+
+            }
+            else if (type == "Teacher" || type == "teacher")
+            {
+                //add teacher view
+                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+
+            }
 
         }
 

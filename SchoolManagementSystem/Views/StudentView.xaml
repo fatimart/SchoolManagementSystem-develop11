@@ -9,18 +9,14 @@
       Title="StudentView">
 
     <Grid>
-        <TabControl SelectedIndex="{Binding Mode=OneWay}">
+        <TabControl>
 
             <TabItem Header=" Schedule">
                 <Frame Name="Schedule" Source="CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
-            <TabItem Header=" Students">
-                <Frame Name="students" Height="Auto" Width="Auto" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
-            </TabItem>
-
-            <TabItem Header="Profile">
-                <Frame Name="Profile" Source="ProfileScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+            <TabItem Header="Courses">
+                <Frame Name="Courses" Source="StudentCourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
 

@@ -39,12 +39,13 @@ namespace SchoolManagementSystem.Views
             DateTime now = DateTime.Now;
 
             table.AddTimeTable(
-                0,
+                11,
+                                1,
+                                "10",
                                 10,
-                                10,
-                                10,
-                                100,
-                                "aa"
+                                
+                                "aa",
+                                coursenametxt.Text
                                );
         }
 
@@ -135,8 +136,10 @@ namespace SchoolManagementSystem.Views
 
                     if (dt.Rows.Count > 0)
                     {
-                            coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
-                            examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString(); 
+                        coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
+                        examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString();
+                        sectionnotxt.Text = dt.Rows[0]["ExamDate"].ToString();
+
                     }
                     connection.Close();
                 }

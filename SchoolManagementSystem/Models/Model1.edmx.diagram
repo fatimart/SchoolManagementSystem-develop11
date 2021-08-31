@@ -4,25 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="539c54268307492ca5bd0fe85f2b17f4" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="9d5e9b50ecf1464db93dbabce945db47" Name="Diagram1">
         <EntityTypeShape EntityType="SchoolMSModel.Course" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Room" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Section" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.StudentGrade" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.TimeTable" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.User" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Year" Width="1.5" PointX="6" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Room" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Section" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.StudentGrade" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.TimeTable" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.User" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Year" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="SchoolMSModel.FK_Section_Course" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_Course" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Course1" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_Section_Room" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Room" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Section" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_Year" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Year" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_TimeTable" />
-        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Users" />
+        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_TimeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

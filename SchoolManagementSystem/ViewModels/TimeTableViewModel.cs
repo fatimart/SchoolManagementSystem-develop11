@@ -38,39 +38,27 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }
-        public int SectionID
-
+       
+        public string RoomNo
         {
-            get { return timeTable.SectionID; }
+            get { return timeTable.RoomNo; }
             set
             {
-                if (timeTable.SectionID != value)
+                if (timeTable.RoomNo != value)
                 {
-                    timeTable.SectionID = value;
-                    OnPropertyChanged("SectionID");
-                }
-            }
-        }
-        public int RoomID
-        {
-            get { return timeTable.RoomID; }
-            set
-            {
-                if (timeTable.RoomID != value)
-                {
-                    timeTable.RoomID = value;
+                    timeTable.RoomNo = value;
                     OnPropertyChanged("RoomID");
                 }
             }
         }
-        public int YearID
+        public int Year
         {
-            get { return timeTable.YearID; }
+            get { return timeTable.Year; }
             set
             {
-                if (timeTable.YearID != value)
+                if (timeTable.Year != value)
                 {
-                    timeTable.YearID = value;
+                    timeTable.Year = value;
                     OnPropertyChanged("YearID");
                 }
             }
@@ -101,7 +89,7 @@ namespace SchoolManagementSystem.ViewModels
         }
 
 
-        public void AddTimeTable(int userID, int CourseID, int SectionID, int RoomID, int YearID,  string TeacherName)
+        public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename)
         {
             try
 
@@ -110,10 +98,10 @@ namespace SchoolManagementSystem.ViewModels
                 TimeTable TTable = new TimeTable();
                 TTable.UserID = userID;
                 TTable.CourseID = CourseID;
-                TTable.SectionID = SectionID;
-                TTable.RoomID = RoomID;
-                TTable.YearID = YearID;
+                TTable.RoomNo = RoomID;
+                TTable.Year = YearID;
                 TTable.TeacherName = TeacherName;
+                TTable.CourseName = coursename;
 
 
                 ty.TimeTables.Add(TTable);
@@ -123,21 +111,20 @@ namespace SchoolManagementSystem.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.InnerException.Message);
             }
            
 
         }
 
 
-        public void UpdateTimeTable(int CourseID, int SectionID, int RoomID, int YearID, int TimeTableID, string TeacherName)
+        public void UpdateTimeTable(int CourseID, string RoomID, int YearID, int TimeTableID, string TeacherName)
         {
 
             TimeTable updaTimeTables = (from m in ty.TimeTables where m.TimeTableID == TimeTableID select m).Single();
             updaTimeTables.CourseID = CourseID;
-            updaTimeTables.SectionID = SectionID;
-            updaTimeTables.RoomID = RoomID;
-            updaTimeTables.YearID = YearID;
+            updaTimeTables.RoomNo = RoomID;
+            updaTimeTables.Year = YearID;
             updaTimeTables.TimeTableID = TimeTableID;
             updaTimeTables.TeacherName = TeacherName;
             ty.SaveChanges();
