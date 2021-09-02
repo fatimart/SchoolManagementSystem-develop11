@@ -168,14 +168,12 @@ namespace SchoolManagementSystem.ViewModels
 
 
         //MARK: Check by Course Code
-        public bool CheckCourseCode ( string courseCode )
+        /**public bool CheckCourseCode ( string courseCode )
         {
             try
             {
                 var CourseCode1 = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
-                //if (CourseCode1 != null)
                 return true;
-               // else { return false; }
             }
             catch (Exception ex)
             {
@@ -183,11 +181,11 @@ namespace SchoolManagementSystem.ViewModels
             }
            return false;
 
-        }
+        }**/
 
+        //MARK: update and insert when uploading new excel sheet
         public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
         {
-
 
             if (ty.Courses.Any(o => o.CourseCode == courseCode))
             {
@@ -202,6 +200,8 @@ namespace SchoolManagementSystem.ViewModels
 
             }
         }
+
+        
 
 
         public void Clear()

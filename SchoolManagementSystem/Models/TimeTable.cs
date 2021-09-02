@@ -21,6 +21,8 @@ namespace SchoolManagementSystem.Models
         public int TimeTableID { get; set; }
         public string TeacherName { get; set; }
         public string CourseName { get; set; }
+        public string Time { get; set; }
+        public string CourseCode { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual TimeTable TimeTable1 { get; set; }

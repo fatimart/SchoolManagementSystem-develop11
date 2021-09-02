@@ -20,7 +20,7 @@
                           Width="178"
                           Height="22"
                           DisplayMemberPath="CourseCode" 
-                          SelectionChanged="course_combo_box_SelectionChanged" DropDownClosed="course_combo_box_DropDownClosed">
+                          DropDownClosed="course_combo_box_DropDownClosed">
 
                     <ComboBox.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -87,10 +87,11 @@
                                    Text="{Binding ExamDate, Mode=OneWay}" 
                                    VerticalAlignment="Top"/>
 
-                        <TextBlock x:Name="teachernametxt" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="roomNotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" Text="{Binding RoomNo, Mode=OneWay}"  VerticalAlignment="Top"/>
-                        <TextBlock x:Name="timetxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="sectionnotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+                        <TextBlock x:Name="teachernametxt" Text="Teacher1" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="roomNotxt" Text="{Binding RoomNo, Mode=OneWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="timetxt" Text="{Binding Time, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+                        <TextBlock x:Name="sectionnotxt" Text="{Binding SectionNum, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+                        <TextBlock x:Name="txtcourseID" Grid.Column="1" HorizontalAlignment="Left" Margin="177,22,0,0" TextWrapping="Wrap" Text="{Binding CourseID, Mode=OneWay}" VerticalAlignment="Top" RenderTransformOrigin="0.449,-1.062" Visibility="Hidden"/>
                     </Grid>
                 </GroupBox>
 
@@ -104,10 +105,25 @@
                   HorizontalAlignment="Left"
                   Height="100" Margin="30,295,0,0"
                   VerticalAlignment="Top"
-                  Width="694">
+                  Width="694"
+                  AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Course Code" Binding="{Binding Path='CourseCode'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Course Name" Binding="{Binding Path='CourseName'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Section No" Binding="{Binding Path='SectionNo'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Time" Binding="{Binding Path='Time'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Room" Binding="{Binding Path='RoomNo'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Exam Date" Binding="{Binding Path='ExamDate'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Teacher Name" Binding="{Binding Path='TeacherName'}" IsReadOnly="True" />
 
-    
-            
+                <DataGridTemplateColumn Header="">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                            <Button x:Name="btnRemove" Content="Remove" Click="btnRemove_Click"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
 
     </Grid>

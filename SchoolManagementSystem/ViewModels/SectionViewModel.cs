@@ -24,7 +24,7 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }
-        public byte SectionNum
+        public int SectionNum
         {
             get { return Section.SectionNum; }
             set
@@ -60,6 +60,20 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }
+
+        public string Time
+        {
+            get { return Section.Time; }
+            set
+            {
+                if (Section.Time != value)
+                {
+                    Section.Time = value;
+                    OnPropertyChanged("Time");
+                }
+            }
+        }
+
         public void AddSection(int sectionID, byte sectionNum, int courseID, int RoomID)
         {
 

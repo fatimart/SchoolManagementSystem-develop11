@@ -15,10 +15,10 @@ namespace SchoolManagementSystem.Models
     public partial class Section
     {
         public int SectionID { get; set; }
-        public byte SectionNum { get; set; }
+        public int SectionNum { get; set; }
         public int CourseID { get; set; }
         public int RoomID { get; set; }
-        public byte[] Time { get; set; }
+        public string Time { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Room Room { get; set; }

@@ -38,17 +38,26 @@ namespace SchoolManagementSystem.Views
         {
             DateTime now = DateTime.Now;
 
-            table.AddTimeTable(
-                                Convert.ToInt32(UserViewModel.userSession.UserID),
-                                Convert.ToInt32(course_combo_box.Text),
-                                roomNotxt.Text,
-                                2021,
-                                teachernametxt.Text,
-                                coursenametxt.Text
-                               );
-            FillDataGrid();
+            if (notEmpty())
+            {
 
+                table.InsertTimeTable(
+                                    Convert.ToInt32(UserViewModel.userSession.UserID),
+                                    Convert.ToInt32(txtcourseID.Text.ToString()),
+                                    roomNotxt.Text.ToString(),
+                                    2021,
+                                    "techer name test",
+                                    coursenametxt.Text.ToString(),
+                                    timetxt.Text.ToString(),
+                                    course_combo_box.Text.ToString()
+                                   );
+                FillDataGrid();
 
+            }
+            else
+            {
+                MessageBox.Show("Please Select a course!!");
+            }
         }
 
         private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
@@ -64,7 +73,7 @@ namespace SchoolManagementSystem.Views
             using (SqlConnection connection = new SqlConnection(strcon))
             {
                 SqlCommand command = new SqlCommand(
-                     "select * from TimeTable where UserID='" + UserViewModel.userSession.UserID + "'", connection);
+                     "select TimeTable.CourseCode,TimeTable.CourseName,Section.SectionNum,TimeTable.RoomNo, TimeTable.Time, Course.Examdate,TimeTable.TeacherName from TimeTable, Course, Section where Course.CourseID=TimeTable.CourseID AND Course.CourseID=Section.CourseID AND UserID='" + UserViewModel.userSession.UserID + "'", connection);
                 connection.Open();
 
                 SqlDataAdapter sda = new SqlDataAdapter(command);
@@ -80,7 +89,8 @@ namespace SchoolManagementSystem.Views
 
         }
 
-        
+      
+
         public void fillCourseBox ()
         {
             try
@@ -115,12 +125,9 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-        private void course_combo_box_SelectionChanged ( object sender, SelectionChangedEventArgs e )
-        {
-          
-        }
+        
 
-
+        //MARK: to fill the course detail group box with the selected course code
         public void fillCourseDetails ()
         {
             try
@@ -130,7 +137,7 @@ namespace SchoolManagementSystem.Views
 
                 using (SqlConnection connection = new SqlConnection(strcon))
                 {
-                    SqlCommand cmd = new SqlCommand("select Course.CourseCode,Course.CourseName,Course.ExamDate, Section.SectionNum from Course, Section where Section.CourseID= Course.CourseID AND CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                    SqlCommand cmd = new SqlCommand("select Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -141,6 +148,10 @@ namespace SchoolManagementSystem.Views
                         coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
                         examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString();
                         sectionnotxt.Text = dt.Rows[0]["SectionNum"].ToString();
+                        timetxt.Text = dt.Rows[0]["Time"].ToString();
+                        roomNotxt.Text = dt.Rows[0]["RoomNum"].ToString();
+                        //teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
+                        txtcourseID.Text = dt.Rows[0]["CourseID"].ToString();
 
                     }
                     connection.Close();
@@ -160,10 +171,21 @@ namespace SchoolManagementSystem.Views
         {
             course_combo_box.SelectedItem = "";
             course_combo_box.Text = "";
+            coursenametxt.Text = "";
+            examDatetxt.Text = "";
+            sectionnotxt.Text = "";
+            timetxt.Text = "";
+            roomNotxt.Text = "";
+            teachernametxt.Text = "";
+            txtcourseID.Text = "";
             course_details_groupbox.Visibility = Visibility.Hidden;
+        }
 
-
-
+        public bool notEmpty ()
+        {
+            if(course_combo_box.Text == "" )
+            { return false; }
+            else { return true; }
         }
 
         private void course_combo_box_DropDownClosed ( object sender, EventArgs e )
@@ -173,5 +195,29 @@ namespace SchoolManagementSystem.Views
 
 
         }
+
+        private void btnRemove_Click ( object sender, RoutedEventArgs e )
+        {
+            DataRowView dataRowView = (DataRowView)((Button)e.Source).DataContext;
+            String CourseCode = dataRowView[0].ToString();
+            String CourseName = dataRowView[1].ToString();
+
+            if (MessageBox.Show("Are You sure you want to delete : " + CourseCode + "\r\n" + CourseName + "?", "Course", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    table.DeleteTimeTable(UserViewModel.userSession.UserID, CourseCode);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    FillDataGrid();
+                }
+            }
+        }
+
     }
 }
