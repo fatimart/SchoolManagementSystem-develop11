@@ -122,10 +122,25 @@ namespace SchoolManagementSystem.ViewModels
             updateCourse.CourseCode = courseCode;
             updateCourse.Description = description;
             updateCourse.ExamDate = examDate;
-            //updateCourse.SectionID = sectionID;
             ty.SaveChanges();
 
         }
+
+        public void UpdateCourseV2 ( string courseName, string courseCode, string description, DateTime examDate )
+        {
+
+            Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
+            updateCourse.CourseName = courseName;
+            updateCourse.CourseCode = courseCode;
+            updateCourse.Description = description;
+            updateCourse.ExamDate = examDate;
+            ty.SaveChanges();
+            //MessageBox.Show("Courses have been updated");
+
+        }
+
+
+
 
         public void DeleteCourse(int courseID)
         {
@@ -170,41 +185,20 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public void try2file ( string courseName, string courseCode, string description, DateTime examDate )
-        {
-
-            if (CheckCourseCode(courseCode))
-            {
-                Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
-                updateCourse.CourseName = courseName;
-                updateCourse.CourseCode = courseCode;
-                updateCourse.Description = description;
-                updateCourse.ExamDate = examDate;
-                ty.SaveChanges();
-                MessageBox.Show("Courses have been updated");
-
-
-            }
-        }
-
         public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
         {
 
 
             if (ty.Courses.Any(o => o.CourseCode == courseCode))
             {
-                Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
-                updateCourse.CourseName = courseName;
-                updateCourse.CourseCode = courseCode;
-                updateCourse.Description = description;
-                updateCourse.ExamDate = examDate;
-                ty.SaveChanges();
-                MessageBox.Show("Courses have been updated");
+                UpdateCourseV2(courseName, courseCode, description, examDate);
+                //MessageBox.Show("Courses have been updated");
             }
+
             else
             {
                 AddCourse(courseName, courseCode, description, examDate);
-                MessageBox.Show("Courses have been inserted");
+                //MessageBox.Show("Courses have been inserted");
 
             }
         }

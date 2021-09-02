@@ -103,55 +103,6 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-
-        private void btnSave_Click ( object sender, RoutedEventArgs e )
-        {
-            try
-            {
-
-                string constr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtFileName.Text + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1;\"";
-                OleDbConnection Econ = new OleDbConnection(constr);
-
-                string Query = string.Format("Select * FROM [{0}]", "Sheet1$");
-                OleDbCommand Ecom = new OleDbCommand(Query, Econ);
-                Econ.Open();
-                DataSet ds = new DataSet();
-                OleDbDataAdapter oda = new OleDbDataAdapter(Query, Econ);
-                Econ.Close();
-                oda.Fill(ds);
-                DataTable Exceldt = ds.Tables[0];
-
-
-
-                //creating object of SqlBulkCopy 
-                string sqlconn = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-                SqlConnection con = new SqlConnection(sqlconn);
-
-                SqlBulkCopy objbulk = new SqlBulkCopy(con);
-                //assigning Destination table name      
-                objbulk.DestinationTableName = "Course";
-                //Mapping Table column    
-                objbulk.ColumnMappings.Add("CourseName", "CourseName");
-                objbulk.ColumnMappings.Add("CourseCode", "CourseCode");
-                objbulk.ColumnMappings.Add("Description", "Description");
-                objbulk.ColumnMappings.Add("ExamDate", "ExamDate");
-                //inserting Datatable Records to DataBase    
-                con.Open();
-                objbulk.WriteToServer(Exceldt);
-                con.Close();
-
-                MessageBox.Show("Courses have been inserted");
-                fillGrid();
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-
         //save data gridview to database
         private void savetry2_Click ( object sender, RoutedEventArgs e )
         {
@@ -179,32 +130,18 @@ namespace SchoolManagementSystem.Views
                     Description = o_dr[3].ToString();
                     ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
 
-
-                    //if (courseViewModel.CheckCourseCode(CourseCode))
-                    //{
-
-                        courseViewModel.UpdateCourse1(
-                                                        CourseName,
-                                                        CourseCode,
-                                                        Description,
-                                                        Convert.ToDateTime(ExamDate)
-                                                     );
-                       // MessageBox.Show("Courses have been updated");
-
-                   // }
-                   // else
-                    //{
-                     //   courseViewModel.AddCourse(
-                      //                              CourseName,
-                      //                              CourseCode,
-                      //                              Description,
-                       //                             Convert.ToDateTime(ExamDate)
-                        //                         );
-                        //MessageBox.Show("Courses have been inserted");
-                   // }
-                    //MessageBox.Show("Courses have been inserted");
-                    fillGrid();
+                    courseViewModel.UpdateCourse1(
+                                                    CourseName,
+                                                    CourseCode,
+                                                    Description,
+                                                    Convert.ToDateTime(ExamDate)
+                                                 );
                 }
+
+                MessageBox.Show("Data Have Been Updated!!");
+                fillGrid();
+
+                Econ.Close();
             }
             catch (Exception ex)
             {
@@ -212,16 +149,6 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-        private void savetry2_Click2 ( object sender, RoutedEventArgs e )
-        {
-
-        }
-
-        //fill datagridview with sql database data
-        private void Page_Loaded ( object sender, RoutedEventArgs e )
-        {
-            //fillGrid();
-        }
     }
 }
 
