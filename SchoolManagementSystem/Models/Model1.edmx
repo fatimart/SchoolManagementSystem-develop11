@@ -30,6 +30,7 @@
           <Property Name="SectionNum" Type="tinyint" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
           <Property Name="RoomID" Type="int" Nullable="false" />
+          <Property Name="Time" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -48,6 +49,14 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="Done" Type="bit" Nullable="false" />
           <Property Name="year" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeacherCourses">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="TimeTable">
           <Key>
             <PropertyRef Name="TimeTableID" />
@@ -64,7 +73,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
@@ -171,6 +180,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherCourses" EntityType="Self.TeacherCourses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeTable" EntityType="Self.TimeTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
@@ -237,6 +247,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="SectionNum" Type="Byte" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Section_Course" FromRole="Section" ToRole="Course" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Section_Room" FromRole="Section" ToRole="Room" />
         </EntityType>
@@ -253,6 +264,14 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="year" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_StudentGrade_Course" FromRole="StudentGrade" ToRole="Course" />
           <NavigationProperty Name="User" Relationship="Self.FK_StudentGrade_User" FromRole="StudentGrade" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="TeacherCours">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
@@ -274,7 +293,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -383,6 +402,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="Sections" EntityType="Self.Section" />
           <EntitySet Name="StudentGrades" EntityType="Self.StudentGrade" />
+          <EntitySet Name="TeacherCourses" EntityType="Self.TeacherCours" />
           <EntitySet Name="TimeTables" EntityType="Self.TimeTable" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Years" EntityType="Self.Year" />
@@ -447,6 +467,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
                 <ScalarProperty Name="SectionNum" ColumnName="SectionNum" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -460,6 +481,15 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
                 <ScalarProperty Name="Done" ColumnName="Done" />
                 <ScalarProperty Name="year" ColumnName="year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherCourses">
+            <EntityTypeMapping TypeName="SchoolMSModel.TeacherCours">
+              <MappingFragment StoreEntitySet="TeacherCourses">
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

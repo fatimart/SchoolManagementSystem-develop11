@@ -12,15 +12,10 @@ namespace SchoolManagementSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Section
+    public partial class TeacherCours
     {
-        public int SectionID { get; set; }
-        public byte SectionNum { get; set; }
-        public int CourseID { get; set; }
-        public int RoomID { get; set; }
-        public byte[] Time { get; set; }
-    
-        public virtual Course Course { get; set; }
-        public virtual Room Room { get; set; }
+        public int TID { get; set; }
+        public string TeacherName { get; set; }
+        public string CourseCode { get; set; }
     }
 }
