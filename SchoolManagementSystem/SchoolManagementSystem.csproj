@@ -16,7 +16,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -47,9 +47,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +64,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Z.Dapper.Plus, Version=4.0.11.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.Dapper.Plus.4.0.11\lib\net45\Z.Dapper.Plus.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -112,6 +117,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchoolMSDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolMSDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SchoolMSDataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CourseRegistrationViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
@@ -168,6 +178,12 @@
     </Compile>
     <Compile Include="Views\TimeTableScreen.xaml.cs">
       <DependentUpon>TimeTableScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UploadCourseScreen.xaml.cs">
+      <DependentUpon>UploadCourseScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\uploadcourseTry2.xaml.cs">
+      <DependentUpon>uploadcourseTry2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\YearScreen.xaml.cs">
       <DependentUpon>YearScreen.xaml</DependentUpon>
@@ -258,6 +274,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UploadCourseScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\uploadcourseTry2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\YearScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -281,6 +305,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="SchoolMSDataSet1.xsc">
+      <DependentUpon>SchoolMSDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SchoolMSDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SchoolMSDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SchoolMSDataSet1.xss">
+      <DependentUpon>SchoolMSDataSet1.xsd</DependentUpon>
+    </None>
     <Resource Include="Fonts\Roboto-Light.ttf" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

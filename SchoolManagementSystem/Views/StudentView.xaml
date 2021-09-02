@@ -16,10 +16,15 @@
             </TabItem>
 
             <TabItem Header="Courses">
-                <Frame Name="Courses" Source="StudentCourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Courses" Source="uploadcourseTry2.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
+            <TabItem Header="Courses">
+                <Frame Name="Course" Source="UploadCourseScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+            </TabItem>
 
+            
+            
         </TabControl>
     </Grid>
 
