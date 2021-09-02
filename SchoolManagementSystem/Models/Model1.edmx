@@ -70,6 +70,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="CourseName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SectionNo" Type="int" Nullable="false" />
+          <Property Name="Examdate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -153,18 +155,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TimeTable_TimeTable">
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="1" />
-          <End Role="TimeTable1" Type="Self.TimeTable" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TimeTable">
-              <PropertyRef Name="TimeTableID" />
-            </Principal>
-            <Dependent Role="TimeTable1">
-              <PropertyRef Name="TimeTableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TimeTable_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
@@ -205,10 +195,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <AssociationSet Name="FK_TimeTable_Course1" Association="Self.FK_TimeTable_Course1">
             <End Role="Course" EntitySet="Course" />
             <End Role="TimeTable" EntitySet="TimeTable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_TimeTable" Association="Self.FK_TimeTable_TimeTable">
-            <End Role="TimeTable" EntitySet="TimeTable" />
-            <End Role="TimeTable1" EntitySet="TimeTable" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Users" Association="Self.FK_TimeTable_Users">
             <End Role="Users" EntitySet="Users" />
@@ -288,9 +274,9 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SectionNo" Type="Int32" Nullable="false" />
+          <Property Name="Examdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_TimeTable_Course1" FromRole="TimeTable" ToRole="Course" />
-          <NavigationProperty Name="TimeTable1" Relationship="Self.FK_TimeTable_TimeTable" FromRole="TimeTable" ToRole="TimeTable1" />
-          <NavigationProperty Name="TimeTable2" Relationship="Self.FK_TimeTable_TimeTable" FromRole="TimeTable1" ToRole="TimeTable" />
           <NavigationProperty Name="User" Relationship="Self.FK_TimeTable_Users" FromRole="TimeTable" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
@@ -377,18 +363,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TimeTable_TimeTable">
-          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="1" />
-          <End Role="TimeTable1" Type="Self.TimeTable" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TimeTable">
-              <PropertyRef Name="TimeTableID" />
-            </Principal>
-            <Dependent Role="TimeTable1">
-              <PropertyRef Name="TimeTableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TimeTable_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
@@ -429,10 +403,6 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <AssociationSet Name="FK_StudentGrade_User" Association="Self.FK_StudentGrade_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_TimeTable" Association="Self.FK_TimeTable_TimeTable">
-            <End Role="TimeTable" EntitySet="TimeTables" />
-            <End Role="TimeTable1" EntitySet="TimeTables" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Users" Association="Self.FK_TimeTable_Users">
             <End Role="Users" EntitySet="Users" />
@@ -509,6 +479,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="SectionNo" ColumnName="SectionNo" />
+                <ScalarProperty Name="Examdate" ColumnName="Examdate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

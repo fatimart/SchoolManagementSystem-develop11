@@ -127,6 +127,32 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        public int SectionNo
+        {
+            get { return timeTable.SectionNo; }
+            set
+            {
+                if (timeTable.SectionNo != value)
+                {
+                    timeTable.SectionNo = value;
+                    OnPropertyChanged("SectionNo");
+                }
+            }
+        }
+
+        public DateTime Examdate
+        {
+            get { return timeTable.Examdate; }
+            set
+            {
+                if (timeTable.Examdate != value)
+                {
+                    timeTable.Examdate = value;
+                    OnPropertyChanged("Examdate");
+                }
+            }
+        }
+
         //MARK: used in course registration page
         public bool checkifRecordTableExsist ( string courseCode, int userID )
         {
@@ -149,7 +175,7 @@ namespace SchoolManagementSystem.ViewModels
            
         }
 
-        public void InsertTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName, string coursename, string time, string courseCode )
+        public void InsertTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName, string coursename, string time, string courseCode, int SectionNo, DateTime Examdate)
         {
             if (checkifRecordTableExsist(courseCode, userID))
             {
@@ -164,9 +190,10 @@ namespace SchoolManagementSystem.ViewModels
                     TTable.Year = YearID;
                     TTable.TeacherName = TeacherName;
                     TTable.CourseName = coursename;
-                    TTable.CourseCode = courseCode;
                     TTable.Time = time;
-
+                    TTable.CourseCode = courseCode;
+                    TTable.SectionNo = SectionNo;
+                    TTable.Examdate = Examdate;
 
                     ty.TimeTables.Add(TTable);
                     ty.SaveChanges();
@@ -175,7 +202,7 @@ namespace SchoolManagementSystem.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.InnerException.Message);
+                    MessageBox.Show("ERROR: " +ex.InnerException.Message);
                 }
             }
             else
@@ -187,8 +214,16 @@ namespace SchoolManagementSystem.ViewModels
         }
 
 
-        //MARK: Need to edit based on the updtaed database
 
+
+
+
+
+
+
+
+
+        //MARK: Need to edit based on the updtaed database
         public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename)
         {
 

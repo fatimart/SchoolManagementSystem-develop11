@@ -49,7 +49,9 @@ namespace SchoolManagementSystem.Views
                                     "techer name test",
                                     coursenametxt.Text.ToString(),
                                     timetxt.Text.ToString(),
-                                    course_combo_box.Text.ToString()
+                                    course_combo_box.Text.ToString(),
+                                    Convert.ToInt32(sectionnotxt.Text.ToString()),
+                                    Convert.ToDateTime(examDatetxt.Text.ToString())
                                    );
                 FillDataGrid();
 
@@ -73,7 +75,7 @@ namespace SchoolManagementSystem.Views
             using (SqlConnection connection = new SqlConnection(strcon))
             {
                 SqlCommand command = new SqlCommand(
-                     "select TimeTable.CourseCode,TimeTable.CourseName,Section.SectionNum,TimeTable.RoomNo, TimeTable.Time, Course.Examdate,TimeTable.TeacherName from TimeTable, Course, Section where Course.CourseID=TimeTable.CourseID AND Course.CourseID=Section.CourseID AND UserID='" + UserViewModel.userSession.UserID + "'", connection);
+                     "select TimeTable.CourseCode,TimeTable.CourseName,TimeTable.SectionNo,TimeTable.RoomNo, TimeTable.Time, Course.Examdate,TimeTable.TeacherName from TimeTable, Course, Section where Course.CourseID=TimeTable.CourseID AND Course.CourseID=Section.CourseID AND UserID='" + UserViewModel.userSession.UserID + "'", connection);
                 connection.Open();
 
                 SqlDataAdapter sda = new SqlDataAdapter(command);
@@ -178,7 +180,6 @@ namespace SchoolManagementSystem.Views
             roomNotxt.Text = "";
             teachernametxt.Text = "";
             txtcourseID.Text = "";
-            course_details_groupbox.Visibility = Visibility.Hidden;
         }
 
         public bool notEmpty ()

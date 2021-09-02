@@ -113,7 +113,7 @@
                 <DataGridTextColumn Header="Section No" Binding="{Binding Path='SectionNo'}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Time" Binding="{Binding Path='Time'}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Room" Binding="{Binding Path='RoomNo'}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Exam Date" Binding="{Binding Path='ExamDate'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Exam Date" Binding="{Binding Path='Examdate'}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Teacher Name" Binding="{Binding Path='TeacherName'}" IsReadOnly="True" />
 
                 <DataGridTemplateColumn Header="">
