@@ -115,10 +115,7 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-        private void course_combo_box_SelectionChanged ( object sender, SelectionChangedEventArgs e )
-        {
-          
-        }
+
 
 
         public void fillCourseDetails ()
@@ -173,5 +170,7 @@ namespace SchoolManagementSystem.Views
 
 
         }
+
+
     }
 }

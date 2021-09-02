@@ -16,7 +16,7 @@ namespace SchoolManagementSystem.Models
     public partial class SchoolMSEntities1 : DbContext
     {
         public SchoolMSEntities1()
-            : base("name=SchoolMSEntities1")
+            : base("name=SchoolMSEntities")
         {
         }
     
@@ -29,6 +29,7 @@ namespace SchoolManagementSystem.Models
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }
+        public virtual DbSet<TeacherCours> TeacherCourses { get; set; }
         public virtual DbSet<TimeTable> TimeTables { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Year> Years { get; set; }

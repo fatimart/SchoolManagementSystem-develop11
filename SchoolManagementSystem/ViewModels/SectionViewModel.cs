@@ -24,7 +24,7 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }
-        public byte SectionNum
+        public int SectionNum
         {
             get { return Section.SectionNum; }
             set

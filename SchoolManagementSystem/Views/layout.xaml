@@ -270,7 +270,7 @@
                         <ListViewItem.ToolTip>
 
                             <ToolTip x:Name="tt_contacts"
-                                         Content="Contacts"
+                                         Content="profile"
                                        />
 
                         </ListViewItem.ToolTip>
@@ -335,7 +335,7 @@
                         <ListViewItem.ToolTip>
 
                             <ToolTip x:Name="tt_maps"
-                                         Content="Maps"
+                                         Content="signOut"
                                          />
 
                         </ListViewItem.ToolTip>

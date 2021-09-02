@@ -20,7 +20,7 @@
                           Width="178"
                           Height="22"
                           DisplayMemberPath="CourseCode" 
-                          SelectionChanged="course_combo_box_SelectionChanged" DropDownClosed="course_combo_box_DropDownClosed">
+                         DropDownClosed="course_combo_box_DropDownClosed">
 
                     <ComboBox.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -87,10 +87,11 @@
                                    Text="{Binding ExamDate, Mode=OneWay}" 
                                    VerticalAlignment="Top"/>
 
-                        <TextBlock x:Name="teachernametxt" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="roomNotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" Text="{Binding RoomNo, Mode=OneWay}"  VerticalAlignment="Top"/>
-                        <TextBlock x:Name="timetxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="sectionnotxt" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+                        <TextBlock x:Name="teachernametxt" Text="Teacher1" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="roomNotxt" Text="{Binding RoomNo, Mode=OneWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="timetxt" Text="{Binding Time, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+                        <TextBlock x:Name="sectionnotxt" Text="{Binding SectionNum, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+                        <TextBlock x:Name="txtcourseID" Grid.Column="1" HorizontalAlignment="Left" Margin="177,22,0,0" TextWrapping="Wrap" Text="{Binding CourseID, Mode=OneWay}" VerticalAlignment="Top" RenderTransformOrigin="0.449,-1.062" Visibility="Hidden"/>
                     </Grid>
                 </GroupBox>
 
@@ -106,8 +107,8 @@
                   VerticalAlignment="Top"
                   Width="694">
 
-    
-            
+
+
         </DataGrid>
 
     </Grid>
