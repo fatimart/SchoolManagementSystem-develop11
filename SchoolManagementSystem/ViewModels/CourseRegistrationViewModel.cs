@@ -32,7 +32,7 @@ namespace SchoolManagementSystem.ViewModels
                 CourseCode = data.CourseCode,
                 Description = data.Description,
                 ExamDate = Convert.ToDateTime(data.ExamDate),
-                SectionID = data.SectionID
+                //SectionID = data.SectionID
 
         }));
             //return AllUsers;

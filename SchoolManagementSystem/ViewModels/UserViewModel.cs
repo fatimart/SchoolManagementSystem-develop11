@@ -258,12 +258,12 @@ namespace SchoolManagementSystem.ViewModels
                         //MessageBox.Show(userSession.UserName);
                         //  MessageBox.Show(Application.Current.Resources["UserName"].ToString());
                         //  MessageBox.Show(Usersession.UserName);
-                        MessageBox.Show(userSession.UserName);
-                        MessageBox.Show("edit" + UserViewModel.userSession.UserID.ToString());
+                        //MessageBox.Show(userSession.UserName);
+                        //MessageBox.Show("edit" + UserViewModel.userSession.UserID.ToString());
 
                         reader.Close();
                         //MessageBox.Show(userSession.UserName);
-                        MessageBox.Show( Application.Current.Resources["UserID"].ToString());
+                        //MessageBox.Show( Application.Current.Resources["UserID"].ToString());
 
                         reader.Close();
                         //MessageBox.Show( Application.Current.Resources["UserID"].ToString());

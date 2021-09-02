@@ -91,14 +91,14 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }
-        public int yearID
+        public int year
         {
-            get { return SGrades.yearID; }
+            get { return SGrades.year; }
             set
             {
-                if (SGrades.yearID != value)
+                if (SGrades.year != value)
                 {
-                    SGrades.yearID = value;
+                    SGrades.year = value;
                     OnPropertyChanged("yearID");
                 }
             }
@@ -113,7 +113,7 @@ namespace SchoolManagementSystem.ViewModels
             SGrade1.Score = Score;
             SGrade1.Attendance = Attendance;
             SGrade1.Done = Done;
-            SGrade1.yearID = yearID;
+            SGrade1.year = yearID;
 
             ty.StudentGrades.Add(SGrade1);
             ty.SaveChanges();
@@ -131,7 +131,7 @@ namespace SchoolManagementSystem.ViewModels
             updateSGrade.Score = Score;
             updateSGrade.Attendance = Attendance;
             updateSGrade.Done = Done;
-            updateSGrade.yearID = yearID;
+            updateSGrade.year = yearID;
             ty.SaveChanges();
 
         }

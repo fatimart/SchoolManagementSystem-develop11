@@ -20,10 +20,9 @@ namespace SchoolManagementSystem.Models
         public int Score { get; set; }
         public int Attendance { get; set; }
         public bool Done { get; set; }
-        public int yearID { get; set; }
+        public int year { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual User User { get; set; }
-        public virtual Year Year { get; set; }
     }
 }

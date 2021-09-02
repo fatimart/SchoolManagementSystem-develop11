@@ -43,7 +43,7 @@ namespace SchoolManagementSystem.Views
 
         }
 
-        private void logOut_Click ( object sender, RoutedEventArgs e )
+        /**private void logOut_Click ( object sender, RoutedEventArgs e )
         {
             User user = new User();
             UserViewModel.userSession = user;
@@ -53,7 +53,7 @@ namespace SchoolManagementSystem.Views
             LoginScreen dashboard = new LoginScreen();
             dashboard.Show();
             //this.Close();
-        }
+        }**/
 
         private void update_profile_Click ( object sender, RoutedEventArgs e )
         {
@@ -80,12 +80,7 @@ namespace SchoolManagementSystem.Views
                                );
         }
 
-        private void Button_Click ( object sender, RoutedEventArgs e )
-        {
-            //StudentsListScreen dashboard = new StudentsListScreen();
-            //dashboard.Show();
-        }
-
+        
         /**
             private void student_list_Click ( object sender, RoutedEventArgs e )
             {

@@ -12,18 +12,10 @@ namespace SchoolManagementSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class TeacherCours
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Room()
-        {
-            this.Sections = new HashSet<Section>();
-        }
-    
-        public int RoomID { get; set; }
-        public string RoomNum { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Section> Sections { get; set; }
+        public int TID { get; set; }
+        public string TeacherName { get; set; }
+        public string CourseCode { get; set; }
     }
 }

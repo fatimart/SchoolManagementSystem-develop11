@@ -1,0 +1,43 @@
+﻿<Page x:Class="SchoolManagementSystem.Views.AdminView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolManagementSystem.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="adminScreen" Height="515" Width="800" >
+
+    <Grid>
+        <TabControl>
+          
+            <TabItem Header="Courses Screen">
+                <Frame Name="course" Source="CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+
+            <TabItem Header="Room Screen">
+                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+            <TabItem Header="Section Screen">
+                <Frame Name="section" Source="SectionScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+            
+            <!--<TabItem Header="student Grade Screen">
+                <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>-->
+            <TabItem Header="Year Screen">
+                <Frame Name="Year" Source="YearScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+
+            <TabItem Header="Students List Screen">
+                <Frame Name="SList" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+            
+            <TabItem Header="Teacher List Screen">
+                <Frame Name="TList" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+
+</Page>

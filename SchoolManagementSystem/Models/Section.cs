@@ -14,20 +14,13 @@ namespace SchoolManagementSystem.Models
     
     public partial class Section
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Section()
-        {
-            this.TimeTables = new HashSet<TimeTable>();
-        }
-    
         public int SectionID { get; set; }
         public byte SectionNum { get; set; }
         public int CourseID { get; set; }
         public int RoomID { get; set; }
+        public byte[] Time { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Room Room { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTable> TimeTables { get; set; }
     }
 }

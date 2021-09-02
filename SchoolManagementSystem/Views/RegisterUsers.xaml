@@ -16,22 +16,22 @@
         <TabControl SelectedIndex="{Binding Mode=OneWay}">
 
             <TabItem Header=" Students">
-                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0"/>
+                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             <TabItem Header="Teachers">
-                <Frame Name="teachers" Source="TeacherListScreen.xaml" Margin="0,0,0,0"/>
+                <Frame Name="teachers" Source="TeacherListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Profile">
-                <Frame Name="Profile" Source="ProfileScreen.xaml" Margin="0,0,0,0"/>
+                <Frame Name="Profile" Source="ProfileScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             
             <TabItem Header="RoomScreen">
-                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0"/>
+                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="StudentGrade">
-                <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0"/>
+                <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
 

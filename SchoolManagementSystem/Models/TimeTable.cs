@@ -14,16 +14,17 @@ namespace SchoolManagementSystem.Models
     
     public partial class TimeTable
     {
+        public int UserID { get; set; }
         public int CourseID { get; set; }
-        public int SectionID { get; set; }
-        public int RoomID { get; set; }
-        public int YearID { get; set; }
+        public string RoomNo { get; set; }
+        public int Year { get; set; }
         public int TimeTableID { get; set; }
         public string TeacherName { get; set; }
+        public string CourseName { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual Section Section { get; set; }
-        public virtual Year Year { get; set; }
+        public virtual TimeTable TimeTable1 { get; set; }
+        public virtual TimeTable TimeTable2 { get; set; }
+        public virtual User User { get; set; }
     }
 }

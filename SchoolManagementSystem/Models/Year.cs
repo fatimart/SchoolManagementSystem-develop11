@@ -14,19 +14,7 @@ namespace SchoolManagementSystem.Models
     
     public partial class Year
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Year()
-        {
-            this.StudentGrades = new HashSet<StudentGrade>();
-            this.TimeTables = new HashSet<TimeTable>();
-        }
-    
         public int YearID { get; set; }
         public string YearNum { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentGrade> StudentGrades { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTable> TimeTables { get; set; }
     }
 }

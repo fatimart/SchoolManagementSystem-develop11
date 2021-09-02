@@ -86,7 +86,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
-        public int SectionID
+      /**  public int SectionID
         {
             get { return course.SectionID; }
             set
@@ -97,8 +97,8 @@ namespace SchoolManagementSystem.ViewModels
                     OnPropertyChanged("SectionID");
                 }
             }
-        }
-       public void AddCourse( string courseName, string courseCode, string description, DateTime examDate, int sectionID)
+        }**/
+       public void AddCourse( string courseName, string courseCode, string description, DateTime examDate)
         {
 
             Course course = new Course();
@@ -106,7 +106,7 @@ namespace SchoolManagementSystem.ViewModels
             course.CourseCode = courseCode;
             course.Description = description;
             course.ExamDate = examDate;
-            course.SectionID = sectionID;
+            //course.SectionID = sectionID;
 
             ty.Courses.Add(course);
             ty.SaveChanges();
@@ -114,7 +114,7 @@ namespace SchoolManagementSystem.ViewModels
         }
    
 
-        public void UpdateCourse(int courseID,string courseName, string courseCode, string description, DateTime examDate, int sectionID)
+        public void UpdateCourse(int courseID,string courseName, string courseCode, string description, DateTime examDate)
         {
      
             Course updateCourse = (from m in ty.Courses where m.CourseID == courseID select m).Single();
@@ -122,10 +122,25 @@ namespace SchoolManagementSystem.ViewModels
             updateCourse.CourseCode = courseCode;
             updateCourse.Description = description;
             updateCourse.ExamDate = examDate;
-            updateCourse.SectionID = sectionID;
             ty.SaveChanges();
 
         }
+
+        public void UpdateCourseV2 ( string courseName, string courseCode, string description, DateTime examDate )
+        {
+
+            Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
+            updateCourse.CourseName = courseName;
+            updateCourse.CourseCode = courseCode;
+            updateCourse.Description = description;
+            updateCourse.ExamDate = examDate;
+            ty.SaveChanges();
+            //MessageBox.Show("Courses have been updated");
+
+        }
+
+
+
 
         public void DeleteCourse(int courseID)
         {
@@ -140,7 +155,7 @@ namespace SchoolManagementSystem.ViewModels
         {
             try
             {
-               var CourseID= ty.Courses.Where(m => m.CourseID == courseID).Single();
+               var CourseID= ty.Courses.Where(m => m.CourseID == courseID).SingleOrDefault();
                 return true;
             }
             catch (Exception ex)
@@ -150,6 +165,45 @@ namespace SchoolManagementSystem.ViewModels
             return false;
 
         }
+
+
+        //MARK: Check by Course Code
+        public bool CheckCourseCode ( string courseCode )
+        {
+            try
+            {
+                var CourseCode1 = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
+                //if (CourseCode1 != null)
+                return true;
+               // else { return false; }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("check if code" + ex.Message);
+            }
+           return false;
+
+        }
+
+        public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
+        {
+
+
+            if (ty.Courses.Any(o => o.CourseCode == courseCode))
+            {
+                UpdateCourseV2(courseName, courseCode, description, examDate);
+                //MessageBox.Show("Courses have been updated");
+            }
+
+            else
+            {
+                AddCourse(courseName, courseCode, description, examDate);
+                //MessageBox.Show("Courses have been inserted");
+
+            }
+        }
+
+
         public void Clear()
         {
             CourseListScreen course = new CourseListScreen();
@@ -182,7 +236,7 @@ namespace SchoolManagementSystem.ViewModels
                 CourseCode = data.CourseCode,
                 Description = data.Description,
                 ExamDate = Convert.ToDateTime(data.ExamDate),
-                SectionID = data.SectionID
+                //SectionID = data.SectionID
 
             }));
             //return AllUsers;

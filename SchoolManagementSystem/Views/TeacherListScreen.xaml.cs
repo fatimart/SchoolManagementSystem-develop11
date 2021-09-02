@@ -24,7 +24,7 @@ namespace SchoolManagementSystem.Views
     public partial class TeacherListScreen : Page
     {
 
-        StudentListViewModel _userViewModel = new StudentListViewModel();
+        TeacherListViewModel _userViewModel = new TeacherListViewModel();
 
         public TeacherListScreen ()
         {

@@ -18,6 +18,7 @@ namespace SchoolManagementSystem.Models
         public User()
         {
             this.StudentGrades = new HashSet<StudentGrade>();
+            this.TimeTables = new HashSet<TimeTable>();
         }
     
         public int UserID { get; set; }
@@ -33,5 +34,7 @@ namespace SchoolManagementSystem.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentGrade> StudentGrades { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TimeTable> TimeTables { get; set; }
     }
 }

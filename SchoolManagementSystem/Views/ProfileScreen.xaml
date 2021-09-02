@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
         xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.ProfileScreen"
-        mc:Ignorable="d"
-        Title="ProfileScreen" Height="561" Width="536" Loaded="Window_Loaded">
+        mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
+        Title="ProfileScreen" Loaded="Window_Loaded">
 
 
     <Grid Margin="0,0,2,25">
@@ -14,7 +14,7 @@
             <RowDefinition Height="240*"/>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
-        <GroupBox x:Name="profileGroupBox" Background="#FFF9F9F9" HorizontalAlignment="Left" Height="438" Margin="26,44,0,0" VerticalAlignment="Top" Width="468">
+        <GroupBox x:Name="profileGroupBox" Background="#FFF9F9F9" HorizontalAlignment="Left" Height="454" Margin="26,28,0,0" VerticalAlignment="Top" Width="468">
             <GroupBox.Header>
                 Profile
             </GroupBox.Header>
@@ -27,9 +27,8 @@
                     <ColumnDefinition Width="243*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock HorizontalAlignment="Left" Margin="43,44,0,0" TextWrapping="Wrap" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" FontSize="20" Width="98" Grid.Column="2"/>
-                <Button x:Name="logOut" Content="LogOut" Grid.Column="3" HorizontalAlignment="Left" Margin="174,-37,0,0" VerticalAlignment="Top" Width="61" Height="21" Click="logOut_Click"/>
 
-                <Grid x:Name="grid1" VerticalAlignment="Top" Margin="0,96,0,0" HorizontalAlignment="Left"  Width="425" Height="305" Grid.ColumnSpan="3" Grid.Column="1">
+                <Grid x:Name="grid1" VerticalAlignment="Top" Margin="0,96,0,-28" HorizontalAlignment="Left"  Width="425" Height="344" Grid.ColumnSpan="3" Grid.Column="1">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -68,13 +67,11 @@
 
                     <Label x:Name="old_pass_label" Content="New Password:" Grid.Column="1" HorizontalAlignment="Left" Margin="140,26,0,0" Grid.Row="9" VerticalAlignment="Top" Width="94"/>
                     <TextBox x:Name="txtnewPass" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="234,26,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
-                    <Image x:Name="userImg" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="236,-76,0,0" VerticalAlignment="Top" Width="100" Source="Imgs/generaluser.png" Stretch="Fill" OpacityMask="#FF131111"/>
                     <Button x:Name="update_profile" Content="UPDATE" Grid.Column="1" HorizontalAlignment="Left" Margin="101,91,0,0" Grid.Row="9" VerticalAlignment="Top" Width="76" Height="22" Click="update_profile_Click"/>
 
                 </Grid>
             </Grid>
         </GroupBox>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="350,24,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
     </Grid>
 
 

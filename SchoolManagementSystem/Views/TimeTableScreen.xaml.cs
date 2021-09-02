@@ -44,12 +44,13 @@ namespace SchoolManagementSystem.Views
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
             //add
-            TimeTable.AddTimeTable(Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(sectionIDTextBox.Text), Convert.ToInt32(roomIDTextBox.Text), Convert.ToInt32(yearIDTextBox.Text), teacherNameTextBox.Text.Trim());
+            //TimeTable.AddTimeTable(Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(sectionIDTextBox.Text), Convert.ToInt32(roomIDTextBox.Text), Convert.ToInt32(yearIDTextBox.Text), teacherNameTextBox.Text.Trim());
             Load();
         }
 
         private void Button_Click3(object sender, RoutedEventArgs e)
         {
+            /**
             if (TimeTable.CheckTimeTableID(Convert.ToInt32(timeTableIDTextBox.Text)))
             {
                 TimeTable.UpdateTimeTable(Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(sectionIDTextBox.Text), Convert.ToInt32(roomIDTextBox.Text), Convert.ToInt32(yearIDTextBox.Text), Convert.ToInt32(timeTableIDTextBox.Text), teacherNameTextBox.Text.Trim());
@@ -61,6 +62,7 @@ namespace SchoolManagementSystem.Views
             {
                 MessageBox.Show("ID not existed");
             }
+            **/
           
         }
 

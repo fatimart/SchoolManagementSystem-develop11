@@ -27,7 +27,6 @@ namespace SchoolManagementSystem.Models
         public string CourseCode { get; set; }
         public string Description { get; set; }
         public System.DateTime ExamDate { get; set; }
-        public int SectionID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Section> Sections { get; set; }

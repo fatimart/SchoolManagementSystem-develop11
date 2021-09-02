@@ -9,8 +9,8 @@
         xmlns:Views="clr-namespace:SchoolManagementSystem.Views"
         mc:Ignorable="d"
                 Title="MainWindow" 
-        Height="600" 
-        Width="800"
+        Height="800" 
+        Width="1000"
         Topmost="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"   Loaded="Window_Loaded_1">
@@ -246,7 +246,7 @@
 
                         <StackPanel Orientation="Horizontal"
                                         Width="230">
-                            <Button  Click="Button_Click3">
+                            <Button x:Name="homeButton"  Click="Home_Click">
                                 <Image Source="/Assets/img_home.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
@@ -277,15 +277,15 @@
 
                         <StackPanel Orientation="Horizontal"
                                         Width="230">
-                            <!--add an exit button-->
-                            <Button  Click="Button_Click3">
+                            <!--profile button-->
+                            <Button  Click="Button_Click2">
 
                                 <Image x:Name="profile" Source="/Assets/img_contact.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
                             </Button>
 
-                            <TextBlock Text="Contacts"
+                            <TextBlock Text="Profile"
                                            Margin="25,0,0,0"
                                           FontFamily="open sans condensed"/>
 
@@ -319,7 +319,7 @@
                             <TextBlock Text="Messages"
                                            Margin="25,0,0,0"
                                          FontFamily="open sans condensed" />
-                           
+
                         </StackPanel>
 
                     </ListViewItem>
@@ -340,16 +340,20 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <StackPanel x:Name="logout_pink_button" Orientation="Horizontal"
                                         Width="230">
 
-                            <Image Source="/Assets/img_map.png"
+                            <!--add logout button-->
+                            <Button  Click="Button_Click3">
+
+                                <Image Source="/Assets/img_signout.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
-                            <TextBlock Text="Maps"
+                            </Button>
+                            <TextBlock Text="Sign Out"
                                            Margin="25,0,0,0"
-                                         FontFamily="open sans condensed"  />
+                                     FontFamily="open sans condensed"     />
 
                         </StackPanel>
 
@@ -371,7 +375,7 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <!--<StackPanel Orientation="Horizontal"
                                         Width="230">
 
                             <Image Source="/Assets/img_setting.png"
@@ -382,11 +386,10 @@
                                            Margin="25,0,0,0"
                                          FontFamily="open sans condensed"  />
 
-                        </StackPanel>
+                        </StackPanel>-->
 
                     </ListViewItem>
 
-                    <!--// Sign Out //-->
 
                     <ListViewItem HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter"
@@ -402,18 +405,7 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
-                                        Width="230">
 
-                            <Image Source="/Assets/img_signout.png"
-                                       Stretch="None"
-                                       Margin="12,0,0,0"/>
-
-                            <TextBlock Text="Sign Out"
-                                           Margin="25,0,0,0"
-                                     FontFamily="open sans condensed"     />
-
-                        </StackPanel>
 
                     </ListViewItem>
 
@@ -427,7 +419,7 @@
         <Grid Height="80"
                   VerticalAlignment="Bottom"
                   Background="#233C4F"/>
-        <Frame  HorizontalAlignment="Left" Height="422" Margin="70,85,0,0" VerticalAlignment="Top" Width="722" Name="pages" Navigated="pages_Navigated" />
+        <Frame  HorizontalAlignment="Left" Height="Auto" Margin="70,85,0,0" VerticalAlignment="Top" Width="Auto" Name="pages" Navigated="pages_Navigated" NavigationUIVisibility="Hidden" />
 
 
     </Grid>
