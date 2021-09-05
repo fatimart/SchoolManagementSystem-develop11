@@ -1,4 +1,5 @@
-﻿using SchoolManagementSystem.ViewModels;
+﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,6 +30,7 @@ namespace SchoolManagementSystem.Views.StudentViews
         {
             InitializeComponent();
             DataContext = tablet;
+            fillCourseBox();
         }
 
         private void Register_Click ( object sender, RoutedEventArgs e )
@@ -94,6 +96,34 @@ namespace SchoolManagementSystem.Views.StudentViews
                 }
             }
         }
+
+        public void fillCourseBox ()
+        {
+            try
+            {
+                course_combo_box.Items.Clear();
+
+                foreach (var item in tablet.AllCourses)
+                {
+                    course_combo_box.ItemsSource = item.CourseCode.ToString();
+                   
+                    //MessageBox.Show(item.CourseCode);
+
+                }
+                course_combo_box.SelectedIndex = -1;
+                course_combo_box.DisplayMemberPath = "CourseCode";
+                course_combo_box.SelectedValuePath = "CourseCode";
+
+
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
 
         public bool notEmpty ()
         {

@@ -23,7 +23,9 @@
                           Width="178"
                           Height="22"
                           DisplayMemberPath="CourseCode" 
-                          DropDownClosed="course_combo_box_DropDownClosed">
+                          DropDownClosed="course_combo_box_DropDownClosed"
+                          SelectedItem="{Binding Path=CourseCode}"
+                          >
 
                     <ComboBox.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
