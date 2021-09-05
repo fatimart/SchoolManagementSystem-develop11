@@ -24,7 +24,7 @@
             </TabItem>
 
             <TabItem Header="Courses">
-                <Frame Name="Course" Source="UploadCourseScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Course" Source="AdminViews/UploadCourseScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             

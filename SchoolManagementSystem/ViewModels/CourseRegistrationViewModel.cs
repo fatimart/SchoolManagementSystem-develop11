@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,8 +60,8 @@ namespace SchoolManagementSystem.ViewModels
 
         public List<TimeTable> GetAll1 ()
         {
-            return ty.TimeTables.ToList();
+            return ty.TimeTables.Where(m => m.UserID == UserViewModel.userSession.UserID).ToList();
         }
-
+        
     }
 }

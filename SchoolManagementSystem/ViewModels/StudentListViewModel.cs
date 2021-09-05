@@ -125,7 +125,7 @@ namespace SchoolManagementSystem.ViewModels
 
         public string ContactNo
         {
-            get { return _Password; }
+            get { return _ContactNo; }
             set
             {
                 _ContactNo = value;

@@ -24,7 +24,7 @@
                           Height="22"
                           DisplayMemberPath="CourseCode" 
                           DropDownClosed="course_combo_box_DropDownClosed"
-                          SelectedItem="{Binding Path=CourseCode}"
+                          ItemsSource="{Binding CourseCode}"
                           >
 
                     <ComboBox.Background>
@@ -118,10 +118,21 @@
                 <DataGridTemplateColumn Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding Path=TimeTableID}"
+                                        Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor,
+                                                AncestorType=Window}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Button x:Name="btnRemove" Content="Remove" Click="btnRemove_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

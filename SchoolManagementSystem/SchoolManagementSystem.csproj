@@ -186,7 +186,7 @@
     <Compile Include="Views\TimeTableScreen.xaml.cs">
       <DependentUpon>TimeTableScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UploadCourseScreen.xaml.cs">
+    <Compile Include="Views\AdminViews\UploadCourseScreen.xaml.cs">
       <DependentUpon>UploadCourseScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\YearScreen.xaml.cs">
@@ -282,7 +282,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UploadCourseScreen.xaml">
+    <Page Include="Views\AdminViews\UploadCourseScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -381,6 +381,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\TeacherViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

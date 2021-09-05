@@ -25,12 +25,15 @@ namespace SchoolManagementSystem.Views.StudentViews
     {
         TimeTableViewModel table = new TimeTableViewModel();
         CourseRegistrationViewModel tablet = new CourseRegistrationViewModel();
+        CourseViewModel _course = new CourseViewModel();
 
         public StudentCoursesListScreen ()
         {
             InitializeComponent();
-            DataContext = tablet;
+            this.DataContext = tablet;
+
             fillCourseBox();
+            fillCourseDetails();
         }
 
         private void Register_Click ( object sender, RoutedEventArgs e )
@@ -97,6 +100,39 @@ namespace SchoolManagementSystem.Views.StudentViews
             }
         }
 
+        //MARK: to fill the course detail group box with the selected course code
+        public void fillCourseDetails ()
+        {
+            try
+            {
+                foreach (var item in _course.getCourseDetails())
+                {
+                    foreach (var item1 in tablet.AllCourses)
+                    {
+                        if (item.CourseCode == item1.CourseCode)
+                        {
+                            coursenametxt.Text = item.CourseName.ToString();
+                            coursenametxt.Text = item.CourseCode.ToString();
+                            examDatetxt.Text = item.ExamDate.ToString();
+                            sectionnotxt.Text = item1.SectionNo.ToString();
+                            //timetxt.Text = dt.Rows[0]["Time"].ToString();
+                            //roomNotxt.Text = dt.Rows[0]["RoomNum"].ToString();
+                            //teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
+                            txtcourseID.Text = item.CourseID.ToString();
+                        }
+                    }
+                }
+            }
+            
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
+
         public void fillCourseBox ()
         {
             try
@@ -106,8 +142,8 @@ namespace SchoolManagementSystem.Views.StudentViews
                 foreach (var item in tablet.AllCourses)
                 {
                     course_combo_box.ItemsSource = item.CourseCode.ToString();
-                   
-                    //MessageBox.Show(item.CourseCode);
+                    MessageBox.Show(item.CourseCode);
+
 
                 }
                 course_combo_box.SelectedIndex = -1;

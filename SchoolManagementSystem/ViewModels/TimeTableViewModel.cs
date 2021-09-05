@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SchoolManagementSystem.ViewModels
 {
@@ -250,6 +251,18 @@ namespace SchoolManagementSystem.ViewModels
 
             }));
 
+        }
+
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                    _deleteCommand = new RelayCommand(param => DeleteTimeTable((int)param), null);
+
+                return _deleteCommand;
+            }
         }
 
 

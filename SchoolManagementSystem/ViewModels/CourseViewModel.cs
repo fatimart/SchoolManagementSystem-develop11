@@ -3,6 +3,8 @@ using SchoolManagementSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,74 +32,64 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        private int _CourseID;
         public int CourseID
         {
-            get { return course.CourseID; }
-            set { course.CourseID = value; }
-        } 
+            get { return _CourseID; }
+            set { _CourseID = value; }
+        }
 
+        private string _CourseName;
         public string CourseName
         {
-            get { return course.CourseName; }
+            get { return _CourseName; }
             set
             {
-                if (course.CourseName != value)
-                {
-                    course.CourseName = value;
+               
+                    _CourseName = value;
                     OnPropertyChanged("CourseName");
-                }
+                
             }
         }
+
+        private string _CourseCode;
         public string CourseCode
         {
-            get { return course.CourseCode; }
+            get { return _CourseCode; }
             set
             {
-                if (course.CourseCode != value)
-                {
-                    course.CourseCode = value;
+                _CourseCode = value;
                     OnPropertyChanged("CourseCode");
-                }
+                
             }
         }
 
+
+        private string _Description;
         public string Description
         {
-            get { return course.Description; }
+            get { return _Description; }
             set
             {
-                if (course.Description != value)
-                {
-                    course.Description = value;
+
+                _Description = value;
                     OnPropertyChanged("Description");
-                }
-            }
-        }
-        public DateTime ExamDate
-        {
-            get { return course.ExamDate; }
-            set
-            {
-                if (course.ExamDate != value)
-                {
-                    course.ExamDate = value;
-                    OnPropertyChanged("ExamDate");
-                }
+                
             }
         }
 
-      /**  public int SectionID
+        private DateTime _ExamDate;
+        public DateTime ExamDate
         {
-            get { return course.SectionID; }
+            get { return _ExamDate; }
             set
             {
-                if (course.SectionID != value)
-                {
-                    course.SectionID = value;
-                    OnPropertyChanged("SectionID");
-                }
+                _ExamDate = value;
+                    OnPropertyChanged("ExamDate");
+                
             }
-        }**/
+        }
+
 
        public void AddCourse( string courseName, string courseCode, string description, DateTime examDate)
         {
@@ -242,6 +234,39 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
+        //MARK: Get all courses details for time table
 
+        public List<Course> getCourseDetails ()
+        {
+            List<Course> courses = new List<Course>();
+            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(strcon))
+            {
+                SqlCommand command = new SqlCommand(
+                  "SELECT * FROM Course;",
+                  connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        courses.Add(new Course
+                        {
+                            CourseID = Convert.ToInt32(reader["CourseID"]),
+                            CourseName = reader["CourseName"].ToString(),
+                            CourseCode = reader["CourseCode"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            ExamDate = Convert.ToDateTime(reader["ExamDate"])
+                        });
+                    }
+                }
+                reader.Close();
+            }
+            return courses;
+
+        }
     }
 }

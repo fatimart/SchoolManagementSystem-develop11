@@ -13,17 +13,16 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public Year year;
 
-     
+
+        private string _YearNum;
         public string YearNum
         {
-            get { return year.YearNum; }
+            get { return _YearNum; }
             set
             {
-                if (year.YearNum != value)
-                {
-                    year.YearNum = value;
+                _YearNum = value;
                     OnPropertyChanged("YearNum");
-                }
+                
             }
         }
          public int YearID
