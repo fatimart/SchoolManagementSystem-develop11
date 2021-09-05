@@ -166,13 +166,13 @@ namespace SchoolManagementSystem.ViewModels
 
 
 
-        /**public StudentListViewModel ()
+        public StudentListViewModel ()
         {
 
-            GetAll();
-            AllUsers = new ObservableCollection<User>();
+            //GetAll();
+            //AllUsers = new ObservableCollection<User>();
 
-        }**/
+        }
 
         public User Get ( int id )
         {
