@@ -30,7 +30,7 @@ namespace SchoolManagementSystem.Views
         public StudentsListScreen ()
         {
             InitializeComponent();
-            //DataContext = _userViewModel;
+            DataContext = _userViewModel;
 
             FillDataGrid();
         }

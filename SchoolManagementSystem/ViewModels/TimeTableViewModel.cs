@@ -15,7 +15,6 @@ namespace SchoolManagementSystem.ViewModels
         public TimeTable timeTable;
 
         private ObservableCollection<TimeTable> _courseRecords;
-
         public ObservableCollection<TimeTable> AllCourses
         {
             get
@@ -29,143 +28,139 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        private int _UserID;
         public int UserID
        {
-           get { return timeTable.UserID; }
+           get { return _UserID; }
            set
            {
-               if (timeTable.UserID != value)
-               {
-                   timeTable.UserID = value;
+               _UserID = value;
                    OnPropertyChanged("UserID");
-               }
+               
            }
        }
 
+        private int _CourseID;
         public int CourseID
         {
-            get { return timeTable.CourseID; }
+            get { return _CourseID; }
             set
             {
-                if (timeTable.CourseID != value)
-                {
-                    timeTable.CourseID = value;
+                
+                    _CourseID = value;
                     OnPropertyChanged("CourseID");
-                }
+                
             }
         }
-       
+
+        private string _RoomNo;
         public string RoomNo
         {
-            get { return timeTable.RoomNo; }
+            get { return _RoomNo; }
             set
             {
-                if (timeTable.RoomNo != value)
-                {
-                    timeTable.RoomNo = value;
+                
+                    _RoomNo = value;
                     OnPropertyChanged("RoomID");
-                }
+                
             }
         }
+
+        private int _Year;
+
         public int Year
         {
-            get { return timeTable.Year; }
+            get { return _Year; }
             set
             {
-                if (timeTable.Year != value)
-                {
-                    timeTable.Year = value;
+               _Year = value;
                     OnPropertyChanged("Year");
-                }
+                
             }
         }
+
+        private int _TimeTableID;
         public int TimeTableID
         {
-            get { return timeTable.TimeTableID; }
+            get { return _TimeTableID; }
             set
             {
-                if (timeTable.TimeTableID != value)
-                {
-                    timeTable.TimeTableID = value;
+                _TimeTableID = value;
                     OnPropertyChanged("TimeTableID");
-                }
+                
             }
         }
+
+        private string _TeacherName;
         public string TeacherName
         {
-            get { return timeTable.TeacherName; }
+            get { return _TeacherName; }
             set
             {
-                if (timeTable.TeacherName != value)
-                {
-                    timeTable.TeacherName = value;
+                _TeacherName = value;
                     OnPropertyChanged("TeacherName");
-                }
+                
             }
         }
 
+        private string _CourseName;
         public string CourseName
         {
-            get { return timeTable.CourseName; }
+            get { return _CourseName; }
             set
             {
-                if (timeTable.CourseName != value)
-                {
-                    timeTable.CourseName = value;
+
+                _CourseName = value;
                     OnPropertyChanged("CourseName");
-                }
+                
             }
         }
 
+        private string _CourseCode;
         public string CourseCode
         {
-            get { return timeTable.CourseCode; }
+            get { return _CourseCode; }
             set
             {
-                if (timeTable.CourseCode != value)
-                {
-                    timeTable.CourseCode = value;
+               _CourseCode = value;
                     OnPropertyChanged("CourseCode");
-                }
+                
             }
         }
 
+        private string _Time;
         public string Time
         {
-            get { return timeTable.Time; }
+            get { return _Time; }
             set
             {
-                if (timeTable.Time != value)
-                {
-                    timeTable.Time = value;
+                _Time = value;
                     OnPropertyChanged("Time");
-                }
+                
             }
         }
 
+        private int _SectionNo;
         public int SectionNo
         {
-            get { return timeTable.SectionNo; }
+            get { return _SectionNo; }
             set
             {
-                if (timeTable.SectionNo != value)
-                {
-                    timeTable.SectionNo = value;
-                    OnPropertyChanged("SectionNo");
-                }
+                _SectionNo = value;
+                OnPropertyChanged("SectionNo");
+                
             }
         }
 
+        private DateTime _Examdate;
         public DateTime Examdate
         {
-            get { return timeTable.Examdate; }
+            get { return _Examdate; }
             set
             {
-                if (timeTable.Examdate != value)
-                {
-                    timeTable.Examdate = value;
+                _Examdate = value;
                     OnPropertyChanged("Examdate");
-                }
+                
             }
         }
 

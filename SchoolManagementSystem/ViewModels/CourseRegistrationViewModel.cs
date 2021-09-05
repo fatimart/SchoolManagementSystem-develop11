@@ -9,23 +9,35 @@ using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
-    public class CourseRegistrationViewModel
+     class CourseRegistrationViewModel : ViewModelBase
     {
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
 
-        private TimeTableViewModel courseRecord;
-
-        public CourseRegistrationViewModel()
+        private ObservableCollection<TimeTable> _courseRecords;
+        public ObservableCollection<TimeTable> AllCourses
         {
-            //GetAll();
-
-
+            get
+            {
+                return _courseRecords;
+            }
+            set
+            {
+                _courseRecords = value;
+                OnPropertyChanged("AllCourses");
+            }
         }
+
+        public CourseRegistrationViewModel ()
+        {
+            GetAll();
+        }
+
+   
 
         public void GetAll ()
         {
-            courseRecord.AllCourses = new ObservableCollection<TimeTable>();
-            courseRecord.GetAll1().ForEach(data => courseRecord.AllCourses.Add(new TimeTable()
+            AllCourses = new ObservableCollection<TimeTable>();
+            GetAll1().ForEach(data => AllCourses.Add(new TimeTable()
             {
 
                 UserID = Convert.ToInt32(data.UserID),
@@ -41,10 +53,12 @@ namespace SchoolManagementSystem.ViewModels
 
             }));
 
-            MessageBox.Show("show");
-
         }
 
+        public List<TimeTable> GetAll1 ()
+        {
+            return ty.TimeTables.ToList();
+        }
 
     }
 }

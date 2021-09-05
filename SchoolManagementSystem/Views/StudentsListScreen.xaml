@@ -77,7 +77,7 @@
 
 
 
-            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllUsers, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="5" SelectionChanged="usersDataGrid_SelectionChanged" Margin="11,0,37,113" Height="447" VerticalAlignment="Bottom">
+            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllUsers}"   AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="5" SelectionChanged="usersDataGrid_SelectionChanged" Margin="11,0,37,113" Height="447" VerticalAlignment="Bottom">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="userIDColumn" Binding="{Binding UserID, UpdateSourceTrigger=PropertyChanged}" Header="User ID" IsReadOnly="True" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="userNameColumn" Binding="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Header="User Name" Width="SizeToHeader"/>
