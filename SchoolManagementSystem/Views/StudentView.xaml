@@ -14,9 +14,13 @@
             <TabItem Header=" Schedule">
                 <Frame Name="Schedule" Source="CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
+            
+            <TabItem Header=" Schedule">
+                <Frame Name="st" Source=" StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+            </TabItem>
 
             <TabItem Header="Courses">
-                <Frame Name="Courses" Source="uploadcourseTry2.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Courses" Source="StudentViews/StudentCoursesListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Courses">

@@ -166,12 +166,13 @@ namespace SchoolManagementSystem.ViewModels
 
 
 
-        public StudentListViewModel ()
+        /**public StudentListViewModel ()
         {
 
             GetAll();
+            AllUsers = new ObservableCollection<User>();
 
-        }
+        }**/
 
         public User Get ( int id )
         {
@@ -202,7 +203,6 @@ namespace SchoolManagementSystem.ViewModels
                 ContactNo = data.ContactNo
 
             }));
-            //return AllUsers;
 
         }
 

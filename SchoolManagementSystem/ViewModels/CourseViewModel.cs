@@ -98,17 +98,17 @@ namespace SchoolManagementSystem.ViewModels
                 }
             }
         }**/
+
        public void AddCourse( string courseName, string courseCode, string description, DateTime examDate)
         {
 
-            Course course = new Course();
-            course.CourseName = courseName;
-            course.CourseCode = courseCode;
-            course.Description = description;
-            course.ExamDate = examDate;
-            //course.SectionID = sectionID;
+            Course course1 = new Course();
+            course1.CourseName = courseName;
+            course1.CourseCode = courseCode;
+            course1.Description = description;
+            course1.ExamDate = examDate;
 
-            ty.Courses.Add(course);
+            ty.Courses.Add(course1);
             ty.SaveChanges();
    
         }
@@ -126,6 +126,7 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
+        //MARK: Update by course code 
         public void UpdateCourseV2 ( string courseName, string courseCode, string description, DateTime examDate )
         {
 
@@ -236,10 +237,8 @@ namespace SchoolManagementSystem.ViewModels
                 CourseCode = data.CourseCode,
                 Description = data.Description,
                 ExamDate = Convert.ToDateTime(data.ExamDate),
-                //SectionID = data.SectionID
 
             }));
-            //return AllUsers;
 
         }
 

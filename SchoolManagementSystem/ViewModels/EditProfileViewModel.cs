@@ -46,7 +46,6 @@ namespace SchoolManagementSystem.ViewModels
                         };
                     }
                 }
-                //MessageBox.Show("edit" + UserViewModel.userSession.UserID.ToString());
                 reader.Close();
             }
 

@@ -1,6 +1,7 @@
 ﻿using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,22 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public TimeTable timeTable;
 
-       public int UserID
+        private ObservableCollection<TimeTable> _courseRecords;
+
+        public ObservableCollection<TimeTable> AllCourses
+        {
+            get
+            {
+                return _courseRecords;
+            }
+            set
+            {
+                _courseRecords = value;
+                OnPropertyChanged("AllCourses");
+            }
+        }
+
+        public int UserID
        {
            get { return timeTable.UserID; }
            set
@@ -59,7 +75,7 @@ namespace SchoolManagementSystem.ViewModels
                 if (timeTable.Year != value)
                 {
                     timeTable.Year = value;
-                    OnPropertyChanged("YearID");
+                    OnPropertyChanged("Year");
                 }
             }
         }
@@ -202,7 +218,7 @@ namespace SchoolManagementSystem.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR: " +ex.InnerException.Message);
+                    MessageBox.Show("ERROR: " +ex.Message);
                 }
             }
             else
@@ -213,13 +229,33 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
+        public List<TimeTable> GetAll1 ()
+        {
+            return ty.TimeTables.ToList();
+        }
 
+        
 
+        public void GetAll ()
+        {
+            AllCourses = new ObservableCollection<TimeTable>();
+            GetAll1().ForEach(data => AllCourses.Add(new TimeTable()
+            {
 
+                UserID = Convert.ToInt32(data.UserID),
+                CourseID = Convert.ToInt32(data.CourseID),
+                RoomNo = data.RoomNo,
+                Year = data.Year,
+                TeacherName = data.TeacherName,
+                CourseName = data.CourseName,
+                Time = data.Time,
+                CourseCode = data.CourseCode,
+                SectionNo = data.SectionNo,
+                Examdate = Convert.ToDateTime(data.Examdate)
 
+            }));
 
-
-
+        }
 
 
 

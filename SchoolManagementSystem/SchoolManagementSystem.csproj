@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAccess\myConnection.cs" />
     <Compile Include="EventRaiser.cs" />
     <Compile Include="Models\Course.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -167,6 +168,9 @@
     <Compile Include="Views\StudentView.xaml.cs">
       <DependentUpon>StudentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StudentViews\StudentCoursesListScreen.xaml.cs">
+      <DependentUpon>StudentCoursesListScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TeacherListScreen.xaml.cs">
       <DependentUpon>TeacherListScreen.xaml</DependentUpon>
     </Compile>
@@ -184,9 +188,6 @@
     </Compile>
     <Compile Include="Views\UploadCourseScreen.xaml.cs">
       <DependentUpon>UploadCourseScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\uploadcourseTry2.xaml.cs">
-      <DependentUpon>uploadcourseTry2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\YearScreen.xaml.cs">
       <DependentUpon>YearScreen.xaml</DependentUpon>
@@ -257,6 +258,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StudentViews\StudentCoursesListScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TeacherListScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -278,10 +283,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UploadCourseScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\uploadcourseTry2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

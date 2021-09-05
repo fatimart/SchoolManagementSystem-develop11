@@ -10,6 +10,8 @@
     <Page.Resources>
         <SchoolManagementSystem:SchoolMSDataSet x:Key="schoolMSDataSet"/>
         <CollectionViewSource x:Key="courseViewSource" Source="{Binding Course, Source={StaticResource schoolMSDataSet}}"/>
+        <SchoolManagementSystem:SchoolMSDataSet1 x:Key="schoolMSDataSet1"/>
+        <CollectionViewSource x:Key="courseViewSource1" Source="{Binding Course, Source={StaticResource schoolMSDataSet1}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource courseViewSource}">
         <Grid.ColumnDefinitions>

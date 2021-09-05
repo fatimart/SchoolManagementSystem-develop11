@@ -23,7 +23,6 @@ namespace SchoolManagementSystem.Views
     /// </summary>
     public partial class CourseRegistrationScreen : Page
     {
-        CourseViewModel course = new CourseViewModel();
         TimeTableViewModel table = new TimeTableViewModel();
 
         public CourseRegistrationScreen ()
@@ -43,7 +42,7 @@ namespace SchoolManagementSystem.Views
 
                 table.InsertTimeTable(
                                     Convert.ToInt32(UserViewModel.userSession.UserID),
-                                    Convert.ToInt32(txtcourseID.Text.ToString()),
+                                    Convert.ToInt32(txtcourseID.Text),
                                     roomNotxt.Text.ToString(),
                                     2021,
                                     "techer name test",
@@ -62,10 +61,6 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-        private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
-        {
-            //table.DeleteTimeTable(Convert.ToInt32(userIDTextBox.Text.Trim()));
-        }
 
         private void FillDataGrid ()
 
@@ -92,7 +87,6 @@ namespace SchoolManagementSystem.Views
         }
 
       
-
         public void fillCourseBox ()
         {
             try

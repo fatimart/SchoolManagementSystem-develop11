@@ -34,26 +34,7 @@ namespace SchoolManagementSystem.Views
         {
             string type = UserViewModel.userSession.Type.ToString();
 
-            /**if (type == "Admin" || type == "Admin")
-            {
-                update_profile_Click.Visibility = Visibility.Hidden;
-            }**/
-
-            
-
         }
-
-        /**private void logOut_Click ( object sender, RoutedEventArgs e )
-        {
-            User user = new User();
-            UserViewModel.userSession = user;
-
-
-            //MessageBox.Show(UserViewModel.userSession.UserID.ToString());
-            LoginScreen dashboard = new LoginScreen();
-            dashboard.Show();
-            //this.Close();
-        }**/
 
         private void update_profile_Click ( object sender, RoutedEventArgs e )
         {
@@ -79,28 +60,6 @@ namespace SchoolManagementSystem.Views
                                       contactNoTextBox.Text.Trim()
                                );
         }
-
-        
-        /**
-            private void student_list_Click ( object sender, RoutedEventArgs e )
-            {
-               StudentsListScreen dashboard = new StudentsListScreen();
-               dashboard.Show();
-            }
-
-
-            private void Button_Click ( object sender, RoutedEventArgs e )
-            {
-               RegisterUsers dashboard = new RegisterUsers();
-               dashboard.Show();
-            }
-
-            private void student_list_Copy_Click ( object sender, RoutedEventArgs e )
-            {
-
-            }
-
-         **/
 
     }
 }
