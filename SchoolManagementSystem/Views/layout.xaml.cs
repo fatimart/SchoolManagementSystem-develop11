@@ -42,7 +42,7 @@ namespace SchoolManagementSystem.Views
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
-                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+                pages.Source = new Uri("TeacherScreen.xaml", UriKind.Relative);
 
             }
 
@@ -121,7 +121,7 @@ namespace SchoolManagementSystem.Views
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
-                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+                pages.Source = new Uri("TeacherScreen.xaml", UriKind.Relative);
 
             }
         }

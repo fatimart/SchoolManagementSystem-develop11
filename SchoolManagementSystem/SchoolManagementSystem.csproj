@@ -172,6 +172,7 @@
     <Compile Include="ViewModels\TeacherCourseViewModel.cs" />
     <Compile Include="ViewModels\TeacherListViewModel.cs" />
     <Compile Include="ViewModels\TimeTableViewModel.cs" />
+    <Compile Include="ViewModels\UsersUploadViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\YearViewModel.cs" />
     <Compile Include="Views\AdminView.xaml.cs">
@@ -204,6 +205,9 @@
     <Compile Include="Views\StudentView.xaml.cs">
       <DependentUpon>StudentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeacherCourseScreen.xaml.cs">
+      <DependentUpon>TeacherCourseScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TeacherCourseView.xaml.cs">
       <DependentUpon>TeacherCourseView.xaml</DependentUpon>
     </Compile>
@@ -219,11 +223,17 @@
     <Compile Include="Views\StudentGradeScreen.xaml.cs">
       <DependentUpon>StudentGradeScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeacherScreen.xaml.cs">
+      <DependentUpon>TeacherScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeacherView.xaml.cs">
+      <DependentUpon>TeacherView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimeTableScreen.xaml.cs">
       <DependentUpon>TimeTableScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\tryImport.xaml.cs">
-      <DependentUpon>tryImport.xaml</DependentUpon>
+    <Compile Include="Views\UsersUpload.cs">
+      <DependentUpon>UsersUpload.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\YearScreen.xaml.cs">
       <DependentUpon>YearScreen.xaml</DependentUpon>
@@ -294,6 +304,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TeacherCourseScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TeacherCourseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -314,11 +328,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TeacherScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeacherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimeTableScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\tryImport.xaml">
+    <Page Include="Views\UsersUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

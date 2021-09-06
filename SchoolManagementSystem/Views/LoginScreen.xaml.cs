@@ -36,6 +36,7 @@ namespace SchoolManagementSystem
 
         private void btnSubmit_Click ( object sender, RoutedEventArgs e )
         {
+           
             if(userViewModel.login(txtUsername.Text.Trim(), txtPassword.Password.ToString()))
             {
 

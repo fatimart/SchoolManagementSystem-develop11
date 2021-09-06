@@ -23,10 +23,10 @@ namespace SchoolManagementSystem.Models
         public string CourseName { get; set; }
         public string Time { get; set; }
         public string CourseCode { get; set; }
+        public int SectionNo { get; set; }
+        public System.DateTime Examdate { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual TimeTable TimeTable1 { get; set; }
-        public virtual TimeTable TimeTable2 { get; set; }
         public virtual User User { get; set; }
     }
 }

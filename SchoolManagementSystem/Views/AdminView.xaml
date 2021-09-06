@@ -11,7 +11,7 @@
     <Grid>
         <TabControl>
             <TabItem Header="Import Users">
-                <Frame Name="Import" Source="tryImport.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="Import" Source="UsersUpload.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
             <TabItem Header="Courses Screen">
                 <Frame Name="course" Source="CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>

@@ -16,7 +16,7 @@ namespace SchoolManagementSystem.Models
     public partial class SchoolMSEntities1 : DbContext
     {
         public SchoolMSEntities1()
-            : base("name=SchoolMSEntities")
+            : base("name=SchoolMSEntities1")
         {
         }
     

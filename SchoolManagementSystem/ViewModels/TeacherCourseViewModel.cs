@@ -149,6 +149,96 @@ namespace SchoolManagementSystem.ViewModels
             }
 
         }
+        public void FillCourseBox()
+        {
+            try
+            {
+
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT CourseCode from Course;", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt); //db have all the courses names
+
+                TCourse1.course_combo_box.ItemsSource = dt.DefaultView;
+                TCourse1.course_combo_box.SelectedIndex = -1;
+                TCourse1.course_combo_box.DisplayMemberPath = "CourseCode";
+                TCourse1.course_combo_box.SelectedValuePath = "CourseCode";
+
+
+                con.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+        public void FillTeacherBox()
+        {
+            try
+            {
+                // teacher_combo_box.Items.Clear();
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("select Name from Users where Type='" + "teacher" + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt); //db have all the teachers names
+
+                TCourse1.teacher_combo_box.ItemsSource = dt.DefaultView;
+                TCourse1.teacher_combo_box.SelectedIndex = -1;
+                TCourse1.teacher_combo_box.DisplayMemberPath = "Name";
+                TCourse1.teacher_combo_box.SelectedValuePath = "Name";
+
+
+                con.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+        public void FillCourseDetails()
+        {
+            try
+            {
+
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                using (SqlConnection connection = new SqlConnection(strcon))
+                {
+                    SqlCommand cmd = new SqlCommand("select * from TeacherCourses ", connection);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    TCourse1.dtGrid.ItemsSource = dt.DefaultView;
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
 
 
 

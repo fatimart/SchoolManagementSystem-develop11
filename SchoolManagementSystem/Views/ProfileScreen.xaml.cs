@@ -57,6 +57,8 @@ namespace SchoolManagementSystem.Views
 
         private void update_profile_Click ( object sender, RoutedEventArgs e )
         {
+           
+
             string pass = "";
             if (txtnewPass.Text.Trim() == "")
             {
