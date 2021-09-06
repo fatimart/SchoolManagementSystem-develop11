@@ -12,29 +12,30 @@
         <TabControl>
           
             <TabItem Header="Courses Screen">
-                <Frame Name="course" Source="CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="course" Source="AdminViews/CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
             <TabItem Header="Room Screen">
-                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="room" Source="AdminViews/RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
             <TabItem Header="Section Screen">
-                <Frame Name="section" Source="SectionScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="section" Source="AdminViews/SectionScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
             
             <!--<TabItem Header="student Grade Screen">
                 <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>-->
+            
             <TabItem Header="Year Screen">
-                <Frame Name="Year" Source="YearScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="Year" Source="AdminViews/YearScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
-            <TabItem Header="Students List Screen">
-                <Frame Name="SList" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            <TabItem Header="Students List">
+                <Frame Name="SList" Source="AdminViews/StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
             
-            <TabItem Header="Teacher List Screen">
-                <Frame Name="TList" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+            <TabItem Header="Teachers List">
+                <Frame Name="TList" Source="AdminViews/TeacherListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
         </TabControl>

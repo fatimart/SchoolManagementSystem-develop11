@@ -18,152 +18,169 @@ namespace SchoolManagementSystem.ViewModels
         public User user;
 
         private SchoolMSEntities1 ty = new SchoolMSEntities1();
-        private ObservableCollection<User> _studentRecords;
+        public ObservableCollection<User> AllUsers { get; private set; }
+        public ObservableCollection<User> users { get; private set; }
 
-        public ObservableCollection<User> AllUsers
-        {
-            get
-            {
-                return _studentRecords;
-            }
-            set
-            {
-                _studentRecords = value;
-                OnPropertyChanged("AllUsers");
-            }
-        }
-
-
-
+        private int _UserID;
         public int UserID
         {
-            get { return user.UserID; }
+            get { return _UserID; }
             set
             {
-                if (user.UserID != value)
-                {
-                    user.UserID = value;
-                    OnPropertyChanged("UserID");
-                }
+
+                _UserID = value;
+                OnPropertyChanged("UserID");
+
             }
         }
-
+        private string _UserName;
         public string UserName
         {
-            get { return user.UserName; }
+            get { return _UserName; }
             set
             {
-                if (user.UserName != value)
-                {
-                    user.UserName = value;
-                    OnPropertyChanged("UserName");
-                }
+                _UserName = value;
+                OnPropertyChanged("UserName");
+
             }
         }
-
+        private string _Name;
         public string Name
         {
-            get { return user.Name; }
+            get { return _Name; }
             set
             {
-                if (user.Name != value)
-                {
-                    user.Name = value;
-                    OnPropertyChanged("Name");
-                }
+
+                _Name = value;
+                OnPropertyChanged("Name");
+
             }
         }
-
+        private string _Email;
         public string Email
         {
-            get { return user.Email; }
+            get { return _Email; }
             set
             {
-                if (user.Email != value)
-                {
-                    user.Email = value;
-                    OnPropertyChanged("Email");
-                }
+                _Email = value;
+                OnPropertyChanged("Email");
+
             }
         }
-
+        private decimal _CPR;
         public decimal CPR
         {
-            get { return user.CPR; }
+            get { return _CPR; }
             set
             {
-                if (user.CPR != value)
-                {
-                    user.CPR = value;
-                    OnPropertyChanged("CPR");
-                }
+                _CPR = value;
+                OnPropertyChanged("CPR");
+
             }
         }
 
+        private string _Address;
         public string Address
         {
-            get { return user.Address; }
+            get { return _Address; }
             set
             {
-                if (user.Address != value)
-                {
-                    user.Address = value;
-                    OnPropertyChanged("Address");
-                }
+                _Address = value;
+                OnPropertyChanged("Address");
+
             }
         }
 
+        private string _Type;
         public string Type
         {
-            get { return user.Type; }
+            get { return _Type; }
             set
             {
-                if (user.Type != value)
-                {
-                    user.Type = value;
-                    OnPropertyChanged("Type");
-                }
+                _Type = value;
+                OnPropertyChanged("Type");
+
             }
         }
 
+        private string _Password;
         public string Password
         {
-            get { return user.Password; }
+            get { return _Password; }
             set
             {
-                if (user.Password != value)
-                {
-                    user.Password = value;
-                    OnPropertyChanged("Password");
-                }
+                _Password = value;
+                OnPropertyChanged("Password");
+
             }
         }
 
+        private string _ContactNo;
         public string ContactNo
         {
-            get { return user.ContactNo; }
+            get { return _ContactNo; }
             set
             {
-                if (user.ContactNo != value)
-                {
-                    user.ContactNo = value;
-                    OnPropertyChanged("ContactNo");
-                }
+                _ContactNo = value;
+                OnPropertyChanged("ContactNo");
+
             }
         }
 
+        private DateTime _DOB;
         public DateTime DOB
         {
-            get { return user.DOB; }
+            get { return _DOB; }
             set
             {
-                if (user.DOB != value)
-                {
-                    user.DOB = value;
-                    OnPropertyChanged("DOB");
-                }
+                _DOB = value;
+                OnPropertyChanged("DOB");
+
             }
         }
+
+
+
+        public TeacherListViewModel ()
+        {
+            GetAll();
+
+
+        }
+
+        public User Get ( int id )
+        {
+            return ty.Users.Find(id);
+        }
+
+        public List<User> GetAll1 ()
+        {
+            return ty.Users.Where(m => m.Type == "teacher").ToList();
+
+
+        }
+
+        public void GetAll ()
+        {
+            AllUsers = new ObservableCollection<User>();
+            GetAll1().ForEach(data => AllUsers.Add(new User()
+            {
+                UserID = Convert.ToInt32(data.UserID),
+                UserName = data.UserName,
+                Name = data.Name,
+                Email = data.Email,
+                CPR = Convert.ToDecimal(data.CPR),
+                Address = data.Address,
+                DOB = Convert.ToDateTime(data.DOB),
+                Type = data.Type,
+                Password = data.Password,
+                ContactNo = data.ContactNo
+
+            }));
+
+        }
+
+        //MARK: DataAccess Functions
 
         public void InsertUser ( string username, string name, string email, decimal cpr, string address, DateTime dob, string password, string contactNo )
         {
@@ -286,7 +303,7 @@ namespace SchoolManagementSystem.ViewModels
         {
             try
             {
-                var user = ty.Users.Where(m => m.UserID == userID).Single();
+                var user1 = ty.Users.Where(m => m.UserID == userID).Single();
                 return true;
             }
             catch (Exception ex)

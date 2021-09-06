@@ -1,6 +1,7 @@
 ﻿using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,32 +14,63 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public Room Room;
 
+        private ObservableCollection<Room> _RoomRecord;
+        public ObservableCollection<Room> AllRooms
+        {
+            get
+            {
+                return _RoomRecord;
+            }
+            set
+            {
+                _RoomRecord = value;
+                OnPropertyChanged("AllRooms");
+            }
+        }
+
+        private int _RoomID;
         public int RoomID
         {
-            get { return Room.RoomID; }
+            get { return _RoomID; }
             set
             {
-                if (Room.RoomID != value)
-                {
-                    Room.RoomID = value;
-                    OnPropertyChanged("RoomID");
-                }
+                _RoomID = value;
+                OnPropertyChanged("RoomID");
+
             }
         }
+
+        private string _RoomNum;
         public string RoomNum
         {
-            get { return Room.RoomNum; }
+            get { return _RoomNum; }
             set
             {
-                if (Room.RoomNum != value)
-                {
-                    Room.RoomNum = value;
-                    OnPropertyChanged("RoomNum");
-                }
+                _RoomNum = value;
+                OnPropertyChanged("RoomNum");
+
             }
         }
 
+        public List<Room> GetAll1 ()
+        {
+            return ty.Rooms.ToList();
+        }
 
+        public void GetAll ()
+        {
+            AllRooms = new ObservableCollection<Room>();
+            GetAll1().ForEach(data => AllRooms.Add(new Room()
+            {
+
+                RoomID = data.RoomID,
+                RoomNum = data.RoomNum
+
+            }));
+
+        }
+
+        //MARK: DataAccess function
         public void AddRoom(string RoomNum)
         {
 

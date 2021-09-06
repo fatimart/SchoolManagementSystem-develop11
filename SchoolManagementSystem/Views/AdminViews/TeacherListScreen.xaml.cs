@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SchoolManagementSystem.Views
+namespace SchoolManagementSystem.Views.AdminViews
 {
     /// <summary>
     /// Interaction logic for TeacherListScreen.xaml
@@ -131,13 +131,24 @@ namespace SchoolManagementSystem.Views
 
         private void Reset_Click ( object sender, RoutedEventArgs e )
         {
-            _userViewModel.ResetData();
             
-            /** foreach (var user in _userViewModel.GetAll())
-             {
-                 MessageBox.Show(user.Address);
+            _userViewModel.ResetData();
+            Clear();
 
-             }**/
+
+        }
+
+        public void Clear()
+        {
+            userIDTextBox.Text = "";
+            userNameTextBox.Text = "";
+            nameTextBox.Text = "";
+            emailTextBox.Text = "";
+            cPRTextBox.Text = "";
+            addressTextBox.Text = "";
+            dOBDatePicker.Text = "";
+            passwordTextBox.Text = "";
+            contactNoTextBox.Text = "";
         }
 
         public void getUserByID ()
@@ -155,8 +166,6 @@ namespace SchoolManagementSystem.Views
                 SqlCommand cmd = new SqlCommand("SELECT * from Users WHERE UserID='" + userIDTextBox.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable(); //store data in dt
-
-                //MessageBox.Show("CHECK");
 
                 da.Fill(dt);
 
@@ -177,8 +186,6 @@ namespace SchoolManagementSystem.Views
                 else
                 {
                     MessageBox.Show("Invalid user ID");
-
-
                 }
             }
 
@@ -189,6 +196,5 @@ namespace SchoolManagementSystem.Views
             }
         }
 
-     
     }
 }

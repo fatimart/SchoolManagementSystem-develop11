@@ -1,6 +1,7 @@
 ﻿using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,97 +14,126 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public StudentGrade SGrades ;
 
-
-
-        public int ID
-    {
-            get { return SGrades.ID; }
+        private ObservableCollection<StudentGrade> _GradeRecords;
+        public ObservableCollection<StudentGrade> AllGrades
+        {
+            get
+            {
+                return _GradeRecords;
+            }
             set
             {
-                if (SGrades.ID != value)
-                {
-                    SGrades.ID = value;
-                    OnPropertyChanged("ID");
-                }
+                _GradeRecords = value;
+                OnPropertyChanged("AllGrades");
             }
         }
 
+        private int _ID;
+        public int ID
+        {
+                get { return _ID; }
+                set
+                {
+                    _ID = value;
+                        OnPropertyChanged("ID");
+                
+                }
+            }
+
+        private int _CourseID;
         public int CourseID
         {
-            get { return SGrades.StudentID; }
+            get { return _CourseID; }
             set
             {
-                if (SGrades.CourseID != value)
-                {
-                    SGrades.CourseID = value;
+                _CourseID = value;
                     OnPropertyChanged("CourseID");
                 }
-            }
+            
         }
 
+    private int _StudentID;
         public int StudentID
         {
-            get { return SGrades.StudentID; }
+            get { return _StudentID; }
             set
             {
-                if (SGrades.StudentID != value)
-                {
-                    SGrades.StudentID = value;
+                _StudentID = value;
                     OnPropertyChanged("StudentID");
                 }
-            }
+            
         }
 
+    private int _Score;
         public int Score
         {
-            get { return SGrades.Score; }
+            get { return _Score; }
             set
             {
-                if (SGrades.Score != value)
-                {
-                    SGrades.Score = value;
+                _Score = value;
                     OnPropertyChanged("Score");
                 }
-            }
+            
         }
 
+    private int _Attendance;
         public int Attendance
         {
-            get { return SGrades.Attendance; }
+            get { return _Attendance; }
             set
             {
-                if (SGrades.Attendance != value)
-                {
-                    SGrades.Attendance = value;
+                _Attendance = value;
                     OnPropertyChanged("Attendance");
-                }
-            }
-        }
-        public bool Done
-        {
-            get { return SGrades.Done; }
-            set
-            {
-                if (SGrades.Done != value)
-                {
-                    SGrades.Done = value;
-                    OnPropertyChanged("Done");
-                }
-            }
-        }
-        public int year
-        {
-            get { return SGrades.year; }
-            set
-            {
-                if (SGrades.year != value)
-                {
-                    SGrades.year = value;
-                    OnPropertyChanged("yearID");
-                }
+                
             }
         }
 
+    private bool _Done;
+        public bool Done
+        {
+            get { return _Done; }
+            set
+            {
+                _Done = value;
+                    OnPropertyChanged("Done");
+                
+            }
+        }
+
+        private int _year;
+        public int year
+        {
+            get { return _year; }
+            set
+            {
+                _year = value;
+                    OnPropertyChanged("yearID");
+                
+            }
+        }
+        
+        public List<StudentGrade> GetAll1 ()
+        {
+            return ty.StudentGrades.ToList();
+        }
+
+        public void GetAll ()
+        {
+            AllGrades = new ObservableCollection<StudentGrade>();
+            GetAll1().ForEach(data => AllGrades.Add(new StudentGrade()
+            {
+                CourseID = data.CourseID,
+                StudentID = data.StudentID,
+                Score = data.Score,
+                Attendance = data.Attendance,
+                Done = data.Done,
+                year = data.year
+
+            }));
+
+        }
+
+        //MARK: DataAccess
         public void AddStudentGrade( int CourseID, int StudentID, int Score, int Attendance, bool Done, int yearID)
         {
 

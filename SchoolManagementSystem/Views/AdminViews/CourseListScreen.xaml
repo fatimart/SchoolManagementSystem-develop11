@@ -1,0 +1,95 @@
+﻿<Page
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolManagementSystem.Views"
+        xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.AdminViews.CourseListScreen"
+        mc:Ignorable="d"
+        d:DesignHeight="450" d:DesignWidth="800"
+        Title="CourseListScreen" Loaded="Window_Loaded"
+        Height="553.5" Width="809">
+
+
+    <Grid Margin="0,0,0,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="451*"/>
+            <RowDefinition Height="93*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="701*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid HorizontalAlignment="Left" Width="809" Height="544" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="93*"/>
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="24*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="116*"/>
+                <ColumnDefinition Width="521*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="grid1"  Grid.Row="2" Grid.ColumnSpan="5" HorizontalAlignment="Right" Width="228" Margin="0,42,0,0" Height="232" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="134"/>
+                    <ColumnDefinition Width="53"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label VerticalAlignment="Center" Grid.Row="1" Margin="-2,16,0,18" HorizontalAlignment="Left" Grid.Column="0" Content="Course ID:" Height="26"/>
+                <TextBox x:Name="courseIDTextBox" IsReadOnly="True" Width="68" VerticalAlignment="Bottom" Text="{Binding CourseID, Mode=OneWay}" Grid.Row="1" Margin="84,0,0,25" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2" Background="#FFE8DCDC"/>
+                <Label VerticalAlignment="Center" Grid.Row="1" Margin="-2,43,0,26" HorizontalAlignment="Left" Grid.Column="0" Content="Course Code:" Grid.RowSpan="2" Height="25"/>
+                <TextBox x:Name="courseCodeTextBox" Width="74" VerticalAlignment="Center" Text="{Binding CourseCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="84,46,0,30" Height="22" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                <Label VerticalAlignment="Center" Grid.Row="2" Margin="-2,22,0,20" HorizontalAlignment="Left" Grid.Column="0" Content="Course Name:" Grid.RowSpan="2" Height="26"/>
+                <TextBox x:Name="courseNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding CourseName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="84,28,-11,22" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                <Label VerticalAlignment="Center" Grid.Row="4" Margin="-2,2,0,112" HorizontalAlignment="Left" Grid.Column="0" Content="Description:" Height="26"/>
+                <TextBox x:Name="descriptionTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="84,3,-11,116" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
+                <Label VerticalAlignment="Center" Grid.Row="4" Margin="-2,46,0,69" HorizontalAlignment="Left" Grid.Column="0" Content="Exam Date:" Height="26"/>
+                <DatePicker x:Name="examDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding ExamDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="84,49,-13,70" HorizontalAlignment="Left" Grid.ColumnSpan="3" Width="122" Height="24"/>
+                <Button x:Name="find_button" Content="Find" Grid.Column="1" Margin="25,45,-8,0" VerticalAlignment="Top" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Height="24" Grid.ColumnSpan="2" Click="find_button_Click" Grid.RowSpan="2"/>
+            </Grid>
+
+
+
+
+            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="5" Margin="2,24,0,0" SelectionChanged="usersDataGrid_SelectionChanged" Height="332" VerticalAlignment="Top" HorizontalAlignment="Left" Width="479" RenderTransformOrigin="0.5,0.5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="courseIDColumn" Binding="{Binding CourseID, UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn x:Name="courseCodeColumn" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" Header="Course Code" Width="Auto"/>
+                    <DataGridTextColumn x:Name="coursenameColumn" Binding="{Binding CourseName,UpdateSourceTrigger=PropertyChanged}" Header="Course Name" Width="Auto"/>
+                    <DataGridTextColumn x:Name="courseDescriptionColumn" Binding="{Binding Description,UpdateSourceTrigger=PropertyChanged}" Header="Description" Width="Auto"/>
+                    <DataGridTemplateColumn x:Name="examDateColumn" Header="Exam Date" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding ExamDate,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,334,0,0" Grid.RowSpan="3" Grid.ColumnSpan="4" Click="DeleteCourse_Click"/>
+            <Button x:Name="UpdateCourse" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="88" Height="21" VerticalAlignment="Bottom" Margin="0,0,20,223" Grid.RowSpan="3"  Grid.Column="4" Click="UpdateCourse_Click" />
+            <Button x:Name="AddNewCourse" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,223" Grid.ColumnSpan="4" Grid.RowSpan="3" Click="AddNewCourse_Click"/>
+            <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="9,334,20,0" Grid.RowSpan="3" Height="22" VerticalAlignment="Top" Grid.Column="4" Click="Reset_Click"/>
+        </Grid>
+    </Grid>
+</Page>

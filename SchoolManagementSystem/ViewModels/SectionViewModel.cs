@@ -1,6 +1,7 @@
 ﻿using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,69 +13,103 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public Section Section;
 
+        private ObservableCollection<Section> _sectionRecord;
+        public ObservableCollection<Section> AllSections
+        {
+            get
+            {
+                return _sectionRecord;
+            }
+            set
+            {
+                _sectionRecord = value;
+                OnPropertyChanged("AllSections");
+            }
+        }
+
+        private int _SectionID;
         public int SectionID
         {
-            get { return Section.SectionID; }
+            get { return _SectionID; }
             set
             {
-                if (Section.SectionID != value)
-                {
-                    Section.SectionID = value;
-                    OnPropertyChanged("SectionID");
-                }
+                _SectionID = value;
+                OnPropertyChanged("SectionID");
+
             }
         }
+
+        private int _SectionNum;
         public int SectionNum
         {
-            get { return Section.SectionNum; }
+            get { return _SectionNum; }
             set
             {
-                if (Section.SectionNum != value)
-                {
-                    Section.SectionNum = value;
-                    OnPropertyChanged("SectionNum");
-                }
+                _SectionNum = value;
+                OnPropertyChanged("SectionNum");
+
             }
         }
+
+        private int _CourseID;
         public int CourseID
         {
-            get { return Section.CourseID; }
+            get { return _CourseID; }
             set
             {
-                if (Section.CourseID != value)
-                {
-                    Section.CourseID = value;
-                    OnPropertyChanged("CourseID");
-                }
+                _CourseID = value;
+                OnPropertyChanged("CourseID");
+
             }
         }
+
+        private int _RoomID;
         public int RoomID
         {
-            get { return Section.RoomID; }
+            get { return _RoomID; }
             set
             {
-                if (Section.RoomID != value)
-                {
-                    Section.RoomID = value;
-                    OnPropertyChanged("RoomID");
-                }
+                _RoomID = value;
+                OnPropertyChanged("RoomID");
+
             }
         }
 
+        private string _Time;
         public string Time
         {
-            get { return Section.Time; }
+            get { return _Time; }
             set
             {
-                if (Section.Time != value)
-                {
-                    Section.Time = value;
-                    OnPropertyChanged("Time");
-                }
+                _Time = value;
+                OnPropertyChanged("Time");
+
             }
         }
 
-        public void AddSection(int sectionID, byte sectionNum, int courseID, int RoomID)
+        public List<Section> GetAll1 ()
+        {
+            return ty.Sections.ToList();
+        }
+
+        public void GetAll ()
+        {
+            AllSections = new ObservableCollection<Section>();
+            GetAll1().ForEach(data => AllSections.Add(new Section()
+            {
+                SectionID = data.SectionID,
+                SectionNum = data.SectionNum,
+                CourseID = data.CourseID,
+                RoomID = data.RoomID,
+                Time = data.Time
+                
+
+            }));
+
+        }
+
+        //MARK: DataAcesss
+        public void AddSection(int sectionID, byte sectionNum, int courseID, int RoomID, string time)
         {
 
             Section section = new Section();
@@ -82,6 +117,7 @@ namespace SchoolManagementSystem.ViewModels
             section.SectionNum = sectionNum;
             section.CourseID = courseID;
             section.RoomID = RoomID;
+            section.Time = time;
 
             ty.Sections.Add(section);
             ty.SaveChanges();
@@ -89,7 +125,7 @@ namespace SchoolManagementSystem.ViewModels
         }
 
 
-        public void UpdateSection(int sectionID, byte sectionNum, int courseID, int RoomID)
+        public void UpdateSection(int sectionID, byte sectionNum, int courseID, int RoomID, string time )
         {
 
             Section updateSection = (from m in ty.Sections where m.SectionID == sectionID select m).Single();
@@ -97,6 +133,8 @@ namespace SchoolManagementSystem.ViewModels
             updateSection.SectionNum = sectionNum;
             updateSection.CourseID = courseID;
             updateSection.RoomID = RoomID;
+            updateSection.Time = time;
+
             ty.SaveChanges();
 
         }
@@ -109,8 +147,6 @@ namespace SchoolManagementSystem.ViewModels
             ty.SaveChanges();
 
         }
-
-
 
     }
 }

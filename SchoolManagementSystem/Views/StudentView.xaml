@@ -12,11 +12,11 @@
         <TabControl>
 
             <TabItem Header=" Schedule">
-                <Frame Name="Schedule" Source="CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Schedule" Source="StudentViews/CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             
             <TabItem Header=" Schedule">
-                <Frame Name="st" Source=" StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="st" Source="AdminViews/StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Courses">

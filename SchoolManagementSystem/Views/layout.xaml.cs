@@ -1,5 +1,6 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.ViewModels;
+using SchoolManagementSystem.Views.AdminViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,6 @@ namespace SchoolManagementSystem.Views
     /// </summary>
     public partial class layout : Window
     {
-        // CourseListScreen CList = new CourseListScreen();
-        RegisterUsers RScreen = new RegisterUsers();
-
         public layout ()
         {
             InitializeComponent();
@@ -42,7 +40,7 @@ namespace SchoolManagementSystem.Views
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
-                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+                pages.Source = new Uri("TeacherView.xaml", UriKind.Relative);
 
             }
 
@@ -121,7 +119,7 @@ namespace SchoolManagementSystem.Views
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
-                pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+                pages.Source = new Uri("TeacherView.xaml", UriKind.Relative);
 
             }
         }
@@ -130,7 +128,7 @@ namespace SchoolManagementSystem.Views
         private void Button_Click2 ( object sender, RoutedEventArgs e )
         {
 
-            pages.Source = new Uri("ProfileScreen.xaml", UriKind.Relative);
+            pages.Source = new Uri("Views/Authentication/ProfileScreen.xaml", UriKind.Relative);
 
         }
 
@@ -161,7 +159,7 @@ namespace SchoolManagementSystem.Views
 
         private void Button_Click_1 ( object sender, RoutedEventArgs e )
         {
-            pages.Source = new Uri("RoomScreen.xaml", UriKind.Relative);
+            //pages.Source = new Uri("RoomScreen.xaml", UriKind.Relative);
         }
 
         private void pages_Navigated ( object sender, NavigationEventArgs e )

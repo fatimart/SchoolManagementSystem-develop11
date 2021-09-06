@@ -1,5 +1,6 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Views;
+using SchoolManagementSystem.Views.AdminViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -93,28 +94,37 @@ namespace SchoolManagementSystem.ViewModels
 
        public void AddCourse( string courseName, string courseCode, string description, DateTime examDate)
         {
+           
+                Course course1 = new Course();
+                course1.CourseName = courseName;
+                course1.CourseCode = courseCode;
+                course1.Description = description;
+                course1.ExamDate = examDate;
 
-            Course course1 = new Course();
-            course1.CourseName = courseName;
-            course1.CourseCode = courseCode;
-            course1.Description = description;
-            course1.ExamDate = examDate;
+                if (course1.CourseID <= 0)
+                {
+                    ty.Courses.Add(course1);
+                    ty.SaveChanges();
+                    //MessageBox.Show("New Course successfully Added.");
 
-            ty.Courses.Add(course1);
-            ty.SaveChanges();
-   
+                }
+            
+            
         }
    
 
         public void UpdateCourse(int courseID,string courseName, string courseCode, string description, DateTime examDate)
         {
-     
-            Course updateCourse = (from m in ty.Courses where m.CourseID == courseID select m).Single();
-            updateCourse.CourseName = courseName;
-            updateCourse.CourseCode = courseCode;
-            updateCourse.Description = description;
-            updateCourse.ExamDate = examDate;
-            ty.SaveChanges();
+           
+
+                    Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
+                    updateCourse.CourseName = courseName;
+                    updateCourse.CourseCode = courseCode;
+                    updateCourse.Description = description;
+                    updateCourse.ExamDate = examDate;
+
+                    ty.SaveChanges();
+                    MessageBox.Show("Course updated.");
 
         }
 
@@ -128,23 +138,22 @@ namespace SchoolManagementSystem.ViewModels
             updateCourse.Description = description;
             updateCourse.ExamDate = examDate;
             ty.SaveChanges();
-            //MessageBox.Show("Courses have been updated");
 
         }
 
 
 
 
-        public void DeleteCourse(int courseID)
+        public void DeleteCourse ( string courseCode )
         {
-
-            var deleteCourse = ty.Courses.Where(m => m.CourseID == courseID).Single();
+            var deleteCourse = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
             ty.Courses.Remove(deleteCourse);
             ty.SaveChanges();
-
+            MessageBox.Show("Record successfully deleted.");
+            
         }
 
-       public bool CheckCourseID(int courseID)
+        public bool CheckCourseID(int courseID)
         {
             try
             {
@@ -159,22 +168,15 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-
-        //MARK: Check by Course Code
-        /**public bool CheckCourseCode ( string courseCode )
+        public bool checkCourseCode(string CourseCode)
         {
-            try
+            if (ty.Courses.Any(o => o.CourseCode == CourseCode))
+            { return true; }
+            else
             {
-                var CourseCode1 = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
-                return true;
+                return false;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("check if code" + ex.Message);
-            }
-           return false;
-
-        }**/
+        }
 
         //MARK: update and insert when uploading new excel sheet
         public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
@@ -183,25 +185,23 @@ namespace SchoolManagementSystem.ViewModels
             if (ty.Courses.Any(o => o.CourseCode == courseCode))
             {
                 UpdateCourseV2(courseName, courseCode, description, examDate);
-                //MessageBox.Show("Courses have been updated");
             }
 
             else
             {
                 AddCourse(courseName, courseCode, description, examDate);
-                //MessageBox.Show("Courses have been inserted");
-
             }
         }
 
-        
-
-
-        public void Clear()
+        public void ResetData ()
         {
-            CourseListScreen course = new CourseListScreen();
-            course.courseNameTextBox.Text = course.courseCodeTextBox.Text = course.descriptionTextBox.Text = course.sectionIDTextBox.Text = "";
+            Course course1 = new Course();
 
+            course1.CourseID = 0;
+            course1.CourseCode = string.Empty;
+            course1.CourseName = string.Empty;
+            course1.Description = string.Empty;
+           
         }
 
         public Course Get ( int id )

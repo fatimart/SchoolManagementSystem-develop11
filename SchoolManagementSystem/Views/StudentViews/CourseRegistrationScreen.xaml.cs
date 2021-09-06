@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SchoolManagementSystem.Views
+namespace SchoolManagementSystem.Views.StudentViews
 {
     /// <summary>
     /// Interaction logic for CourseRegistrationScreen.xaml

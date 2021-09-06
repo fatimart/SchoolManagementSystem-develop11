@@ -1,6 +1,7 @@
 ﻿using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,21 @@ namespace SchoolManagementSystem.ViewModels
         public Year year;
 
 
+        private ObservableCollection<Year> _yearRecord;
+        public ObservableCollection<Year> AllYears
+        {
+            get
+            {
+                return _yearRecord;
+            }
+            set
+            {
+                _yearRecord = value;
+                OnPropertyChanged("AllYears");
+            }
+        }
+
+
         private string _YearNum;
         public string YearNum
         {
@@ -21,24 +37,50 @@ namespace SchoolManagementSystem.ViewModels
             set
             {
                 _YearNum = value;
-                    OnPropertyChanged("YearNum");
-                
-            }
-        }
-         public int YearID
-        {
-            get { return year.YearID; }
-            set
-            {
-                if (year.YearID != value)
-                {
-                    year.YearID = value;
-                    OnPropertyChanged("YearID");
-                }
+                OnPropertyChanged("YearNum");
+
             }
         }
 
-        public void AddYear(string YearNum)
+        private int _YearID;
+        public int YearID
+        {
+            get { return _YearID; }
+            set
+            {
+                _YearID = value;
+                OnPropertyChanged("YearID");
+
+            }
+        }
+
+        public YearViewModel()
+        {
+            GetAll();
+        }
+        
+        //MARK: Get All years
+        public List<Year> GetAll1 ()
+        {
+            return ty.Years.ToList();
+
+
+        }
+
+        public void GetAll ()
+        {
+            AllYears = new ObservableCollection<Year>();
+            GetAll1().ForEach(data => AllYears.Add(new Year()
+            {
+                YearID = data.YearID,
+                YearNum = data.YearNum
+
+            }));
+
+        }
+
+        //MARK: DataAccess Functions
+        public void AddYear ( string YearNum )
         {
 
             Year year = new Year();
@@ -47,9 +89,9 @@ namespace SchoolManagementSystem.ViewModels
 
             ty.Years.Add(year);
             ty.SaveChanges();
+            GetAll();
 
         }
-
 
         public void UpdateYear(int YearID, string YearNum)
         {
@@ -59,6 +101,7 @@ namespace SchoolManagementSystem.ViewModels
             updateYears.YearNum = YearNum;
 
             ty.SaveChanges();
+            GetAll();
 
         }
 
@@ -68,20 +111,21 @@ namespace SchoolManagementSystem.ViewModels
             var deleteYears = ty.Years.Where(m => m.YearID == YearID).Single();
             ty.Years.Remove(deleteYears);
             ty.SaveChanges();
+            GetAll();
 
         }
-        public bool CheckYearID(int roomID)
-        {
-            try
+
+        public bool CheckYearID(int YearID)
+        { 
+
+            if (ty.Years.Any(o => o.YearID == YearID))
             {
-                var RoomID = ty.Years.Where(m => m.YearID == YearID).Single();
                 return true;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                return false;
             }
-            return false;
 
         }
 

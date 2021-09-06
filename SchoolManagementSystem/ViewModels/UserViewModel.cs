@@ -255,17 +255,9 @@ namespace SchoolManagementSystem.ViewModels
 
 
                         }
-                        //MessageBox.Show(userSession.UserName);
-                        //  MessageBox.Show(Application.Current.Resources["UserName"].ToString());
-                        //  MessageBox.Show(Usersession.UserName);
-                        //MessageBox.Show(userSession.UserName);
-                        //MessageBox.Show("edit" + UserViewModel.userSession.UserID.ToString());
-
+                      
                         reader.Close();
                         //MessageBox.Show(userSession.UserName);
-                        //MessageBox.Show( Application.Current.Resources["UserID"].ToString());
-
-                        reader.Close();
                         //MessageBox.Show( Application.Current.Resources["UserID"].ToString());
 
                         return true;
@@ -317,21 +309,6 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public void getUserByID (int userID)
-        {
-            try 
-            {
-                var query = from u in ty.Users
-                        where u.UserID == userID
-                        select u;
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
     
 

@@ -2,6 +2,7 @@
 using SchoolManagementSystem.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -18,7 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SchoolManagementSystem.Views
+namespace SchoolManagementSystem.Views.AdminViews
 {
     /// <summary>
     /// Interaction logic for StudentsListScreen.xaml
@@ -50,12 +51,12 @@ namespace SchoolManagementSystem.Views
         private void FillDataGrid ()
 
         {
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+             string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
-            using (SqlConnection connection = new SqlConnection(strcon))
-            {
+             using (SqlConnection connection = new SqlConnection(strcon))
+             {
                 SqlCommand command = new SqlCommand(
-                     "select * from Users where Type='" + "student" + "'", connection);
+                   "select * from Users where Type='" + "student" + "'", connection);
                 connection.Open();
 
                 SqlDataAdapter sda = new SqlDataAdapter(command);
@@ -64,9 +65,12 @@ namespace SchoolManagementSystem.Views
 
                 sda.Fill(dt);
                 usersDataGrid.ItemsSource = dt.DefaultView;
+
+                //usersDataGrid.ItemsSource = _userViewModel.AllUsers;
+
                 usersDataGrid.Items.Refresh();
 
-            }
+             }
 
         }
 
@@ -74,6 +78,7 @@ namespace SchoolManagementSystem.Views
 
         private void AddNewStudent_Click ( object sender, RoutedEventArgs e )
         {
+
             _userViewModel.InsertUser(
                                       //Convert.ToInt32(userIDTextBox.Text.Trim()),
                                       userNameTextBox.Text.Trim(),
@@ -123,9 +128,14 @@ namespace SchoolManagementSystem.Views
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;
 
+            MessageBox.Show("checkdata1111");
+
             if (row_selected != null)
             {
-                userIDTextBox.Text = row_selected["UserID"].ToString();
+                MessageBox.Show("checkdata1111");
+
+                MessageBox.Show(userIDTextBox.Text);
+
                 userNameTextBox.Text = row_selected["UserName"].ToString();
                 nameTextBox.Text = row_selected["Name"].ToString();
                 emailTextBox.Text = row_selected["Email"].ToString();
@@ -139,7 +149,21 @@ namespace SchoolManagementSystem.Views
 
         private void Reset_Click ( object sender, RoutedEventArgs e )
         {
+            Clear();
             _userViewModel.ResetData();
+        }
+
+        public void Clear ()
+        {
+            userIDTextBox.Text = "";
+            userNameTextBox.Text = "";
+            nameTextBox.Text = "";
+            emailTextBox.Text = "";
+            cPRTextBox.Text = "";
+            addressTextBox.Text = "";
+            dOBDatePicker.Text = "";
+            passwordTextBox.Text = "";
+            contactNoTextBox.Text = "";
         }
 
         public void getUserByID ()

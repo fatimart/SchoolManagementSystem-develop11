@@ -14,12 +14,9 @@
         Topmost="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"   Loaded="Window_Loaded_1">
-    <Window.Resources>
-        <DataTemplate x:Name="register" DataType="{x:Type Views:CourseListScreen}"/>
-        <SchoolManagementSystem:SchoolMSDataSet x:Key="schoolMSDataSet"/>
-        <CollectionViewSource x:Key="courseViewSource" Source="{Binding Course, Source={StaticResource schoolMSDataSet}}"/>
-    </Window.Resources>
-    <Grid DataContext="{StaticResource courseViewSource}">
+
+    
+    <Grid>
 
 
         <!--add a header to the grid-->
@@ -412,7 +409,6 @@
                 </ListView>
 
             </StackPanel>
-
 
         </Grid>
         <!--add a footer-->

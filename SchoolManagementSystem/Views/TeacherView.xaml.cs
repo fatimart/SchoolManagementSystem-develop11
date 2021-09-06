@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SchoolManagementSystem.Views
 {
     /// <summary>
-    /// Interaction logic for StudentCourseListScreen.xaml
+    /// Interaction logic for TeacherView.xaml
     /// </summary>
-    public partial class StudentCourseListScreen : Page
+    public partial class TeacherView : Page
     {
-        public StudentCourseListScreen ()
+        public TeacherView ()
         {
             InitializeComponent();
         }

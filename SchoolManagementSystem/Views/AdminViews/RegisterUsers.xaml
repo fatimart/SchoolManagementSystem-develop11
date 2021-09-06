@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
-        xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.RegisterUsers"
+        xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.AdminViews.RegisterUsers"
         mc:Ignorable="d"
         Title="RegisterUsers" Height="600" Width="800" Loaded="Window_Loaded">
     <Page.Resources>
@@ -16,14 +16,14 @@
         <TabControl SelectedIndex="{Binding Mode=OneWay}">
 
             <TabItem Header=" Students">
-                <Frame Name="students" Source="StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="students" Source="Views/AdminViews/StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             <TabItem Header="Teachers">
                 <Frame Name="teachers" Source="TeacherListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Profile">
-                <Frame Name="Profile" Source="ProfileScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Profile" Source="Views/Authentication/ProfileScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             
             <TabItem Header="RoomScreen">

@@ -17,7 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SchoolManagementSystem.Views
+namespace SchoolManagementSystem.Views.AdminViews
 {
     /// <summary>
     /// Interaction logic for RegisterUsers.xaml

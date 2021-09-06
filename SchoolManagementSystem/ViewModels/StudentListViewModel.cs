@@ -150,15 +150,11 @@ namespace SchoolManagementSystem.ViewModels
 
         public StudentListViewModel ()
         {
-            GetAll();
+            AllUsers = GetAll();
             
 
         }
 
-        public User Get ( int id )
-        {
-            return ty.Users.Find(id);
-        }
 
         public List<User> GetAll1 ()
         {
@@ -167,7 +163,7 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public void GetAll ()
+        public ObservableCollection<User> GetAll ()
         {
             AllUsers = new ObservableCollection<User>();
             GetAll1().ForEach(data => AllUsers.Add(new User()
@@ -185,6 +181,7 @@ namespace SchoolManagementSystem.ViewModels
 
             }));
 
+            return AllUsers;
         }
 
         

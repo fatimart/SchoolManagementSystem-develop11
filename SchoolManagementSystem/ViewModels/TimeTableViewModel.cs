@@ -268,7 +268,7 @@ namespace SchoolManagementSystem.ViewModels
 
 
         //MARK: Need to edit based on the updtaed database
-        public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename)
+        public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename, string time, string courseCode, int SectionNo, DateTime Examdate )
         {
 
             try
@@ -280,6 +280,10 @@ namespace SchoolManagementSystem.ViewModels
                 TTable.Year = YearID;
                 TTable.TeacherName = TeacherName;
                 TTable.CourseName = coursename;
+                TTable.Time = time;
+                TTable.CourseCode = courseCode;
+                TTable.SectionNo = SectionNo;
+                TTable.Examdate = Examdate;
 
 
                 ty.TimeTables.Add(TTable);

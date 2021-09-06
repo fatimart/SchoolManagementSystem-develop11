@@ -92,8 +92,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Key>
             <PropertyRef Name="YearID" />
           </Key>
-          <Property Name="YearID" Type="int" Nullable="false" />
-          <Property Name="YearNum" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="YearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearNum" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK_Section_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
@@ -300,8 +300,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Key>
             <PropertyRef Name="YearID" />
           </Key>
-          <Property Name="YearID" Type="Int32" Nullable="false" />
-          <Property Name="YearNum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_Section_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
