@@ -1,4 +1,4 @@
-﻿using SchoolManagementSystem.Models;
+﻿    using SchoolManagementSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

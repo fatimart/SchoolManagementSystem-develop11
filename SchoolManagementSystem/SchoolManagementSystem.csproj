@@ -96,6 +96,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -184,6 +185,9 @@
     <Compile Include="Views\CourseRegistrationScreen.xaml.cs">
       <DependentUpon>CourseRegistrationScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FileUpload.xaml.cs">
+      <DependentUpon>FileUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\layout.xaml.cs">
       <DependentUpon>layout.xaml</DependentUpon>
     </Compile>
@@ -251,6 +255,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CourseRegistrationScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

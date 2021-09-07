@@ -1,23 +1,18 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.ViewModels;
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
+
 
 namespace SchoolManagementSystem.Views
 {
@@ -26,8 +21,8 @@ namespace SchoolManagementSystem.Views
     /// </summary>
     public partial class TeacherScreen : Page
     {
+        string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
-
         public TeacherScreen()
         {
             InitializeComponent();
@@ -36,21 +31,10 @@ namespace SchoolManagementSystem.Views
             comboBoxValue();
         }
         DataSet ds;
-        OleDbDataAdapter dataAdapter;
-        SqlDataAdapter da;
-        DataTable dt;
-        void ReadData()
-        {
-            var CID = course_combo_box.Text.Split('-');
-            string cid = CID[0];
-            this.ds = new DataSet();
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-            dataAdapter = new OleDbDataAdapter("select StudentGrade.StudentID,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", strcon);
-            this.dataAdapter.Fill(this.ds, "TABLE1");
-            this.ds.AcceptChanges();
-            //set the table as the datasource for the grid in order to show that data in the grid
-            this.dGrid.ItemsSource = ds.DefaultViewManager;
-        }
+        SqlDataAdapter dataAdapter;
+        SqlDataAdapter sda1;
+        DataTable dt1;
+        SqlCommandBuilder Scb;
 
 
 
@@ -86,19 +70,24 @@ namespace SchoolManagementSystem.Views
             using (SqlConnection connection = new SqlConnection(strcon))
                 try
                 {
-                    this.ds = new DataSet();
+                    connection.Open();
                     var CID = course_combo_box.Text.Split('-');
                     string cid = CID[0];
+                    string cCode = CID[1];
+                    string CSection = CID[3];
                     SqlCommand command = new SqlCommand(
-                         "select StudentGrade.StudentID,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
-                    SqlDataAdapter da = new SqlDataAdapter(command);
-                    DataTable dt = new DataTable();
+                         "select StudentGrade.ID,StudentGrade.StudentID,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
+                     dataAdapter = new SqlDataAdapter(command);
+                 //   DataTable dt = new DataTable();
 
 
-                    da.Fill(dt);
-                    dGrid.ItemsSource = dt.DefaultView;
-                    connection.Close();
- 
+                    dataAdapter.Fill(dt1);
+                    dGrid.ItemsSource = dt1.DefaultView;
+                   
+                 //   connection.Close();
+                    CourseTxt.Content= cCode;
+                   SectionTxt.Text = CSection;
+
                 }
 
                 catch (Exception ex)
@@ -166,22 +155,233 @@ namespace SchoolManagementSystem.Views
 
         private void open_btn_Click(object sender, RoutedEventArgs e)
         {
-            // MessageBox.Show(comboBoxValue());
-            layout layout = new layout();
-            CourseDataFill();
+
+            if (CheckComboBox()) {
+                CourseDataFill1(); }
+            else { return; }
+
             //  Button_Click.Visibility = Visibility.Visible;
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            ReadData();
-           // DataFill();
+            if (CheckComboBox())
+            {
+                CourseDataFill1();
+            }
+            else { return; }
+
 
         }
 
+        public bool CheckComboBox()
+        {
+            string S = course_combo_box.Text;
+            if (S.Length<=0)
+            {
+                return false; 
+            }
+
+            else
+            {
+                return true;
+            }
+
+        }
+        public void CourseDataFill1()
+        {   
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+            var CID = course_combo_box.Text.Split('-');
+            string cid = CID[0];
+            string cCode = CID[1];
+            string CSection = CID[3];
+            SqlConnection con = new SqlConnection(strcon);
+            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Users,Course,StudentGrade where Users.UserID=StudentGrade.StudentID AND Course.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
+            dt1 = new DataTable();
+            sda1.Fill(dt1);
+            dGrid.ItemsSource = dt1.DefaultView;
+
+
+                }
         private void Button_Click(object sender, RoutedEventArgs e)
         {//save
-       
+
+            Save();
+            CourseDataFill1();
+
+
+        }
+        public void Save()
+        {
+            for (int i = 0; i < dGrid.Items.Count - 1; i++)
+            {
+                DataGridCell ID = GetCell(i, 0);
+                DataGridCell StudentID = GetCell(i, 1);
+                DataGridCell score = GetCell(i, 3);
+                DataGridCell attendance = GetCell(i, 4);
+                DataGridCell Done = GetCell(i, 5);
+                TextBlock tb = ID.Content as TextBlock;
+                TextBlock tb1 = StudentID.Content as TextBlock;
+                TextBlock tb2 = score.Content as TextBlock;
+                TextBlock tb3 = attendance.Content as TextBlock;
+                CheckBox tb4 = Done.Content as CheckBox;
+
+                StudentGrade Sgrades = new StudentGrade
+                {
+                    ID = Convert.ToInt32(tb.Text),
+                    StudentID = Convert.ToInt32(tb1.Text),
+                    Score = Convert.ToInt32(tb2.Text),
+                    Attendance = Convert.ToInt32(tb3.Text),
+                   Done = Convert.ToBoolean(tb4.IsChecked.Value.ToString()),
+                };
+                StudentGradeViewModel SGVM = new StudentGradeViewModel();
+                SGVM.UpdateStudentGrade1(
+                                       Sgrades.ID,
+                                       Sgrades.StudentID,
+                                       Sgrades.Score,
+                                       Sgrades.Attendance,
+                                       Sgrades.Done
+                                    );
+            }
+            MessageBox.Show("The Database Updated succesfully");
+
+        }
+        public DataSet CreateCommandAndUpdate()
+        {
+
+            DataSet dataSet = new DataSet();
+            var CID = course_combo_box.Text.Split('-');
+            string cid = CID[0];
+            try { using (OleDbConnection connection =
+                         new OleDbConnection(@"Data Source = PIE-RD-DESK-079\FADHELWORK2; Initial Catalog = SchoolMS; Provider = MSOLEDBSQL;providerName = System.Data.SqlClientUser; Id=sa;Password=Fad4work;"))
+                {
+                    connection.Open();
+                    OleDbDataAdapter adapter =
+                        new OleDbDataAdapter();
+                    adapter.SelectCommand =
+                        new OleDbCommand("select Distinct ID from Course, StudentGrade where Course.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID = '" + cid + "'", connection);
+                    OleDbCommandBuilder builder =
+                        new OleDbCommandBuilder(adapter);
+
+                    adapter.Fill(dataSet);
+
+                    // Code to modify data in the DataSet here.
+
+                    // Without the OleDbCommandBuilder, this line would fail.
+                    adapter.UpdateCommand = builder.GetUpdateCommand();
+                    adapter.Update(dataSet);
+                    return dataSet;
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return dataSet;
+            }
+
+            }
+
+        public void UpdateDataGrid()
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(strcon))
+                try
+                {
+
+                    var CID = course_combo_box.Text.Split('-');
+                    string cid = CID[0];
+                    string cCode = CID[1];
+                    string CSection = CID[3];
+                    SqlCommand command = new SqlCommand(
+                         "select StudentGrade.ID,StudentGrade.StudentID,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    dGrid.ItemsSource.Cast<object>().ToList();
+
+                    for (int i = 0; i < dGrid.Items.Count; i++)
+                    {
+                        DataGridRow row = (DataGridRow)dGrid.ItemContainerGenerator.ContainerFromIndex(i);
+                        foreach (var gridColumn in dGrid.Columns)
+                        {
+                            if (gridColumn.Header == "StudentID")
+                            {
+                                MessageBox.Show("StudentID");
+                            }
+                        }
+                    }
+                     
+                    }
+                catch (Exception ex) 
+                {
+                    connection.Close();
+                    MessageBox.Show(ex.ToString());
+                }
+        }
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+
+
+        }
+
+        public DataGridCell GetCell(int row, int column)
+        {
+                DataGridRow rowData = GetRow(row);
+            if (rowData != null)
+            {
+                DataGridCellsPresenter cellPresenter = GetVisualChild<DataGridCellsPresenter>(rowData);
+                DataGridCell cell = (DataGridCell)cellPresenter.ItemContainerGenerator.ContainerFromIndex(column);
+                if (cell == null)
+                {
+                    dGrid.ScrollIntoView(rowData, dGrid.Columns[column]);
+                    cell = (DataGridCell)cellPresenter.ItemContainerGenerator.ContainerFromIndex(column);
+                }
+                return cell;
+            }
+            return null;
+        }
+
+        public DataGridRow GetRow(int index)
+        {
+            DataGridRow row = (DataGridRow)dGrid.ItemContainerGenerator.ContainerFromIndex(index);
+            if (row == null)
+            {
+                dGrid.UpdateLayout();
+                dGrid.ScrollIntoView(dGrid.Items[index]);
+                row = (DataGridRow)dGrid.ItemContainerGenerator.ContainerFromIndex(index);
+            }
+            return row;
+        }
+
+        public static T GetVisualChild<T>(Visual parent) where T : Visual
+        {
+            T child = default(T);
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                child = v as T;
+                if (child == null)
+                {
+                    child = GetVisualChild<T>(v);
+                }
+                if (child != null)
+                {
+                    break;
+                }
+            }
+            return child;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {//Upload
+            FileUpload FUpload = new FileUpload();
+            FUpload.Show();
         }
     }
-}
+    }
+
+
