@@ -19,6 +19,7 @@
         <AssociationConnector Association="SchoolMSModel.FK_Section_Room" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_User" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SchoolMSModel.Announcement" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

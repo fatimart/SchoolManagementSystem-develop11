@@ -15,12 +15,9 @@
                 <Frame Name="Schedule" Source="StudentViews/CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             
-            <TabItem Header=" Schedule">
-                <Frame Name="st" Source="AdminViews/StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
-            </TabItem>
-
+            
             <TabItem Header="Courses">
-                <Frame Name="Courses" Source="StudentViews/StudentCoursesListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Courses" Source="StudentViews/CourseDetailScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Courses">

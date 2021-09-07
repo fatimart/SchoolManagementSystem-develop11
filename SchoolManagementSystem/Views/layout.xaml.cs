@@ -143,12 +143,7 @@ namespace SchoolManagementSystem.Views
         private void Window_Loaded_1 ( object sender, RoutedEventArgs e )
         {
 
-            //SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
-            // Load data into the table Course. You can modify this code as needed.
-            //SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter schoolMSDataSetCourseTableAdapter = new SchoolManagementSystem.SchoolMSDataSetTableAdapters.CourseTableAdapter();
-            //schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.Course);
-            //System.Windows.Data.CollectionViewSource courseViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("courseViewSource")));
-            //courseViewSource.View.MoveCurrentToFirst();
+            
         }
 
         private void GridSplitter_DragDelta ( object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e )
@@ -172,8 +167,6 @@ namespace SchoolManagementSystem.Views
             User user = new User();
             UserViewModel.userSession = user;
 
-
-            MessageBox.Show(UserViewModel.userSession.UserID.ToString());
             LoginScreen dashboard = new LoginScreen();
             dashboard.Show();
 

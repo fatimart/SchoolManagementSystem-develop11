@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Announcement">
+          <Key>
+            <PropertyRef Name="AnnounID" />
+          </Key>
+          <Property Name="AnnounID" Type="int" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="Announcement" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TimeAnnounced" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
@@ -168,6 +177,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SchoolMSModelStoreContainer">
+          <EntitySet Name="Announcement" EntityType="Self.Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
@@ -201,8 +211,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="TimeTable" EntitySet="TimeTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -408,7 +417,17 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="Users" EntitySet="Users" />
             <End Role="TimeTable" EntitySet="TimeTables" />
           </AssociationSet>
+          <EntitySet Name="Announcements" EntityType="SchoolMSModel.Announcement" />
         </EntityContainer>
+        <EntityType Name="Announcement">
+          <Key>
+            <PropertyRef Name="AnnounID" />
+          </Key>
+          <Property Name="AnnounID" Type="Int32" Nullable="false" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="Announcement1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TimeAnnounced" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -505,6 +524,16 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
               <MappingFragment StoreEntitySet="Year">
                 <ScalarProperty Name="YearID" ColumnName="YearID" />
                 <ScalarProperty Name="YearNum" ColumnName="YearNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Announcements">
+            <EntityTypeMapping TypeName="SchoolMSModel.Announcement">
+              <MappingFragment StoreEntitySet="Announcement">
+                <ScalarProperty Name="TimeAnnounced" ColumnName="TimeAnnounced" />
+                <ScalarProperty Name="Announcement1" ColumnName="Announcement" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="AnnounID" ColumnName="AnnounID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -115,14 +115,10 @@ namespace SchoolManagementSystem.Views.AdminViews
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;
 
-            MessageBox.Show("checkdata1111");
-
             if (row_selected != null)
             {
-                MessageBox.Show("checkdata1111");
 
-                MessageBox.Show(userIDTextBox.Text);
-
+                userIDTextBox.Text = row_selected["UserID"].ToString();
                 userNameTextBox.Text = row_selected["UserName"].ToString();
                 nameTextBox.Text = row_selected["Name"].ToString();
                 emailTextBox.Text = row_selected["Email"].ToString();

@@ -7,6 +7,7 @@ using SchoolManagementSystem.ViewModels;
 using System.Data;
 using System.Collections;
 using System.Configuration;
+using SchoolManagementSystem.Models;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -16,7 +17,10 @@ namespace SchoolManagementSystem.Views.AdminViews
     public partial class CourseListScreen : Page
     {
         CourseViewModel course = new CourseViewModel();
-        public CourseListScreen()
+        private bool isUpdateMode;
+        private SchoolMSEntities1 ty = new SchoolMSEntities1();
+
+        public CourseListScreen ()
         {
             InitializeComponent();
                
@@ -292,5 +296,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             getCourseByID();
         }
+
+
     }
 }
