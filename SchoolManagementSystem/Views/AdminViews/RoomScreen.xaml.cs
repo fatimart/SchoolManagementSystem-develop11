@@ -1,18 +1,8 @@
 ﻿using SchoolManagementSystem.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -25,54 +15,77 @@ namespace SchoolManagementSystem.Views.AdminViews
         public RoomScreen()
         {
             InitializeComponent();
+            DataContext = room;
         }
 
         private void roomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
 
+            if (row_selected != null)
+            {
+                roomNumTextBox.Text = row_selected["RoomNum"].ToString();
+                roomIDTextBox.Text = row_selected["RoomID"].ToString();
+            }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
-            // Load data into the table Room. You can modify this code as needed.
-            SchoolManagementSystem.SchoolMSDataSetTableAdapters.RoomTableAdapter schoolMSDataSetCourseTableAdapter = new SchoolManagementSystem.SchoolMSDataSetTableAdapters.RoomTableAdapter();
-            schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.Room);
-        }
+       
 
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
             //add room 
-            room.AddRoom(roomNumTextBox.Text.Trim());
-            Load();
+            if (roomNotEmpty())
+            {
+                room.AddRoom(roomNumTextBox.Text.Trim());
+                Load();
+            }
+            else
+            {
+                MessageBox.Show("Please enter the room number!");
+            }
         }
 
         private void Button_Click3(object sender, RoutedEventArgs e)
-        {//update 
-            if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+        {//update
+            if (roomIDtEmpty())
             {
+                if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+                {
 
-                room.UpdateRoom(Convert.ToInt32(roomIDTextBox.Text), roomNumTextBox.Text.Trim());
-                Load();
+                    room.UpdateRoom(Convert.ToInt32(roomIDTextBox.Text), roomNumTextBox.Text.Trim());
+                    Load();
 
+                }
+
+                else
+                {
+                    MessageBox.Show("ID not existed");
+                }
             }
-
             else
             {
-                MessageBox.Show("ID not existed");
+                MessageBox.Show("Please enter room Id you to update");
             }
-         
+
         }
 
         private void Button_Click4(object sender, RoutedEventArgs e)
         {//delete
-            if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+            if (roomIDtEmpty())
             {
-                room.DeleteRoom(Convert.ToInt32(roomIDTextBox.Text));
+                if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+                {
+                    room.DeleteRoom(Convert.ToInt32(roomIDTextBox.Text));
+                }
+                else
+                {
+                    MessageBox.Show("ID not existed");
+                }
             }
             else
             {
-                MessageBox.Show("ID not existed");
+                MessageBox.Show("Please enter the room Id ");
             }
 
         }
@@ -81,13 +94,34 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             roomIDTextBox.Text = roomNumTextBox.Text = "";
         }
+
         private void Load()
         {
-            SchoolManagementSystem.SchoolMSDataSet schoolMSDataSet = ((SchoolManagementSystem.SchoolMSDataSet)(this.FindResource("schoolMSDataSet")));
-            // Load data into the table Room. You can modify this code as needed.
-            SchoolManagementSystem.SchoolMSDataSetTableAdapters.RoomTableAdapter schoolMSDataSetCourseTableAdapter = new SchoolManagementSystem.SchoolMSDataSetTableAdapters.RoomTableAdapter();
-            schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.Room);
+           
+        }
 
-        } 
+        public bool roomNotEmpty ()
+        {
+            if (roomNumTextBox.Text != "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool roomIDtEmpty ()
+        {
+            if (roomIDTextBox.Text != "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

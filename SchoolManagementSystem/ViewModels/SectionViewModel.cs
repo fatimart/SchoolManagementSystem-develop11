@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
@@ -109,43 +110,74 @@ namespace SchoolManagementSystem.ViewModels
         }
 
         //MARK: DataAcesss
-        public void AddSection(int sectionID, byte sectionNum, int courseID, int RoomID, string time)
+        public void AddSection( int sectionNum, int courseID, int RoomID, string time)
         {
+            if (!checkSectionExists(sectionNum, courseID))
+            {
+                Section section = new Section();
+                section.SectionNum = sectionNum;
+                section.CourseID = courseID;
+                section.RoomID = RoomID;
+                section.Time = time;
 
-            Section section = new Section();
-            section.SectionID = sectionID;
-            section.SectionNum = sectionNum;
-            section.CourseID = courseID;
-            section.RoomID = RoomID;
-            section.Time = time;
+                ty.Sections.Add(section);
+                ty.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Section with course code already exists please choose another section number!");
 
-            ty.Sections.Add(section);
-            ty.SaveChanges();
-
+            }
         }
 
 
-        public void UpdateSection(int sectionID, byte sectionNum, int courseID, int RoomID, string time )
+        public void UpdateSection(int sectionNum, int courseID, int RoomID, string time )
+        {
+            
+                Section updateSection = (from m in ty.Sections
+                                         where m.SectionNum == sectionNum
+                                         where m.CourseID == courseID
+                                         select m).Single();
+
+                updateSection.SectionNum = sectionNum;
+                updateSection.CourseID = courseID;
+                updateSection.RoomID = RoomID;
+                updateSection.Time = time;
+
+                ty.SaveChanges();
+            
+           
+        }
+
+        public void DeleteSection ( int sectionNum, int courseID )
         {
 
-            Section updateSection = (from m in ty.Sections where m.SectionID == sectionID select m).Single();
-            updateSection.SectionID = sectionID;
-            updateSection.SectionNum = sectionNum;
-            updateSection.CourseID = courseID;
-            updateSection.RoomID = RoomID;
-            updateSection.Time = time;
+            if (checkSectionExists(sectionNum, courseID))
+            { 
+                var deleteSection = (from m in ty.Sections
+                                     where m.SectionNum == sectionNum
+                                     where m.CourseID == courseID
+                                     select m).Single();
+            
+                ty.Sections.Remove(deleteSection);
+                ty.SaveChanges();
+        }
+            else
+            {
+                MessageBox.Show("course with section number " + sectionNum + " does not exists!");
 
-            ty.SaveChanges();
+            }
 
         }
 
-        public void DeleteSection(int sectionID)
+        public bool checkSectionExists ( int sectionNum, int CourseID )
         {
-
-            var deleteSection = ty.Sections.Where(m => m.SectionID == sectionID).Single();
-            ty.Sections.Remove(deleteSection);
-            ty.SaveChanges();
-
+            if (ty.Sections.Any(o => o.CourseID == CourseID && o.SectionNum == sectionNum))
+            { return true; }
+            else
+            {
+                return false;
+            }
         }
 
     }

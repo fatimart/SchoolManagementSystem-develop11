@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
@@ -50,6 +48,11 @@ namespace SchoolManagementSystem.ViewModels
                 OnPropertyChanged("RoomNum");
 
             }
+        }
+
+        public RoomViewModel()
+        {
+            GetAll();
         }
 
         public List<Room> GetAll1 ()

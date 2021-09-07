@@ -12,7 +12,7 @@
         <TabControl>
 
             <TabItem Header="Teacher Screen">
-                <Frame Name="TScreen" Source="TeacherScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
+                <Frame Name="TScreen" Source="TeacherViews/TeacherScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
 
