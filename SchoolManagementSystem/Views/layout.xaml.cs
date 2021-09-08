@@ -31,9 +31,16 @@ namespace SchoolManagementSystem.Views
             if (type == "Admin" || type == "admin")
             {
                 pages.Source = new Uri("AdminView.xaml", UriKind.Relative);
+                
+
             }
             else if (type == "Student" || type == "student")
             {
+                msg_btn.Visibility = Visibility.Collapsed;
+                tt_messages.Visibility = Visibility.Collapsed;
+                msg_stk.Visibility = Visibility.Collapsed;
+                msg_LV.Visibility = Visibility.Collapsed;
+
                 pages.Source = new Uri("StudentView.xaml", UriKind.Relative);
 
             }
@@ -43,6 +50,8 @@ namespace SchoolManagementSystem.Views
                 pages.Source = new Uri("TeacherView.xaml", UriKind.Relative);
 
             }
+
+
 
         }
 
@@ -128,7 +137,7 @@ namespace SchoolManagementSystem.Views
         private void Button_Click2 ( object sender, RoutedEventArgs e )
         {
 
-            pages.Source = new Uri("Views/Authentication/ProfileScreen.xaml", UriKind.Relative);
+            pages.Source = new Uri("Authentication/ProfileScreen.xaml", UriKind.Relative);
 
         }
 

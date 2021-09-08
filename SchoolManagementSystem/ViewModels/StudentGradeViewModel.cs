@@ -166,6 +166,17 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
+        public void UpdateStudentGrade1 ( int ID, int StudentID, int Score, int Attendance, bool Done )
+        {
+
+            StudentGrade updateSGrade = (from m in ty.StudentGrades where m.ID == ID select m).Single();
+            updateSGrade.Score = Score;
+            updateSGrade.Attendance = Attendance;
+            updateSGrade.Done = Done;
+            ty.SaveChanges();
+
+        }
+
         public void deleteStudentGrade(int ID)
         {
 

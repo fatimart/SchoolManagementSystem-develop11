@@ -3,39 +3,101 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SchoolManagementSystem.Views.StudentViews"
+      xmlns:local="clr-namespace:SchoolManagementSystem.Views.StudentViews" xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem"
       mc:Ignorable="d"
-      Title="CourseDetailScreen" Height="468.299" Width="769.547">
+      Title="CourseDetailScreen" Height="472.799" Width="756.047">
 
-    <Grid Margin="0,0,0,164">
-        <Grid Margin="0,0,24,-121">
-            <Label Content="Course" HorizontalAlignment="Left" Margin="115,23,0,0" VerticalAlignment="Top"/>
-            <ComboBox Name="course_combo_box" ItemsSource="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="179,27,0,0" VerticalAlignment="Top" Width="178"  DisplayMemberPath="CourseCode" SelectionChanged="course_combo_box_SelectionChanged" DropDownClosed="course_combo_box_DropDownClosed"/>
-            <Button Name="open_btn" Content="Open" HorizontalAlignment="Left" Margin="375,29,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.333,0.5"/>
-            <Button Name="Reset" Content="Reset" HorizontalAlignment="Left" Margin="465,29,0,0" VerticalAlignment="Top" Width="75" />
-            <Button Content="Save" HorizontalAlignment="Left" Margin="555,29,0,0" VerticalAlignment="Top" Width="75"/>
-            <GroupBox Header="Announcement" HorizontalAlignment="Left" Height="128" Margin="42,78,0,0" VerticalAlignment="Top" Width="685">
-                <Grid HorizontalAlignment="Left" Height="89" Margin="22,10,0,0" VerticalAlignment="Top" Width="633">
-                    <DataGrid x:Name="announ_datagrid"  ItemsSource="{Binding AllAnnounc, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" Height="89" VerticalAlignment="Top" Width="633">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="announiDColumn" Binding="{Binding AnnounID,UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
-                            <DataGridTextColumn x:Name="announIDColumn" Binding="{Binding Announcement,UpdateSourceTrigger=PropertyChanged}" Header="Announcement"  IsReadOnly="True" Width="Auto"/>
-                            <DataGridTemplateColumn x:Name="timeColumn" Header="Date" IsReadOnly="True" Width="Auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding TimeAnnounced,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Course Details" HorizontalAlignment="Left" Height="192" Margin="42,227,0,0" VerticalAlignment="Top" Width="685">
-                <Grid HorizontalAlignment="Left" Height="171" Margin="10,0,-2,-2" VerticalAlignment="Top" Width="665">
-                    <DataGrid x:Name="coursedetails_datagrid" HorizontalAlignment="Left" Height="151" Margin="10,10,0,0" VerticalAlignment="Top" Width="633"/>
-                </Grid>
-            </GroupBox>
-        </Grid>
+
+    <Page.Resources>
+        <SchoolManagementSystem:SchoolMSDataSet x:Key="schoolMSDataSet"/>
+        <CollectionViewSource x:Key="studentGradeViewSource" Source="{Binding StudentGrade, Source={StaticResource schoolMSDataSet}}"/>
+    </Page.Resources>
+
+    <Grid Height="463" VerticalAlignment="Top">
+
+        <Label x:Name="coursecode_label" 
+                   Content="CourseCode:" 
+                   HorizontalAlignment="Left" 
+                   Margin="48,29,0,0" 
+                   VerticalAlignment="Top"
+            />
+
+        <ComboBox x:Name="course_combo_box" 
+                      HorizontalAlignment="Left" 
+                      Margin="130,33,0,0" 
+                      VerticalAlignment="Top" 
+                      Width="178"  
+                      DisplayMemberPath="CourseCode"  
+                      DropDownClosed="Course_combo_box_DropDownClosed" 
+        />
+
+        <GroupBox Header="Announcement" HorizontalAlignment="Left" Height="144" Margin="42,78,0,0" VerticalAlignment="Top" Width="685">
+            <Grid HorizontalAlignment="Left" Height="89" Margin="22,10,0,0" VerticalAlignment="Top" Width="633">
+                <DataGrid x:Name="announ_datagrid"  ItemsSource="{Binding AllAnnounc, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" Height="89" VerticalAlignment="Top" Width="633" Margin="0,4,0,-4">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="announiDColumn" Binding="{Binding AnnounID,UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTextColumn x:Name="announIDColumn" Binding="{Binding Announcement,UpdateSourceTrigger=PropertyChanged}" Header="Announcement"  IsReadOnly="True" Width="Auto"/>
+                        <DataGridTemplateColumn x:Name="timeColumn" Header="Date" IsReadOnly="True" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding TimeAnnounced,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Course Details" HorizontalAlignment="Left" Height="199" Margin="42,245,0,0" VerticalAlignment="Top" Width="685">
+            <Grid HorizontalAlignment="Left" Height="171" Margin="12,-6,-4,0" VerticalAlignment="Top" Width="665">
+                <DataGrid ColumnWidth="Auto" 
+                  Height="156" 
+                  Margin="10,18,0,-3" 
+                  VerticalAlignment="Top" 
+                  x:Name="dGrid" 
+                  HorizontalAlignment="Left" 
+                  Width="632"
+                  IsReadOnly="True"
+        />
+            </Grid>
+        </GroupBox>
+
+        <Button x:Name="Reset" 
+                    Content="Reset" 
+                    HorizontalAlignment="Left" 
+                    Margin="328,35,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="75" 
+                    Click="Reset_Click"
+            />
+
+        <Label x:Name="CourseTxt" 
+                   HorizontalAlignment="Left" 
+                   Height="38" Margin="62,67,0,0"   
+                   VerticalAlignment="Top" 
+                   Width="150" 
+                   FontSize="15"/>
+
+        <TextBox x:Name="SectionTxt" 
+                     HorizontalAlignment="Left" 
+                     Height="19" 
+                     Margin="740,30,0,0" 
+                     TextWrapping="Wrap"  
+                     VerticalAlignment="Top" 
+                     Width="60" 
+                     RenderTransformOrigin="1.083,0.947" 
+                     IsReadOnly="True" 
+                     Visibility="Hidden"/>
+
+        <Label Content="section" 
+                   HorizontalAlignment="Left" 
+                   Margin="692,24,0,0" 
+                   VerticalAlignment="Top" 
+                   RenderTransformOrigin="0,0.423" 
+                   Visibility="Hidden"/>
+        <Button x:Name="openFiles_btn" Content="Files" HorizontalAlignment="Left" Margin="651,35,0,0" VerticalAlignment="Top" Width="75"/>
+
+
     </Grid>
 </Page>

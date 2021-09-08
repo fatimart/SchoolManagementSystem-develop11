@@ -19,7 +19,7 @@
                 <Frame Name="students" Source="Views/AdminViews/StudentsListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
             <TabItem Header="Teachers">
-                <Frame Name="teachers" Source="TeacherListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="teachers" Source="Views/AdminViews/TeacherListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="Profile">
@@ -27,11 +27,11 @@
             </TabItem>
             
             <TabItem Header="RoomScreen">
-                <Frame Name="room" Source="RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="room" Source="Views/AdminViews/RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
             <TabItem Header="StudentGrade">
-                <Frame Name="Sgrades" Source="StudentGradeScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Sgrades" Source="Views/AdminViews/StudentGradeScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
             </TabItem>
 
 

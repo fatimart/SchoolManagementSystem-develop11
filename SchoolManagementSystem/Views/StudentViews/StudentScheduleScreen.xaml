@@ -1,0 +1,37 @@
+﻿<Page x:Class="SchoolManagementSystem.Views.StudentViews.StudentScheduleScreen"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolManagementSystem.Views.StudentViews"
+      mc:Ignorable="d" d:DesignWidth="800"
+      Title="StudentScheduleScreen" Height="443.789">
+
+    <Grid Margin="32,36,21,62">
+        <GroupBox Header="Schedule" HorizontalAlignment="Left" Height="249" Margin="31,23,0,0" VerticalAlignment="Top" Width="686" RenderTransformOrigin="0.5,0.5">
+            <Grid HorizontalAlignment="Left" Height="202" Margin="10,10,0,0" VerticalAlignment="Top" Width="653">
+                <DataGrid x:Name="tableDataGrid"
+                  HorizontalAlignment="Left"
+                  Height="152" Margin="10,30,0,0"
+                  VerticalAlignment="Top"
+                  Width="633"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False" 
+                  RenderTransformOrigin="0.5,0.5"
+                  ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Section No" Binding="{Binding SectionNo, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Time" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Room" Binding="{Binding RoomNo, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Exam Date" Binding="{Binding Examdate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Teacher Name" Binding="{Binding TeacherName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Page>

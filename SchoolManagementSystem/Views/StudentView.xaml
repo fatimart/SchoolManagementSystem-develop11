@@ -12,20 +12,26 @@
         <TabControl>
 
             <TabItem Header=" Schedule">
-                <Frame Name="Schedule" Source="StudentViews/CourseRegistrationScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
-            </TabItem>
-            
-            
-            <TabItem Header="Courses">
-                <Frame Name="Courses" Source="StudentViews/CourseDetailScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Schedule" 
+                       Source="StudentViews/CourseRegistrationScreen.xaml" 
+                       Margin="0,0,0,0" 
+                       NavigationUIVisibility="Hidden"/>
             </TabItem>
 
+
             <TabItem Header="Courses">
-                <Frame Name="Course" Source="AdminViews/UploadCourseScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
+                <Frame Name="Courses" 
+                       Source="StudentViews/CourseDetailScreen.xaml" 
+                       Margin="0,0,0,0" 
+                       NavigationUIVisibility="Hidden"/>
             </TabItem>
 
-            
-            
+            <TabItem Header="Schedule">
+                <Frame Name="Schedule1" 
+                       Source="StudentViews/StudentScheduleScreen.xaml" 
+                       Margin="0,0,0,0" 
+                       NavigationUIVisibility="Hidden"/>
+            </TabItem>
         </TabControl>
     </Grid>
 

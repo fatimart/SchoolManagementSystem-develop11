@@ -17,5 +17,8 @@ namespace SchoolManagementSystem.Models
         public int TID { get; set; }
         public string TeacherName { get; set; }
         public string CourseCode { get; set; }
+        public int CourseID { get; set; }
+    
+        public virtual Course Course { get; set; }
     }
 }

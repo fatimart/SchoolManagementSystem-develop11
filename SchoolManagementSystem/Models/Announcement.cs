@@ -18,5 +18,7 @@ namespace SchoolManagementSystem.Models
         public int CourseID { get; set; }
         public string Announcement1 { get; set; }
         public System.DateTime TimeAnnounced { get; set; }
+    
+        public virtual Course Course { get; set; }
     }
 }

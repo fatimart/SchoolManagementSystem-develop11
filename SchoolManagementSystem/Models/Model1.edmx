@@ -41,11 +41,6 @@
           <Property Name="RoomID" Type="int" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMS">
-          <Property Name="USE  master " Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
         <EntityType Name="StudentGrade">
           <Key>
             <PropertyRef Name="ID" />
@@ -65,6 +60,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
@@ -104,6 +100,18 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="YearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="YearNum" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Announcement_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Announcement" Type="Self.Announcement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Announcement">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Section_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Section" Type="Self.Section" Multiplicity="*" />
@@ -152,6 +160,18 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeacherCourses_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TimeTable_Course1">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
@@ -186,6 +206,10 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <EntitySet Name="TimeTable" EntityType="Self.TimeTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Announcement_Course" Association="Self.FK_Announcement_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Announcement" EntitySet="Announcement" />
+          </AssociationSet>
           <AssociationSet Name="FK_Section_Course" Association="Self.FK_Section_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="Section" EntitySet="Section" />
@@ -201,6 +225,10 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <AssociationSet Name="FK_StudentGrade_User" Association="Self.FK_StudentGrade_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Course" Association="Self.FK_TeacherCourses_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Course1" Association="Self.FK_TimeTable_Course1">
             <End Role="Course" EntitySet="Course" />
@@ -227,6 +255,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Course" FromRole="Course" ToRole="Section" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_Course" FromRole="Course" ToRole="StudentGrade" />
           <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Course1" FromRole="Course" ToRole="TimeTable" />
+          <NavigationProperty Name="Announcements" Relationship="SchoolMSModel.FK_Announcement_Course" FromRole="Course" ToRole="Announcement" />
+          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Course" FromRole="Course" ToRole="TeacherCours" />
         </EntityType>
         <EntityType Name="Room">
           <Key>
@@ -269,6 +299,8 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="SchoolMSModel.FK_TeacherCourses_Course" FromRole="TeacherCours" ToRole="Course" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
@@ -418,6 +450,14 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
             <End Role="TimeTable" EntitySet="TimeTables" />
           </AssociationSet>
           <EntitySet Name="Announcements" EntityType="SchoolMSModel.Announcement" />
+          <AssociationSet Name="FK_Announcement_Course" Association="SchoolMSModel.FK_Announcement_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Announcement" EntitySet="Announcements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Course" Association="SchoolMSModel.FK_TeacherCourses_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="TeacherCours" EntitySet="TeacherCourses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Announcement">
           <Key>
@@ -427,7 +467,32 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <Property Name="Announcement1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TimeAnnounced" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Course" Relationship="SchoolMSModel.FK_Announcement_Course" FromRole="Announcement" ToRole="Course" />
         </EntityType>
+        <Association Name="FK_Announcement_Course">
+          <End Type="SchoolMSModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="SchoolMSModel.Announcement" Role="Announcement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Announcement">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Course">
+          <End Type="SchoolMSModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="TeacherCours">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -480,6 +545,7 @@ warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defi
           <EntitySetMapping Name="TeacherCourses">
             <EntityTypeMapping TypeName="SchoolMSModel.TeacherCours">
               <MappingFragment StoreEntitySet="TeacherCourses">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="TID" ColumnName="TID" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />

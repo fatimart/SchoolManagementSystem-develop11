@@ -227,7 +227,7 @@ namespace SchoolManagementSystem.ViewModels
 
         public List<TimeTable> GetAll1 ()
         {
-            return ty.TimeTables.ToList();
+            return ty.TimeTables.Where(m => m.UserID == UserViewModel.userSession.UserID).ToList();
         }
 
         

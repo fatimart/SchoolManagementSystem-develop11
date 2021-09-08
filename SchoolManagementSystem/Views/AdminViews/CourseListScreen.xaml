@@ -6,22 +6,21 @@
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
         xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.AdminViews.CourseListScreen"
         mc:Ignorable="d"
-        d:DesignHeight="450" d:DesignWidth="800"
         Title="CourseListScreen" Loaded="Window_Loaded"
-        Height="553.5" Width="809">
+        Height="621" Width="728">
 
 
-    <Grid Margin="0,0,0,10">
+    <Grid Margin="0,0,97,107">
         <Grid.RowDefinitions>
-            <RowDefinition Height="451*"/>
-            <RowDefinition Height="93*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16*"/>
             <ColumnDefinition Width="701*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Left" Width="809" Height="544" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Grid Height="554" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,-168,-40" Grid.RowSpan="2" HorizontalAlignment="Left" Width="799">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="93*"/>
@@ -37,41 +36,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid x:Name="grid1"  Grid.Row="2" Grid.ColumnSpan="5" HorizontalAlignment="Right" Width="228" Margin="0,42,0,0" Height="232" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="134"/>
-                    <ColumnDefinition Width="53"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Label VerticalAlignment="Center" Grid.Row="1" Margin="-2,16,0,18" HorizontalAlignment="Left" Grid.Column="0" Content="Course ID:" Height="26"/>
-                <TextBox x:Name="courseIDTextBox" IsReadOnly="True" Width="68" VerticalAlignment="Bottom" Text="{Binding CourseID, Mode=OneWay}" Grid.Row="1" Margin="84,0,0,25" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="2" Background="#FFE8DCDC"/>
-                <Label VerticalAlignment="Center" Grid.Row="1" Margin="-2,43,0,26" HorizontalAlignment="Left" Grid.Column="0" Content="Course Code:" Grid.RowSpan="2" Height="25"/>
-                <TextBox x:Name="courseCodeTextBox" Width="74" VerticalAlignment="Center" Text="{Binding CourseCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="84,46,0,30" Height="22" HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                <Label VerticalAlignment="Center" Grid.Row="2" Margin="-2,22,0,20" HorizontalAlignment="Left" Grid.Column="0" Content="Course Name:" Grid.RowSpan="2" Height="26"/>
-                <TextBox x:Name="courseNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding CourseName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="84,28,-11,22" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
-                <Label VerticalAlignment="Center" Grid.Row="4" Margin="-2,2,0,112" HorizontalAlignment="Left" Grid.Column="0" Content="Description:" Height="26"/>
-                <TextBox x:Name="descriptionTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="84,3,-11,116" Height="24" HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
-                <Label VerticalAlignment="Center" Grid.Row="4" Margin="-2,46,0,69" HorizontalAlignment="Left" Grid.Column="0" Content="Exam Date:" Height="26"/>
-                <DatePicker x:Name="examDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding ExamDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="84,49,-13,70" HorizontalAlignment="Left" Grid.ColumnSpan="3" Width="122" Height="24"/>
-                <Button x:Name="find_button" Content="Find" Grid.Column="1" Margin="25,45,-8,0" VerticalAlignment="Top" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Height="24" Grid.ColumnSpan="2" Click="find_button_Click" Grid.RowSpan="2"/>
-            </Grid>
 
 
 
-
-            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Grid.Column="5" Margin="2,24,0,0" SelectionChanged="usersDataGrid_SelectionChanged" Height="332" VerticalAlignment="Top" HorizontalAlignment="Left" Width="479" RenderTransformOrigin="0.5,0.5">
+            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Margin="36,353,0,0" SelectionChanged="usersDataGrid_SelectionChanged" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left" Width="575" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="6">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="courseIDColumn" Binding="{Binding CourseID, UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
                     <DataGridTextColumn x:Name="courseCodeColumn" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" Header="Course Code" Width="Auto"/>
@@ -86,10 +54,45 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,334,0,0" Grid.RowSpan="3" Grid.ColumnSpan="4" Click="DeleteCourse_Click"/>
-            <Button x:Name="UpdateCourse" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="88" Height="21" VerticalAlignment="Bottom" Margin="0,0,20,223" Grid.RowSpan="3"  Grid.Column="4" Click="UpdateCourse_Click" />
-            <Button x:Name="AddNewCourse" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,223" Grid.ColumnSpan="4" Grid.RowSpan="3" Click="AddNewCourse_Click"/>
-            <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="9,334,20,0" Grid.RowSpan="3" Height="22" VerticalAlignment="Top" Grid.Column="4" Click="Reset_Click"/>
+            <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,191,340,0" Click="DeleteCourse_Click" Grid.Column="5" Grid.Row="2"/>
+            <Button x:Name="UpdateCourse" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="88" Height="21" VerticalAlignment="Bottom" Margin="0,0,447,342"  Grid.Column="4" Click="UpdateCourse_Click" Grid.Row="2" Grid.ColumnSpan="2" />
+            <Button x:Name="AddNewCourse" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="22" VerticalAlignment="Bottom" Margin="0,0,31,342" Click="AddNewCourse_Click" Grid.Column="4" Grid.Row="2"/>
+            <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="207,191,235,0" Height="22" VerticalAlignment="Top" Grid.Column="5" Click="Reset_Click" Grid.Row="2"/>
+            <GroupBox Grid.ColumnSpan="6" Header="Course Detail" HorizontalAlignment="Left" Height="168" Margin="36,11,0,0" Grid.Row="2" VerticalAlignment="Top" Width="575">
+                <Grid HorizontalAlignment="Left" Margin="10,0,0,-13" Width="690" Height="150" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45*"/>
+                        <ColumnDefinition Width="683*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label VerticalAlignment="Center" Margin="2,24,0,100" HorizontalAlignment="Left" Content="Course ID:" Height="26" Grid.ColumnSpan="2"/>
+
+                    <TextBox x:Name="courseIDTextBox" IsReadOnly="True" Width="43" VerticalAlignment="Bottom" Text="{Binding CourseID, Mode=OneWay}" Margin="48,0,0,102" Height="24" HorizontalAlignment="Left" Background="#FFA8A8A8" Grid.Column="1"/>
+
+                    <Label VerticalAlignment="Center" Margin="1,66,0,58" HorizontalAlignment="Left" Content="Course Name:" Height="26" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="courseNameTextBox" Width="143" VerticalAlignment="Center" Text="{Binding CourseName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="48,68,0,58" Height="24" HorizontalAlignment="Left" Grid.Column="1"/>
+                    <Label VerticalAlignment="Center" Margin="2,103,0,21" HorizontalAlignment="Left" Content="Description:" Height="26" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="descriptionTextBox" Width="419" VerticalAlignment="Center" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="48,103,0,21" Height="26" HorizontalAlignment="Left" Grid.Column="1"/>
+                    <DatePicker x:Name="examDateDatePicker" VerticalAlignment="Center" SelectedDate="{Binding ExamDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="287,68,0,56" HorizontalAlignment="Left" Width="140" Height="26" Grid.Column="1"/>
+                    <Label VerticalAlignment="Center" Margin="204,66,0,58" HorizontalAlignment="Left" Content="Exam Date:" Height="26" Grid.Column="1"/>
+                    <Label VerticalAlignment="Center" Margin="111,24,0,102" HorizontalAlignment="Left" Content="Course Code:" Height="24" Grid.Column="1"/>
+                    <TextBox x:Name="courseCodeTextBox" Width="74" VerticalAlignment="Center" Text="{Binding CourseCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="201,24,0,102" Height="24" HorizontalAlignment="Left" Grid.Column="1"/>
+                    <Button x:Name="find_button" Content="Find" Grid.Column="1" Margin="280,24,311,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="24" Click="find_button_Click"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.ColumnSpan="6" Header="Upload Courses" HorizontalAlignment="Left" Height="112" Margin="36,218,0,0" Grid.Row="2" VerticalAlignment="Top" Width="575">
+                <Grid HorizontalAlignment="Left" Margin="0,0,-7,5" Width="570">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="File Path" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtFileName" HorizontalAlignment="Left" Height="23" Margin="100,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="316" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btnBrowse" Content="Browse" HorizontalAlignment="Left" Margin="210,22,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="-0.18,-0.49" Height="23" Click="btnBrowse_Click" Grid.Column="1"/>
+                    <Button x:Name="btnImport" Content="Import" HorizontalAlignment="Left" Margin="210,53,0,0" VerticalAlignment="Top" Width="87" Click="btnImport_Click" Height="22" Grid.Column="1"/>
+                    <Button x:Name="savetry2" Content="Save" HorizontalAlignment="Left" Margin="100,53,0,0" VerticalAlignment="Top" Width="76" Click="savetry2_Click" Height="22"/>
+
+                </Grid>
+            </GroupBox>
         </Grid>
     </Grid>
 </Page>

@@ -45,7 +45,7 @@ namespace SchoolManagementSystem.Views.StudentViews
                                     Convert.ToInt32(txtcourseID.Text),
                                     roomNotxt.Text.ToString(),
                                     2021,
-                                    "techer name test",
+                                    teachernametxt.Text.ToString(),
                                     coursenametxt.Text.ToString(),
                                     timetxt.Text.ToString(),
                                     course_combo_box.Text.ToString(),
@@ -133,7 +133,7 @@ namespace SchoolManagementSystem.Views.StudentViews
 
                 using (SqlConnection connection = new SqlConnection(strcon))
                 {
-                    SqlCommand cmd = new SqlCommand("select Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                    SqlCommand cmd = new SqlCommand("select TeacherCourses.TeacherName, Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room, TeacherCourses where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND TeacherCourses.CourseID=Course.CourseID AND Course.CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -146,7 +146,7 @@ namespace SchoolManagementSystem.Views.StudentViews
                         sectionnotxt.Text = dt.Rows[0]["SectionNum"].ToString();
                         timetxt.Text = dt.Rows[0]["Time"].ToString();
                         roomNotxt.Text = dt.Rows[0]["RoomNum"].ToString();
-                        //teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
+                        teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
                         txtcourseID.Text = dt.Rows[0]["CourseID"].ToString();
 
                     }

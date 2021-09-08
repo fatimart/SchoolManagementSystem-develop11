@@ -10,12 +10,12 @@
 
     <Grid>
         <Grid>
-            <DataGrid x:Name="dgEmp" HorizontalAlignment="Left" Height="491" Margin="10,10,0,0" VerticalAlignment="Top" Width="741"
+            <DataGrid x:Name="dgEmp" HorizontalAlignment="Left" Height="351" Margin="10,10,0,0" VerticalAlignment="Top" Width="741"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding AllCourses}" 
                       >
-                
-                
+
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding CourseID}" Header="CourseID"
                       IsReadOnly="True" x:Name="dgrCourseNo">
@@ -33,9 +33,9 @@
                                 <DatePicker SelectedDate="{Binding ExamDate,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Update" x:Name="btnUpdate"
@@ -43,9 +43,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
-                    
-                    
+
+
+
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

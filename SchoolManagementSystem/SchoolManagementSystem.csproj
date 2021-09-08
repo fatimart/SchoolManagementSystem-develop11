@@ -138,8 +138,10 @@
     <Compile Include="ViewModels\SectionViewModel.cs" />
     <Compile Include="ViewModels\StudentGradeViewModel.cs" />
     <Compile Include="ViewModels\StudentListViewModel.cs" />
+    <Compile Include="ViewModels\TeacherCourseViewModel.cs" />
     <Compile Include="ViewModels\TeacherListViewModel.cs" />
     <Compile Include="ViewModels\TimeTableViewModel.cs" />
+    <Compile Include="ViewModels\UsersUploadViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\YearViewModel.cs" />
     <Compile Include="Views\AdminView.xaml.cs">
@@ -147,6 +149,12 @@
     </Compile>
     <Compile Include="Views\AdminViews\CourseListScreen.xaml.cs">
       <DependentUpon>CourseListScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminViews\TeacherCourseView.xaml.cs">
+      <DependentUpon>TeacherCourseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminViews\UsersUpload.xaml.cs">
+      <DependentUpon>UsersUpload.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StudentViews\CourseDetailScreen.xaml.cs">
       <DependentUpon>CourseDetailScreen.xaml</DependentUpon>
@@ -163,9 +171,6 @@
     <Compile Include="Views\AdminViews\RegisterUsers.xaml.cs">
       <DependentUpon>RegisterUsers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StudentViews\StudentCourseListScreen.xaml.cs">
-      <DependentUpon>StudentCourseListScreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\StudentManageScreen.xaml.cs">
       <DependentUpon>StudentManageScreen.xaml</DependentUpon>
     </Compile>
@@ -174,9 +179,6 @@
     </Compile>
     <Compile Include="Views\StudentView.xaml.cs">
       <DependentUpon>StudentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StudentViews\StudentCoursesListScreen.xaml.cs">
-      <DependentUpon>StudentCoursesListScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminViews\TeacherListScreen.xaml.cs">
       <DependentUpon>TeacherListScreen.xaml</DependentUpon>
@@ -199,11 +201,20 @@
     <Compile Include="Views\AdminViews\YearScreen.xaml.cs">
       <DependentUpon>YearScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StudentViews\StudentScheduleScreen.xaml.cs">
+      <DependentUpon>StudentScheduleScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StudentViews\ViewCourseFiles.xaml.cs">
+      <DependentUpon>ViewCourseFiles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StudentViews\ViewMyCourses.xaml.cs">
       <DependentUpon>ViewMyCourses.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeacherView.xaml.cs">
       <DependentUpon>TeacherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeacherViews\FileUpload1.xaml.cs">
+      <DependentUpon>FileUpload1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeacherViews\TeacherScreen.xaml.cs">
       <DependentUpon>TeacherScreen.xaml</DependentUpon>
@@ -219,6 +230,14 @@
     <Page Include="Views\AdminViews\CourseListScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AdminViews\TeacherCourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminViews\UsersUpload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StudentViews\CourseDetailScreen.xaml">
       <SubType>Designer</SubType>
@@ -262,10 +281,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StudentViews\StudentCourseListScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\StudentManageScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,10 +290,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StudentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StudentViews\StudentCoursesListScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -310,11 +321,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StudentViews\StudentScheduleScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StudentViews\ViewCourseFiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StudentViews\ViewMyCourses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TeacherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeacherViews\FileUpload1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

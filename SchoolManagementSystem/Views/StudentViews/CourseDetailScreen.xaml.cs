@@ -16,54 +16,88 @@ namespace SchoolManagementSystem.Views.StudentViews
         AnnoucnmentViewModel viewModel = new AnnoucnmentViewModel();
         CourseViewModel courseviewModel = new CourseViewModel();
 
+        SqlDataAdapter dataAdapter;
+        SqlDataAdapter sda1;
+        DataTable dt1;
+
         public static int courseID;
 
         public CourseDetailScreen ()
         {
             InitializeComponent();
-            fillCourseBox2();
-            fillCourseDetails();
-            //DataContext = viewModel;
-
+            DataFill();
+            CourseComboBox();
+            comboBoxValue();
         }
 
-        public void fillCourseDetails ()
+
+        public void DataFill ()
         {
-            foreach (var data in viewModel.AllAnnounc)
-            {
-                if (data.CourseID == courseID)
+            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(strcon))
+                try
                 {
-                    announ_datagrid.ItemsSource = viewModel.AllAnnounc;
+                    SqlCommand command = new SqlCommand(
+                         "select Course.CourseID,Course.CourseName,Course.CourseCode,TimeTable.SectionNo,TimeTable.Time,TimeTable.RoomNo from Course,TimeTable,Users where Users.UserID='" + UserViewModel.userSession.UserID + "'AND Users.UserID=TimeTable.UserID And Course.CourseID=TimeTable.CourseID", connection);
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dGrid.ItemsSource = dt.DefaultView;
+                    connection.Close();
                 }
-            }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
+        }
+        public void CourseDataFill ()
+        {
+
+            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(strcon))
+                try
+                {
+                    connection.Open();
+                    var CID = course_combo_box.Text.Split('-');
+                    string cid = CID[0];
+                    string cCode = CID[1];
+                    string CSection = CID[3];
+                    SqlCommand command = new SqlCommand(
+                         "select StudentGrade.ID,StudentGrade.StudentID,StudentGrade.Score from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
+                    dataAdapter = new SqlDataAdapter(command);
+                    //   DataTable dt = new DataTable();
+
+
+                    dataAdapter.Fill(dt1);
+                    dGrid.ItemsSource = dt1.DefaultView;
+
+                    //   connection.Close();
+                    CourseTxt.Content = cCode;
+                    SectionTxt.Text = CSection;
+
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
         }
 
-        public void fillCourseBox2 ()
+
+        public string comboBoxValue ()
+        {
+            string S = course_combo_box.Text;
+            return S;
+        }
+        public void CourseComboBox ()
         {
             try
             {
-                course_combo_box.Items.Clear();
-
-                foreach (var data in courseviewModel.AllCourses)
-                {
-                    course_combo_box.SelectedIndex = -1;
-                    course_combo_box.ItemsSource = data.CourseCode;
-                    course_combo_box.DisplayMemberPath = data.CourseCode.ToString();
-                    course_combo_box.SelectedValuePath = "CourseCode";
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void fillCourseBox ()
-        {
-            try
-            {
-                course_combo_box.Items.Clear();
 
                 string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
@@ -73,44 +107,16 @@ namespace SchoolManagementSystem.Views.StudentViews
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode, CourseID from Course;", con);
+                SqlCommand cmd = new SqlCommand("select Concat(Course.CourseID,'-',TimeTable.CourseCode,'-Section-',TimeTable.SectionNo) AS CodeSection from Course, TimeTable, Users where Users.UserID = '" + UserViewModel.userSession.UserID + "'AND Users.UserID = TimeTable.UserID AND Course.CourseID = TimeTable.CourseID", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt); //db have all the courses names
 
                 course_combo_box.ItemsSource = dt.DefaultView;
                 course_combo_box.SelectedIndex = -1;
-                course_combo_box.DisplayMemberPath = "CourseCode";
-                course_combo_box.SelectedValuePath = "CourseCode";
-
-                con.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void getcourseIDD ()
-        {
-
-            try
-            {
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode,CourseID from Course where CourseCode='" + course_combo_box.Text.ToString() + "'", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                courseID = Convert.ToInt32(dt.Rows[0]["CourseID"].ToString());
+                course_combo_box.DisplayMemberPath = "CodeSection";
+                course_combo_box.SelectedValuePath = "CourseID";
+                //    var CID = course_combo_box.Text.Split('-');
 
                 con.Close();
             }
@@ -120,19 +126,61 @@ namespace SchoolManagementSystem.Views.StudentViews
                 MessageBox.Show(ex.Message);
 
             }
-        }
 
-        private void course_combo_box_SelectionChanged ( object sender, SelectionChangedEventArgs e )
-        {
 
         }
 
-        private void course_combo_box_DropDownClosed ( object sender, EventArgs e )
+        private void Course_combo_box_DropDownClosed ( object sender, EventArgs e )
         {
-            if (course_combo_box.Text != "")
+            if (CheckComboBox())
             {
-                getcourseIDD();
+                CourseDataFill1();
             }
+            else { return; }
+
         }
+
+        private void Reset_Click ( object sender, RoutedEventArgs e )
+        {
+            course_combo_box.SelectedItem = "";
+            course_combo_box.Text = "";
+
+            DataFill();
+           
+
+
+        }
+
+        public bool CheckComboBox ()
+        {
+            string S = course_combo_box.Text;
+            if (S.Length <= 0)
+            {
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
+
+        }
+
+        public void CourseDataFill1 ()
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+            var CID = course_combo_box.Text.Split('-');
+            string cid = CID[0];
+
+            SqlConnection con = new SqlConnection(strcon);
+            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance from Users,Course,StudentGrade where Users.UserID=StudentGrade.StudentID AND Course.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
+            dt1 = new DataTable();
+            sda1.Fill(dt1);
+            dGrid.ItemsSource = dt1.DefaultView;
+
+        }
+
+
     }
 }

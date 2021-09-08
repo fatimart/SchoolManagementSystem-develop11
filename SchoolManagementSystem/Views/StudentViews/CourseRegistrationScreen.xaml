@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagementSystem.Views"
-        mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
-        Title="CourseRegistrationScreen">
-    <Grid>
+        mc:Ignorable="d"
+        Title="CourseRegistrationScreen" Height="445.5" Width="782">
+    <Grid Margin="16,0,-6,24">
         <GroupBox HorizontalAlignment="Left" Background="#FFF9F9F9" Height="263" Margin="30,27,0,0" VerticalAlignment="Top" Width="694" FontSize="14" BorderBrush="#FF8B8F91">
             <GroupBox.Header>
                 Registration
@@ -79,7 +79,7 @@
                                    Text="{Binding ExamDate, Mode=OneWay}" 
                                    VerticalAlignment="Top"/>
 
-                        <TextBlock x:Name="teachernametxt" Text="Teacher1" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="teachernametxt" Text="{Binding TeacherName, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="102,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                         <TextBlock x:Name="roomNotxt" Text="{Binding RoomNo, Mode=OneWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="372,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                         <TextBlock x:Name="timetxt" Text="{Binding Time, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,46,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
                         <TextBlock x:Name="sectionnotxt" Text="{Binding SectionNum, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="372,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
@@ -95,7 +95,7 @@
         </GroupBox>
         <DataGrid x:Name="tableDataGrid"
                   HorizontalAlignment="Left"
-                  Height="100" Margin="30,295,0,0"
+                  Height="100" Margin="30,305,0,0"
                   VerticalAlignment="Top"
                   Width="694"
                   AutoGenerateColumns="False" CanUserAddRows="False">
@@ -109,12 +109,12 @@
                 <DataGridTextColumn Header="Teacher Name" Binding="{Binding Path='TeacherName'}" IsReadOnly="True" />
 
                 <DataGridTemplateColumn Header="">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Button x:Name="btnRemove" Content="Remove" Click="btnRemove_Click"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

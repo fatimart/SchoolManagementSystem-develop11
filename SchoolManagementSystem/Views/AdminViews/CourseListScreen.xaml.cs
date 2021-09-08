@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using System.Data.SqlClient;
 using SchoolManagementSystem.ViewModels;
 using System.Data;
-using System.Collections;
 using System.Configuration;
 using SchoolManagementSystem.Models;
+using System.Windows;
+using System.Data.OleDb;
+using DataGrid = System.Windows.Controls.DataGrid;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -86,25 +86,13 @@ namespace SchoolManagementSystem.Views.AdminViews
         }
 
         
-
-        public IEnumerable<DataGridRow> GetDataGridRows ( DataGrid grid )
-        {
-            var itemsSource = grid.ItemsSource as IEnumerable;
-            if (null == itemsSource) yield return null;
-            foreach (var item in itemsSource)
-            {
-                var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (null != row) yield return row;
-            }
-        }
-
         
         
 
         private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
         {
             //delete button 
-            if (MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
+            if (System.Windows.MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
             == MessageBoxResult.Yes)
             {
                 if (courseIDtEmpty())
@@ -119,12 +107,12 @@ namespace SchoolManagementSystem.Views.AdminViews
                         }
                         else
                         {
-                            MessageBox.Show("ID not existed");
+                            System.Windows.MessageBox.Show("ID not existed");
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        System.Windows.MessageBox.Show(ex.Message);
                     }
 
                     finally
@@ -171,7 +159,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        System.Windows.MessageBox.Show(ex.Message);
                     }
                     finally
                     {
@@ -183,14 +171,14 @@ namespace SchoolManagementSystem.Views.AdminViews
 
                 else
                 {
-                    MessageBox.Show("Invalid course Id");
+                    System.Windows.MessageBox.Show("Invalid course Id");
 
                 }
 
             }
             else
             {
-                MessageBox.Show("Please enter the course Id");
+                System.Windows.MessageBox.Show("Please enter the course Id");
 
             }
 
@@ -205,7 +193,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 {
                     if (course.checkCourseCode(courseCodeTextBox.Text.Trim().ToString()))
                     {
-                        MessageBox.Show("Course Already Exists");
+                        System.Windows.MessageBox.Show("Course Already Exists");
 
                     }
                     else
@@ -219,7 +207,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    System.Windows.MessageBox.Show(ex.Message);
                 }
                 finally
                 {
@@ -230,7 +218,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
             else
             {
-                MessageBox.Show("Please fill the fields");
+                System.Windows.MessageBox.Show("Please fill the fields");
 
             }
 
@@ -279,7 +267,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 }
                 else
                 {
-                    MessageBox.Show("Invalid user ID");
+                    System.Windows.MessageBox.Show("Invalid Course ID");
 
 
                 }
@@ -287,7 +275,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
 
             }
         }
@@ -297,6 +285,91 @@ namespace SchoolManagementSystem.Views.AdminViews
             getCourseByID();
         }
 
+        //For Upload File
+        private void btnBrowse_Click ( object sender, RoutedEventArgs e )
+        {
+            System.Windows.Forms.OpenFileDialog fdlg = new System.Windows.Forms.OpenFileDialog();
+            fdlg.Title = "Select File";
+            fdlg.FileName = txtFileName.Text;
+            fdlg.Filter = "Excel Sheet (*.xls)|*.xls|All Files(*.*)|*.*|Excell|*.xlsx";
+            fdlg.FilterIndex = 1;
+            fdlg.RestoreDirectory = true;
+
+
+            if (fdlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txtFileName.Text = fdlg.FileName;
+            }
+        }
+
+
+        // To read the excel data into datagridView
+        private void btnImport_Click ( object sender, RoutedEventArgs e )
+        {
+            try
+            {
+                string constr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtFileName.Text + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1;\"";
+
+                OleDbConnection theConnection = new OleDbConnection(constr);
+                theConnection.Open();
+
+                OleDbDataAdapter theDataAdapter = new OleDbDataAdapter("Select * from[sheet1$]", theConnection);
+                DataSet theSD = new DataSet();
+                DataTable dt = new DataTable();
+
+                theDataAdapter.Fill(dt);
+                this.usersDataGrid.ItemsSource = dt.DefaultView;
+            }
+
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+        }
+        private void savetry2_Click ( object sender, RoutedEventArgs e )
+        {
+            string CourseName = "";
+            string CourseCode = "";
+            string Description = "";
+            string ExamDate = "";
+
+            try
+            {
+
+                string constr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + txtFileName.Text + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1;\"";
+                OleDbConnection Econ = new OleDbConnection(constr);
+
+                string Query = string.Format("Select * FROM [{0}]", "Sheet1$");
+                OleDbCommand Ecom = new OleDbCommand(Query, Econ);
+                Econ.Open();
+
+                OleDbDataReader o_dr = Ecom.ExecuteReader();
+
+                while (o_dr.Read())
+                {
+                    CourseName = o_dr[1].ToString();
+                    CourseCode = o_dr[2].ToString();
+                    Description = o_dr[3].ToString();
+                    ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
+
+                    course.UpdateCourse1(
+                                                    CourseName,
+                                                    CourseCode,
+                                                    Description,
+                                                    Convert.ToDateTime(ExamDate)
+                                                 );
+                }
+
+                MessageBox.Show("Data Have Been Updated!!");
+                FillDataGrid();
+
+                Econ.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
     }
 }
