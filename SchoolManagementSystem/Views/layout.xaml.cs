@@ -36,13 +36,17 @@ namespace SchoolManagementSystem.Views
             }
             else if (type == "Student" || type == "student")
             {
+                msg_btn.Visibility = Visibility.Collapsed;
+                tt_messages.Visibility = Visibility.Collapsed;
+                msg_stk.Visibility = Visibility.Collapsed;
+                msg_LV.Visibility = Visibility.Collapsed;
                 pages.Source = new Uri("StudentView.xaml", UriKind.Relative);
 
             }
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
-                pages.Source = new Uri("TeacherScreen.xaml", UriKind.Relative);
+                pages.Source = new Uri("TeacherView.xaml", UriKind.Relative);
 
             }
 
@@ -175,7 +179,7 @@ namespace SchoolManagementSystem.Views
             UserViewModel.userSession = user;
 
 
-            MessageBox.Show(UserViewModel.userSession.UserID.ToString());
+           // MessageBox.Show(UserViewModel.userSession.UserID.ToString());
             LoginScreen dashboard = new LoginScreen();
             dashboard.Show();
 

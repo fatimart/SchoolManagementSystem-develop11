@@ -25,11 +25,13 @@ namespace SchoolManagementSystem.Views
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public TeacherScreen()
         {
+    
             InitializeComponent();
             DataFill();
             CourseComboBox();
             comboBoxValue();
         }
+
         DataSet ds;
         SqlDataAdapter dataAdapter;
         SqlDataAdapter sda1;
@@ -100,8 +102,9 @@ namespace SchoolManagementSystem.Views
 
         public string comboBoxValue()
         {
-            string S = course_combo_box.Text;
-            return S;
+            var CID = course_combo_box.Text.Split('-');
+            string cid = CID[0];
+            return cid;
         }
         public void CourseComboBox()
         {
@@ -206,8 +209,14 @@ namespace SchoolManagementSystem.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {//save
 
-            Save();
-            CourseDataFill1();
+            if (CheckComboBox())
+            {
+                Save();
+                CourseDataFill1();
+            }
+            else { return; }
+
+          
 
 
         }
@@ -378,8 +387,17 @@ namespace SchoolManagementSystem.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {//Upload
-            FileUpload FUpload = new FileUpload();
-            FUpload.Show();
+
+            if (CheckComboBox())
+            {
+                var CID = course_combo_box.Text.Split('-');
+                string cid = CID[0];
+                FileUpload1 FUpload = new FileUpload1(cid);
+                FUpload.Owner = Application.Current.MainWindow;
+                FUpload.Show();
+            }
+            else { return; }
+         
         }
     }
     }

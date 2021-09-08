@@ -295,7 +295,7 @@
 
                     <!--// Messages //-->
 
-                    <ListViewItem HorizontalAlignment="Left"
+                    <ListViewItem Name="msg_LV" HorizontalAlignment="Left"
                                       Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter"
                                       >
 
@@ -309,9 +309,9 @@
 
                         </ListViewItem.ToolTip>
 
-                        <StackPanel Orientation="Horizontal"
+                        <StackPanel Name="msg_stk" Orientation="Horizontal"
                                         Width="230">
-                            <Button Click="Button_Click_1">
+                            <Button Name="msg_btn" Click="Button_Click_1">
                                 <Image Source="/Assets/img_message.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>

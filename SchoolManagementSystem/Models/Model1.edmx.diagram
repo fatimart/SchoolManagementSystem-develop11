@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a185d26ad07c4ee2b44820ad230707c5" Name="Diagram1">
-        <EntityTypeShape EntityType="SchoolMSModel.Course" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Room" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Section" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.StudentGrade" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.TeacherCours" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.TimeTable" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.User" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMSModel.Year" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="63ffffda24024d44896e4f065f7c2cbc" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolMSModel.Course" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Document" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Room" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Section" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.StudentGrade" Width="1.5" PointX="6" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.TeacherCours" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.TimeTable" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.User" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMSModel.Year" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="SchoolMSModel.FK_Documents_Course" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_Section_Course" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_Course" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Course1" ManuallyRouted="false" />

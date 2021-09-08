@@ -26,6 +26,7 @@ namespace SchoolManagementSystem.Models
         }
     
         public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }

@@ -101,7 +101,7 @@ namespace SchoolManagementSystem.ViewModels
                         ContactNo = reader["ContactNo"].ToString().Trim(),
                     };
 
-                    string query = @"IF EXISTS(SELECT * FROM Users WHERE UserID = @UserId)
+                    string query = @"IF EXISTS(SELECT * FROM Users WHERE UserName = @UserName)
                         UPDATE Users 
                         SET  UserName = @UserName,
                        Name = @Name,
@@ -112,13 +112,13 @@ namespace SchoolManagementSystem.ViewModels
                         Type = @Type,
                        Password = @Password,
                        ContactNo = @ContactNo
-                        WHERE UserID = @UserId
+                        WHERE UserName = @UserName
                     ELSE
-                        INSERT INTO Users(UserId,UserName,Name,Email,CPR,Address,DOB,Type,Password,ContactNo) VALUES(@UserId,@UserName,@Name, @Email,@CPR,@Address,@DOB,@Type,@Password,@ContactNo);";
+                        INSERT INTO Users(UserName,Name,Email,CPR,Address,DOB,Type,Password,ContactNo) VALUES(@UserName,@Name, @Email,@CPR,@Address,@DOB,@Type,@Password,@ContactNo);";
                     using (SqlConnection connection1 = new SqlConnection(strcon))
                     using (SqlCommand cmd = new SqlCommand(query, connection1))
                     {
-                        cmd.Parameters.AddWithValue("@UserId", user1.UserID);
+                    //    cmd.Parameters.AddWithValue("@UserId", user1.UserID);
                         cmd.Parameters.AddWithValue("@UserName", user1.UserName);
                         cmd.Parameters.AddWithValue("@Name", user1.Name);
                         cmd.Parameters.AddWithValue("@Email", user1.Email);

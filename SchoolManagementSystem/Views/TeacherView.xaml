@@ -14,6 +14,7 @@
             <TabItem Header="Teacher Screen">
                 <Frame Name="TScreen" Source="TeacherScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
+   
 
            
         </TabControl>

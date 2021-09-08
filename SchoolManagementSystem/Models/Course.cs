@@ -17,6 +17,7 @@ namespace SchoolManagementSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
+            this.Documents = new HashSet<Document>();
             this.Sections = new HashSet<Section>();
             this.StudentGrades = new HashSet<StudentGrade>();
             this.TimeTables = new HashSet<TimeTable>();
@@ -28,6 +29,8 @@ namespace SchoolManagementSystem.Models
         public string Description { get; set; }
         public System.DateTime ExamDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Document> Documents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Section> Sections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
