@@ -7,10 +7,10 @@
         xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.AdminViews.CourseListScreen"
         mc:Ignorable="d"
         Title="CourseListScreen" Loaded="Window_Loaded"
-        Height="621" Width="728">
+        Height="721" Width="728">
 
 
-    <Grid Margin="0,0,97,107">
+    <Grid Margin="0,0,97,363">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="701*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Height="554" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,-168,-40" Grid.RowSpan="2" HorizontalAlignment="Left" Width="799">
+        <Grid Height="554" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,-168,-196" Grid.RowSpan="2" HorizontalAlignment="Left" Width="799">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="93*"/>
@@ -35,25 +35,6 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-
-
-
-            <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Margin="36,353,0,0" SelectionChanged="usersDataGrid_SelectionChanged" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left" Width="575" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="6">
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="courseIDColumn" Binding="{Binding CourseID, UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
-                    <DataGridTextColumn x:Name="courseCodeColumn" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" Header="Course Code" Width="Auto"/>
-                    <DataGridTextColumn x:Name="coursenameColumn" Binding="{Binding CourseName,UpdateSourceTrigger=PropertyChanged}" Header="Course Name" Width="Auto"/>
-                    <DataGridTextColumn x:Name="courseDescriptionColumn" Binding="{Binding Description,UpdateSourceTrigger=PropertyChanged}" Header="Description" Width="Auto"/>
-                    <DataGridTemplateColumn x:Name="examDateColumn" Header="Exam Date" Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ExamDate,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
             <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,191,340,0" Click="DeleteCourse_Click" Grid.Column="5" Grid.Row="2"/>
             <Button x:Name="UpdateCourse" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="88" Height="21" VerticalAlignment="Bottom" Margin="0,0,447,342"  Grid.Column="4" Click="UpdateCourse_Click" Grid.Row="2" Grid.ColumnSpan="2" />
             <Button x:Name="AddNewCourse" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="22" VerticalAlignment="Bottom" Margin="0,0,31,342" Click="AddNewCourse_Click" Grid.Column="4" Grid.Row="2"/>
@@ -94,5 +75,20 @@
                 </Grid>
             </GroupBox>
         </Grid>
+        <DataGrid x:Name="usersDataGrid" ItemsSource="{Binding AllCourses, UpdateSourceTrigger=PropertyChanged}"  AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,0,0,-225" SelectionChanged="usersDataGrid_SelectionChanged" Height="225" VerticalAlignment="Top" HorizontalAlignment="Left" Width="576" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="courseIDColumn" Binding="{Binding CourseID, UpdateSourceTrigger=PropertyChanged}" Header="ID" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn x:Name="courseCodeColumn" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" Header="Course Code" Width="Auto"/>
+                <DataGridTextColumn x:Name="coursenameColumn" Binding="{Binding CourseName, UpdateSourceTrigger=PropertyChanged}" Header="Course Name" Width="Auto"/>
+                <DataGridTextColumn x:Name="courseDescriptionColumn" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Description" Width="Auto"/>
+                <DataGridTemplateColumn x:Name="examDateColumn" Header="Exam Date" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding ExamDate, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

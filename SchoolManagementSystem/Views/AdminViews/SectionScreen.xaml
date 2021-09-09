@@ -5,17 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SchoolManagementSystem.Views"
       xmlns:SchoolManagementSystem="clr-namespace:SchoolManagementSystem" x:Class="SchoolManagementSystem.Views.AdminViews.SectionScreen"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="SectionScreen" Loaded="Page_Loaded">
+      mc:Ignorable="d"
+      Title="SectionScreen" Loaded="Page_Loaded" Height="436.5" Width="801.5">
 
 
-    <Grid>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="168,139,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click1" Height="26"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="509,139,0,0" VerticalAlignment="Top" Width="85" Click="Button_Clear" Height="26"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="282,139,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click3" Height="26"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="395,139,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click4" Height="26"/>
-        <DataGrid x:Name="sectionDataGrid"  ItemsSource="{Binding AllSections, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="30,211,22,67" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="sectionDataGrid_SelectionChanged">
+    <Grid Margin="10,0,75,10">
+        <Button Content="ADD" HorizontalAlignment="Left" Margin="243,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click1" Height="26"/>
+        <Button Content="CLEAR" HorizontalAlignment="Left" Margin="584,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Clear" Height="26"/>
+        <Button Content="UPDATE" HorizontalAlignment="Left" Margin="357,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click3" Height="26"/>
+        <Button Content="DELETE" HorizontalAlignment="Left" Margin="470,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click4" Height="26"/>
+        <DataGrid x:Name="sectionDataGrid"  ItemsSource="{Binding AllSections, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="90,245,46,61" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="sectionDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="sectionIDColumn" Binding="{Binding SectionID, UpdateSourceTrigger=PropertyChanged}" Header="Section ID" IsReadOnly="True" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="sectionNumColumn" Binding="{Binding SectionNum, UpdateSourceTrigger=PropertyChanged}" Header="Section Number" Width="SizeToHeader"/>
@@ -25,23 +24,27 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="course_code_combobox" HorizontalAlignment="Left" Margin="315,74,0,0" VerticalAlignment="Top" Width="97" DropDownClosed="course_code_combobox_DropDownClosed"/>
-        <Label Content="Course Code:" HorizontalAlignment="Left" Margin="222,70,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="roomNo_combobox" HorizontalAlignment="Left" Margin="542,74,0,0" VerticalAlignment="Top" Width="96" DropDownClosed="roomNo_combobox_DropDownClosed"/>
-        <Label Content="Room Number:" HorizontalAlignment="Left" Margin="436,70,0,0" VerticalAlignment="Top" Width="101"/>
-        <Label Content="Section Number:" HorizontalAlignment="Left" Margin="28,69,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="106">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.326"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <TextBox x:Name="sectionnumtxtbox" HorizontalAlignment="Left" Height="23" Margin="138,74,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="79"/>
-        <Label Content="Time" HorizontalAlignment="Left" Margin="658,74,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="timetxtbox" HorizontalAlignment="Left" Height="23" Margin="712,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="121" Margin="90,47,0,0" VerticalAlignment="Top" Width="580">
+            <Grid HorizontalAlignment="Left" Height="93" VerticalAlignment="Top" Width="534" Margin="19,0,0,0">
+                <Label Content="Section Number:" HorizontalAlignment="Left" Margin="17,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="106">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.326"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <TextBox x:Name="sectionnumtxtbox" HorizontalAlignment="Left" Height="23" Margin="127,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="79"/>
+                <ComboBox x:Name="course_code_combobox" HorizontalAlignment="Left" Margin="327,21,0,0" VerticalAlignment="Top" Width="97" DropDownClosed="course_code_combobox_DropDownClosed"/>
+                <Label Content="Course Code:" HorizontalAlignment="Left" Margin="234,17,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="roomNo_combobox" HorizontalAlignment="Left" Margin="125,59,0,0" VerticalAlignment="Top" Width="81" DropDownClosed="roomNo_combobox_DropDownClosed"/>
+                <Label Content="Room Number:" HorizontalAlignment="Left" Margin="19,55,0,0" VerticalAlignment="Top" Width="101"/>
+                <Label Content="Time:" HorizontalAlignment="Left" Margin="234,56,0,0" VerticalAlignment="Top" Width="72"/>
+                <TextBox x:Name="timetxtbox" HorizontalAlignment="Left" Height="23" Margin="327,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Page>

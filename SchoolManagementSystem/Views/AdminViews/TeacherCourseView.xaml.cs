@@ -258,18 +258,24 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private void Button_Click ( object sender, RoutedEventArgs e )
         {//add
+            if (notEmpty())
+            {
+                var CID = teacher_combo_box.Text.Split('-');
+                string user_id = CID[0];
+                string teacher_name = CID[1];
+                MessageBox.Show(user_id);
 
-            var CID = teacher_combo_box.Text.Split('-');
-            string user_id = CID[0];
-            string teacher_name = CID[1];
-            MessageBox.Show(user_id);
-
-            TeacherCourse.AddTeacherCourse(teacher_name,
-                                           course_combo_box.Text.ToString(),
-                                           courseID, 
-                                           sectionID,
-                                           Convert.ToInt32(user_id));
-            FillCourseDetails();
+                TeacherCourse.AddTeacherCourse(teacher_name,
+                                               course_combo_box.Text.ToString(),
+                                               courseID,
+                                               sectionID,
+                                               Convert.ToInt32(user_id));
+                FillCourseDetails();
+            }
+            else
+            {
+                MessageBox.Show("Please Select a course, section number and teacher name!!");
+            }
         }
 
         private void Button_Click_1 ( object sender, RoutedEventArgs e )
@@ -290,13 +296,41 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private void Button_Click_2 ( object sender, RoutedEventArgs e )
         {//delete
-            TeacherCourse.DeleteTeacherCourse(Convert.ToInt32(TIDTextBox.Text));
-            FillCourseDetails();
+            var CID = teacher_combo_box.Text.Split('-');
+            string user_id = CID[0];
+            string teacher_name = CID[1];
+
+            if (MessageBox.Show("Are You sure you want to delete ?", "Course", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    TeacherCourse.DeleteTeacherCourse(courseID,
+                                                      sectionID,
+                                                      Convert.ToInt32(user_id));
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                finally
+                {
+                    FillCourseDetails();
+                }
+            }
         }
 
         private void find_Click ( object sender, RoutedEventArgs e )
         {
-            FindTeacherCourse(Convert.ToInt32(TIDTextBox.Text));
+            if (TIDTextBox.Text != "")
+            {
+                FindTeacherCourse(Convert.ToInt32(TIDTextBox.Text));
+            }
+            else
+            {
+                MessageBox.Show("Please write the section number!!");
+            }
         }
 
         public void FindTeacherCourse ( int Tid )
@@ -339,6 +373,29 @@ namespace SchoolManagementSystem.Views.AdminViews
                 
 
             }
+        }
+
+        public bool notEmpty ()
+        {
+            if (course_combo_box.Text == "" && section_combo_box.Text == "" && teacher_combo_box.Text == "")
+            { return false; }
+            else { return true; }
+        } 
+
+        private void clear_btn_Click ( object sender, RoutedEventArgs e )
+        {
+            clear();
+        }
+
+        public void clear()
+        {
+            TIDTextBox.Text = "";
+            course_combo_box.SelectedItem = "";
+            course_combo_box.Text = "";
+            teacher_combo_box.Text = "";
+            teacher_combo_box.SelectedItem = "";
+            section_combo_box.Text = "";
+            section_combo_box.SelectedItem = "";
         }
     }
 }

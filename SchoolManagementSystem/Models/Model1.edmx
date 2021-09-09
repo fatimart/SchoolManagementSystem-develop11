@@ -47,6 +47,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="SectionID" Type="int" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
@@ -148,6 +149,18 @@
             </Principal>
             <Dependent Role="StudentGrade">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrade_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="SectionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -261,6 +274,10 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="StudentGrade" EntitySet="StudentGrade" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Section" Association="Self.FK_StudentGrade_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="StudentGrade" EntitySet="StudentGrade" />
+          </AssociationSet>
           <AssociationSet Name="FK_StudentGrade_User" Association="Self.FK_StudentGrade_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrade" />
@@ -330,6 +347,7 @@
           <NavigationProperty Name="Room" Relationship="Self.FK_Section_Room" FromRole="Section" ToRole="Room" />
           <NavigationProperty Name="TimeTables" Relationship="SchoolMSModel.FK_TimeTable_Section" FromRole="Section" ToRole="TimeTable" />
           <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Section" FromRole="Section" ToRole="TeacherCours" />
+          <NavigationProperty Name="StudentGrades" Relationship="SchoolMSModel.FK_StudentGrade_Section" FromRole="Section" ToRole="StudentGrade" />
         </EntityType>
         <EntityType Name="StudentGrade">
           <Key>
@@ -344,6 +362,8 @@
           <Property Name="year" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_StudentGrade_Course" FromRole="StudentGrade" ToRole="Course" />
           <NavigationProperty Name="User" Relationship="Self.FK_StudentGrade_User" FromRole="StudentGrade" ToRole="Users" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_StudentGrade_Section" FromRole="StudentGrade" ToRole="Section" />
         </EntityType>
         <EntityType Name="TeacherCours">
           <Key>
@@ -530,6 +550,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="TeacherCours" EntitySet="TeacherCourses" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Section" Association="SchoolMSModel.FK_StudentGrade_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Announcement">
           <Key>
@@ -601,6 +625,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentGrade_Section">
+          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
+          <End Type="SchoolMSModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -640,6 +676,7 @@
           <EntitySetMapping Name="StudentGrades">
             <EntityTypeMapping TypeName="SchoolMSModel.StudentGrade">
               <MappingFragment StoreEntitySet="StudentGrade">
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />

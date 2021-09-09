@@ -32,7 +32,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             schoolMSDataSetCourseTableAdapter.Fill(schoolMSDataSet.StudentGrade);
 
         }
-
+        /**
         private void Button_Click1(object sender, RoutedEventArgs e)
         {//add
             bool done = (bool)doneCheckBox.IsChecked;
@@ -47,7 +47,13 @@ namespace SchoolManagementSystem.Views.AdminViews
             {
                 bool done = (bool)doneCheckBox.IsChecked;
 
-                SGrades.UpdateStudentGrade(Convert.ToInt32(iDTextBox.Text), Convert.ToInt32(courseIDTextBox.Text), Convert.ToInt32(studentIDTextBox.Text), Convert.ToInt32(scoreTextBox.Text), Convert.ToInt32(attendanceTextBox.Text), done, Convert.ToInt32(yearIDTextBox.Text));
+                SGrades.UpdateStudentGrade(Convert.ToInt32(iDTextBox.Text),
+                    Convert.ToInt32(courseIDTextBox.Text),
+                    Convert.ToInt32(studentIDTextBox.Text), 
+                    Convert.ToInt32(scoreTextBox.Text), 
+                    Convert.ToInt32(attendanceTextBox.Text), 
+                    done, 
+                    Convert.ToInt32(yearIDTextBox.Text));
                 Load();
 
             }
@@ -59,7 +65,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
 
         }
-
+    **/
         private void Button_Click4(object sender, RoutedEventArgs e)
         {//delete
 

@@ -21,8 +21,10 @@ namespace SchoolManagementSystem.Models
         public int Attendance { get; set; }
         public bool Done { get; set; }
         public int year { get; set; }
+        public int SectionID { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual User User { get; set; }
+        public virtual Section Section { get; set; }
     }
 }

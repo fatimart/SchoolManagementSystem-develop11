@@ -19,6 +19,7 @@ namespace SchoolManagementSystem.Models
         {
             this.TimeTables = new HashSet<TimeTable>();
             this.TeacherCourses = new HashSet<TeacherCours>();
+            this.StudentGrades = new HashSet<StudentGrade>();
         }
     
         public int SectionID { get; set; }
@@ -33,5 +34,7 @@ namespace SchoolManagementSystem.Models
         public virtual ICollection<TimeTable> TimeTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherCours> TeacherCourses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentGrade> StudentGrades { get; set; }
     }
 }

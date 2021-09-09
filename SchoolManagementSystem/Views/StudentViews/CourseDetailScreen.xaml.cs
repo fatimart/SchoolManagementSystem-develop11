@@ -67,7 +67,7 @@ namespace SchoolManagementSystem.Views.StudentViews
                     string cCode = CID[1];
                     string CSection = CID[3];
                     SqlCommand command = new SqlCommand(
-                         "select StudentGrade.ID,StudentGrade.StudentID,StudentGrade.Score from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
+            "select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade, TimeTable, Users, Section where Users.UserID = TimeTable.UserID AND TimeTable.UserID = StudentGrade.StudentID AND Users.UserID = StudentGrade.StudentID AND TimeTable.SectionID = StudentGrade.SectionID AND TimeTable.SectionID = Section.SectionID AND Section.SectionID = StudentGrade.SectionID AND TimeTable.CourseID = StudentGrade.CourseID AND TimeTable.CourseID = Section.CourseID AND Section.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
                     dataAdapter = new SqlDataAdapter(command);
                     //   DataTable dt = new DataTable();
 

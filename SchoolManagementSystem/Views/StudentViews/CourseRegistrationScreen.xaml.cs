@@ -25,6 +25,7 @@ namespace SchoolManagementSystem.Views.StudentViews
     public partial class CourseRegistrationScreen : Page
     {
         TimeTableViewModel table = new TimeTableViewModel();
+        StudentGradeViewModel grade = new StudentGradeViewModel();
         public static int courseID;
         public static int sectionID;
 
@@ -57,6 +58,14 @@ namespace SchoolManagementSystem.Views.StudentViews
                                     Convert.ToDateTime(examDatetxt.Text.ToString()),
                                     sectionID
                                    );
+
+                grade.AddStudentGrade(courseID,
+                                      Convert.ToInt32(UserViewModel.userSession.UserID),
+                                      0,
+                                      0,
+                                      false,
+                                      2021,
+                                      sectionID);
                 FillDataGrid();
 
             }

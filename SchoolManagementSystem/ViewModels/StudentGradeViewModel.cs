@@ -108,7 +108,19 @@ namespace SchoolManagementSystem.ViewModels
                 
             }
         }
-        
+
+        private int _SectionID;
+        public int SectionID
+        {
+            get { return _SectionID; }
+            set
+            {
+                _SectionID = value;
+                OnPropertyChanged("yearID");
+
+            }
+        }
+
         public List<StudentGrade> GetAll1 ()
         {
             return ty.StudentGrades.ToList();
@@ -131,7 +143,7 @@ namespace SchoolManagementSystem.ViewModels
         }
 
         //MARK: DataAccess
-        public void AddStudentGrade( int CourseID, int StudentID, int Score, int Attendance, bool Done, int yearID)
+        public void AddStudentGrade( int CourseID, int StudentID, int Score, int Attendance, bool Done, int yearID, int sectionID)
         {
 
             StudentGrade SGrade1 = new StudentGrade();
@@ -141,14 +153,14 @@ namespace SchoolManagementSystem.ViewModels
             SGrade1.Attendance = Attendance;
             SGrade1.Done = Done;
             SGrade1.year = yearID;
-
+            SGrade1.SectionID = sectionID;
             ty.StudentGrades.Add(SGrade1);
             ty.SaveChanges();
 
         }
 
 
-        public void UpdateStudentGrade(int ID, int CourseID, int StudentID, int Score, int Attendance, bool Done, int yearID)
+        public void UpdateStudentGrade(int ID, int CourseID, int StudentID, int Score, int Attendance, bool Done, int yearID, int sectionID)
         {
 
             StudentGrade updateSGrade = (from m in ty.StudentGrades where m.ID == ID select m).Single();
@@ -159,6 +171,7 @@ namespace SchoolManagementSystem.ViewModels
             updateSGrade.Attendance = Attendance;
             updateSGrade.Done = Done;
             updateSGrade.year = yearID;
+            updateSGrade.SectionID = sectionID;
             ty.SaveChanges();
 
         }

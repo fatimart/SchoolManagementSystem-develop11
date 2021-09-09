@@ -127,21 +127,20 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public void DeleteTeacherCourse(int Tid)
+        public void DeleteTeacherCourse( int courseID, int sectionID, int userID )
         {
-
-            var DeleteTeacherCourses = ty.TeacherCourses.Where(m => m.TID == Tid).Single();
-            ty.TeacherCourses.Remove(DeleteTeacherCourses);
-            ty.SaveChanges();
-
+            if (checkifRecordTableExsist(courseID, sectionID, userID))
+            {
+                var DeleteTeacherCourses = ty.TeacherCourses.Where(o => o.CourseID == courseID && o.UserID == userID && o.SectionID == sectionID).Single();
+                ty.TeacherCourses.Remove(DeleteTeacherCourses);
+                ty.SaveChanges();
+            }
         }
         public bool CheckTeacherCourseID(int Tid)
         {
             try
             {
                 var TCourse1 = ty.TeacherCourses.Where(m => m.TID == Tid).Single();
-                //var TTable = ty.TimeTables.Where(m => m.UserID == UserID).Single();
-
                 return true;
             }
             catch (Exception ex)
@@ -151,7 +150,20 @@ namespace SchoolManagementSystem.ViewModels
             return false;
 
         }
-       
+
+        public bool checkifRecordTableExsist ( int courseID, int sectionID, int userID )
+        {
+            if (ty.TeacherCourses.Any(o => o.CourseID == courseID && o.UserID == userID && o.SectionID == sectionID ))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
 
     }
 }

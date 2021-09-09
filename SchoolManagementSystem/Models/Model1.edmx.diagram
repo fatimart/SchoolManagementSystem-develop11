@@ -25,6 +25,7 @@
         <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Section" />
         <AssociationConnector Association="SchoolMSModel.FK_TeacherCourses_Section" />
         <AssociationConnector Association="SchoolMSModel.FK_TeacherCourses_Users" />
+        <AssociationConnector Association="SchoolMSModel.FK_StudentGrade_Section" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

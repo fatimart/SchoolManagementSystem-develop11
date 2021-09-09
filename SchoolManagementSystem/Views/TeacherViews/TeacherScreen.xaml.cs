@@ -50,7 +50,7 @@ namespace SchoolManagementSystem.Views.TeacherViews
                 try
                 {
                     SqlCommand command = new SqlCommand(
-                         "select Course.CourseID,Course.CourseName,Course.CourseCode,Section.SectionNum,Section.Time from Course, Section, TeacherCourses where TeacherCourses.UserID='" + UserViewModel.userSession.UserID + "'And Course.CourseID=TeacherCourses.CourseID AND Section.SectionID= TeacherCourses.SectionID AND Section.CourseID=TeacherCourses.CourseID AND Course.CourseID=Section.CourseID", connection);
+                         "select Course.CourseID,Course.CourseName,Course.CourseCode,Section.SectionNum,Section.Time from Course, Section, TeacherCourses where TeacherCourses.UserID='" + UserViewModel.userSession.UserID + "'And Course.CourseID=TeacherCourses.CourseID AND Section.CourseID=TeacherCourses.CourseID AND Course.CourseID=Section.CourseID", connection);
 
                     SqlDataAdapter da = new SqlDataAdapter(command);
                     DataTable dt = new DataTable();
@@ -194,7 +194,7 @@ namespace SchoolManagementSystem.Views.TeacherViews
             string cCode = CID[1];
             string CSection = CID[3];
             SqlConnection con = new SqlConnection(strcon);
-            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade,TimeTable,Users where TimeTable.UserID=StudentGrade.StudentID AND TimeTable.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
+            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade, TimeTable, Users, Section where Users.UserID = TimeTable.UserID AND TimeTable.UserID = StudentGrade.StudentID AND Users.UserID = StudentGrade.StudentID AND TimeTable.SectionID = StudentGrade.SectionID AND TimeTable.SectionID = Section.SectionID AND Section.SectionID = StudentGrade.SectionID AND TimeTable.CourseID = StudentGrade.CourseID AND TimeTable.CourseID = Section.CourseID AND Section.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", con);
             dt1 = new DataTable();
             sda1.Fill(dt1);
             dGrid.ItemsSource = dt1.DefaultView;

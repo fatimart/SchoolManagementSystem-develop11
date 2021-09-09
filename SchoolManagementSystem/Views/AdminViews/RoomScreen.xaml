@@ -11,7 +11,7 @@
 
     <Grid>
 
-        <DataGrid x:Name="roomDataGrid" ItemsSource="{Binding AllRooms, UpdateSourceTrigger=PropertyChanged}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,0,588,10" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="roomDataGrid_SelectionChanged">
+        <DataGrid x:Name="roomDataGrid" ItemsSource="{Binding AllRooms, UpdateSourceTrigger=PropertyChanged}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="54,221,76,41" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="roomDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="roomIDColumn" Width="SizeToHeader" IsReadOnly="True" Header="Room ID" Binding="{Binding RoomID, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn x:Name="roomNumColumn" Width="SizeToHeader" Header="Room Num" Binding="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged}"/>
@@ -26,14 +26,18 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Room ID:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="roomIDTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding RoomID, Mode=OneWay}" VerticalAlignment="Center" Width="120"/>
-            <Label Content="Room Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox x:Name="roomNumTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding RoomNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
         <Button Content="add" HorizontalAlignment="Left" Margin="250,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click1"/>
         <Button Content="clear" HorizontalAlignment="Left" Margin="550,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Clear"/>
         <Button Content="Update" HorizontalAlignment="Left" Margin="350,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click3"/>
         <Button Content="delete" HorizontalAlignment="Left" Margin="450,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click4"/>
+        <GroupBox Header="Room" HorizontalAlignment="Left" Height="123" Margin="54,33,0,0" VerticalAlignment="Top" Width="592">
+            <Grid HorizontalAlignment="Left" Height="103" Margin="10,0,0,0" VerticalAlignment="Top" Width="569">
+                <Label Content="Room ID:" Grid.Column="0" HorizontalAlignment="Left" Margin="22,21,0,55" Grid.Row="0" VerticalAlignment="Center" Height="27"/>
+                <TextBox x:Name="roomIDTextBox" HorizontalAlignment="Left" Height="19" Margin="109,21,0,63" Grid.Row="0" Text="{Binding RoomID, Mode=OneWay}" VerticalAlignment="Center" Width="120"/>
+                <Label Content="Room Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="22,53,0,22" VerticalAlignment="Center" Height="28"/>
+                <TextBox x:Name="roomNumTextBox" HorizontalAlignment="Left" Height="24" Margin="109,57,0,22" Text="{Binding RoomNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Page>
