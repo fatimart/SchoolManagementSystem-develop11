@@ -18,7 +18,7 @@
         </DataGrid>
 
         <!--<Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="656,148,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>-->
-        <Button x:Name="savetry2" Content="Save" HorizontalAlignment="Left" Margin="657,186,0,0" VerticalAlignment="Top" Width="76" Click="savetry2_Click"/>
+        <Button x:Name="savetry2" Content="Save" HorizontalAlignment="Left" Margin="655,148,0,0" VerticalAlignment="Top" Width="76" Click="savetry2_Click"/>
 
     </Grid>
 </Page>

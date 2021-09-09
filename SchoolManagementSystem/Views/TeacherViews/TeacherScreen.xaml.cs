@@ -50,7 +50,8 @@ namespace SchoolManagementSystem.Views.TeacherViews
                 try
                 {
                     SqlCommand command = new SqlCommand(
-                         "select Course.CourseID,Course.CourseName,Course.CourseCode,TimeTable.SectionNo,TimeTable.Time,TimeTable.RoomNo from Course,TimeTable,Users where Users.UserID='" + UserViewModel.userSession.UserID + "'AND Users.UserID=TimeTable.UserID And Course.CourseID=TimeTable.CourseID", connection);
+                         "select Course.CourseID,Course.CourseName,Course.CourseCode,Section.SectionNum,Section.Time from Course, Section, TeacherCourses where TeacherCourses.UserID='" + UserViewModel.userSession.UserID + "'And Course.CourseID=TeacherCourses.CourseID AND Section.SectionID= TeacherCourses.SectionID AND Section.CourseID=TeacherCourses.CourseID AND Course.CourseID=Section.CourseID", connection);
+
                     SqlDataAdapter da = new SqlDataAdapter(command);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -80,13 +81,11 @@ namespace SchoolManagementSystem.Views.TeacherViews
                     SqlCommand command = new SqlCommand(
                          "select StudentGrade.ID,StudentGrade.StudentID,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Course,StudentGrade where Course.CourseID=StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
                     dataAdapter = new SqlDataAdapter(command);
-                    //   DataTable dt = new DataTable();
 
 
                     dataAdapter.Fill(dt1);
                     dGrid.ItemsSource = dt1.DefaultView;
 
-                    //   connection.Close();
                     CourseTxt.Content = cCode;
                     SectionTxt.Text = CSection;
 
@@ -119,7 +118,7 @@ namespace SchoolManagementSystem.Views.TeacherViews
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("select Concat(Course.CourseID,'-',TimeTable.CourseCode,'-Section-',TimeTable.SectionNo) AS CodeSection from Course, TimeTable, Users where Users.UserID = '" + UserViewModel.userSession.UserID + "'AND Users.UserID = TimeTable.UserID AND Course.CourseID = TimeTable.CourseID", con);
+                SqlCommand cmd = new SqlCommand("select Concat(Course.CourseID,'-',Course.CourseCode,'-Section-',Section.SectionNum) AS CodeSection from Course, Section,TeacherCourses where TeacherCourses.UserID = '" + UserViewModel.userSession.UserID + "'AND Course.CourseID = Section.CourseID AND TeacherCourses.SectionID=Section.SectionID", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt); //db have all the courses names
@@ -128,10 +127,6 @@ namespace SchoolManagementSystem.Views.TeacherViews
                 course_combo_box.SelectedIndex = -1;
                 course_combo_box.DisplayMemberPath = "CodeSection";
                 course_combo_box.SelectedValuePath = "CourseID";
-                //    var CID = course_combo_box.Text.Split('-');
-
-
-
 
 
                 con.Close();
@@ -164,8 +159,6 @@ namespace SchoolManagementSystem.Views.TeacherViews
                 CourseDataFill1();
             }
             else { return; }
-
-            //  Button_Click.Visibility = Visibility.Visible;
         }
 
         private void Reset_Click ( object sender, RoutedEventArgs e )
@@ -201,7 +194,7 @@ namespace SchoolManagementSystem.Views.TeacherViews
             string cCode = CID[1];
             string CSection = CID[3];
             SqlConnection con = new SqlConnection(strcon);
-            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from Users,Course,StudentGrade where Users.UserID=StudentGrade.StudentID AND Course.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
+            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade,TimeTable,Users where TimeTable.UserID=StudentGrade.StudentID AND TimeTable.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
             dt1 = new DataTable();
             sda1.Fill(dt1);
             dGrid.ItemsSource = dt1.DefaultView;
@@ -246,13 +239,13 @@ namespace SchoolManagementSystem.Views.TeacherViews
                     Done = Convert.ToBoolean(tb4.IsChecked.Value.ToString()),
                 };
                 StudentGradeViewModel SGVM = new StudentGradeViewModel();
-                /**SGVM.UpdateStudentGrade1(
+                SGVM.UpdateStudentGrade1(
                                        Sgrades.ID,
                                        Sgrades.StudentID,
                                        Sgrades.Score,
                                        Sgrades.Attendance,
                                        Sgrades.Done
-                                    );**/
+                                    );
             }
             MessageBox.Show("The Database Updated succesfully");
 

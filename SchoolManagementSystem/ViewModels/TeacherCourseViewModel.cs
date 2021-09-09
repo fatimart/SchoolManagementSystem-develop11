@@ -1,7 +1,6 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Views.AdminViews;
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,56 +11,93 @@ namespace SchoolManagementSystem.ViewModels
     class TeacherCourseViewModel :ViewModelBase
     {
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
-        public TeacherCours TCourse;
-        public TeacherCourseView TCourse1;
 
+        public TeacherCours TCourse;
+
+        private int _TID;
         public int TID
         {
-            get { return TCourse.TID; }
+            get { return _TID; }
             set
             {
-                if (TCourse.TID != value)
-                {
-                    TCourse.TID = value;
+                _TID = value;
                     OnPropertyChanged("TID");
-                }
+               
             }
         }
+
+        private string _CourseID;
+        public string CourseID
+        {
+            get { return _CourseID; }
+            set
+            {
+                _CourseID = value;
+                OnPropertyChanged("CourseCode");
+
+            }
+        }
+        private string _SectionID;
+        public string SectionID
+        {
+            get { return _SectionID; }
+            set
+            {
+                _SectionID = value;
+                OnPropertyChanged("CourseCode");
+
+            }
+        }
+
+        private string _TeacherName;
         public string TeacherName
         {
-            get { return TCourse.TeacherName; }
+            get { return _TeacherName; }
             set
             {
-                if (TCourse.TeacherName != value)
-                {
-                    TCourse.TeacherName = value;
+                _TeacherName = value;
                     OnPropertyChanged("TeacherName");
-                }
+                
             }
         }
+
+        private string _CourseCode;
         public string CourseCode
         {
-            get { return TCourse.CourseCode; }
+            get { return _CourseCode; }
             set
             {
-                if (TCourse.CourseCode != value)
-                {
-                    TCourse.CourseCode = value;
+                _CourseCode = value;
                     OnPropertyChanged("CourseCode");
-                }
+                
             }
         }
-        public void AddTeacherCourse(string teacherName,string courseCode)
+
+        private string _UserID;
+        public string UserID
+        {
+            get { return _UserID; }
+            set
+            {
+                _UserID = value;
+                OnPropertyChanged("CourseCode");
+
+            }
+        }
+
+        //MARK: DataAccess (Add/Edit/Delete)
+
+        public void AddTeacherCourse(string teacherName,string courseCode, int CourseID, int sectionID, int UserID )
         {
             try
-
 
             {
                TeacherCours TCourse1= new TeacherCours();
                 TCourse1.TeacherName = teacherName;
                 TCourse1.CourseCode = courseCode;
-             
-
+                TCourse1.CourseID = CourseID;
+                TCourse1.SectionID = sectionID;
+                TCourse1.UserID = UserID;
 
                 ty.TeacherCourses.Add(TCourse1);
                 ty.SaveChanges();
@@ -73,18 +109,20 @@ namespace SchoolManagementSystem.ViewModels
                 MessageBox.Show(ex.InnerException.Message);
             }
 
-
         }
 
 
-        public void UpdateTeacherCourse(int tid, string teacherName, string courseCode)
+        public void UpdateTeacherCourse(int tid, string teacherName, string courseCode, int CourseID, int sectionID, int UserID)
         {
 
             TeacherCours UpdateTeacherCourse1 = (from m in ty.TeacherCourses where m.TID == tid select m).Single();
             UpdateTeacherCourse1.TID = tid;
             UpdateTeacherCourse1.TeacherName = teacherName;
             UpdateTeacherCourse1.CourseCode = courseCode;
-    
+            UpdateTeacherCourse1.CourseID = CourseID;
+            UpdateTeacherCourse1.SectionID = sectionID;
+            UpdateTeacherCourse1.UserID = UserID;
+
             ty.SaveChanges();
 
         }
@@ -113,132 +151,7 @@ namespace SchoolManagementSystem.ViewModels
             return false;
 
         }
-        public void FindTeacherCourse(int Tid)
-        {
-            try
-            {
-
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                using (SqlConnection connection = new SqlConnection(strcon))
-                {
-                    SqlCommand cmd = new SqlCommand("select CourseCode,TeacherName from TeacherCourses where TID='" + Tid + "'", connection);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-
-                    if (dt.Rows.Count > 0)
-                    {
-                        
-                         TCourse1.course_combo_box.SelectedValue = dt.Rows[0]["CourseCode"].ToString();
-                        TCourse1.teacher_combo_box.SelectedValue = dt.Rows[0]["TeacherName"].ToString();
-                  
-                    }
-                    connection.Close();
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-
-        }
-        public void FillCourseBox()
-        {
-            try
-            {
-
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode from Course;", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                TCourse1.course_combo_box.ItemsSource = dt.DefaultView;
-                TCourse1.course_combo_box.SelectedIndex = -1;
-                TCourse1.course_combo_box.DisplayMemberPath = "CourseCode";
-                TCourse1.course_combo_box.SelectedValuePath = "CourseCode";
-
-
-                con.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
-        public void FillTeacherBox()
-        {
-            try
-            {
-                // teacher_combo_box.Items.Clear();
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("select Name from Users where Type='" + "teacher" + "'", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the teachers names
-
-                TCourse1.teacher_combo_box.ItemsSource = dt.DefaultView;
-                TCourse1.teacher_combo_box.SelectedIndex = -1;
-                TCourse1.teacher_combo_box.DisplayMemberPath = "Name";
-                TCourse1.teacher_combo_box.SelectedValuePath = "Name";
-
-
-                con.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
-        public void FillCourseDetails()
-        {
-            try
-            {
-
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                using (SqlConnection connection = new SqlConnection(strcon))
-                {
-                    SqlCommand cmd = new SqlCommand("select * from TeacherCourses ", connection);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    TCourse1.dtGrid.ItemsSource = dt.DefaultView;
-                    connection.Close();
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
-
-
-
+       
 
     }
 }

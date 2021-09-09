@@ -90,6 +90,8 @@
                 <Button x:Name="register" Content="Register" HorizontalAlignment="Left" Margin="262,206,0,0" VerticalAlignment="Top" Width="74" Click="Register_Click"/>
                 <Label Content="Course Code:" HorizontalAlignment="Left" Margin="57,20,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="cancel" Content="Cancel" HorizontalAlignment="Left" Margin="363,206,0,0" VerticalAlignment="Top" Width="75" Click="cancel_Click"/>
+                <ComboBox x:Name="sectionno_combo_box" HorizontalAlignment="Left" Margin="505,25,0,0" VerticalAlignment="Top" Width="120" Height="22" DropDownClosed="sectionno_combo_box_DropDownClosed"/>
+                <Label Content="Section Number:" HorizontalAlignment="Left" Margin="378,20,0,0" VerticalAlignment="Top"/>
 
             </Grid>
         </GroupBox>

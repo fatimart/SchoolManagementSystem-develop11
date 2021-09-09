@@ -22,6 +22,9 @@
         <EntityTypeShape EntityType="SchoolMSModel.Announcement" Width="1.5" PointX="8.375" PointY="3.75" />
         <AssociationConnector Association="SchoolMSModel.FK_Announcement_Course" />
         <AssociationConnector Association="SchoolMSModel.FK_TeacherCourses_Course" />
+        <AssociationConnector Association="SchoolMSModel.FK_TimeTable_Section" />
+        <AssociationConnector Association="SchoolMSModel.FK_TeacherCourses_Section" />
+        <AssociationConnector Association="SchoolMSModel.FK_TeacherCourses_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

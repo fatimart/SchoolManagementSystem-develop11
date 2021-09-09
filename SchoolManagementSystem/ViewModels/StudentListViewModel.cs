@@ -159,8 +159,6 @@ namespace SchoolManagementSystem.ViewModels
         public List<User> GetAll1 ()
         {
             return ty.Users.Where(m => m.Type == "Student").ToList();
-
-
         }
 
         public ObservableCollection<User> GetAll ()
@@ -184,7 +182,8 @@ namespace SchoolManagementSystem.ViewModels
             return AllUsers;
         }
 
-        
+
+
 
         public void InsertUser ( string username, string name, string email, decimal cpr, string address, DateTime dob, string password, string contactNo )
         {

@@ -58,19 +58,22 @@
             <PropertyRef Name="TID" />
           </Key>
           <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="SectionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
             <PropertyRef Name="TimeTableID" />
           </Key>
+          <Property Name="TimeTableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="SectionID" Type="int" Nullable="false" />
           <Property Name="RoomNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
-          <Property Name="TimeTableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CourseName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="50" Nullable="false" />
@@ -172,6 +175,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeacherCourses_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TimeTable_Course1">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
@@ -181,6 +208,18 @@
             </Principal>
             <Dependent Role="TimeTable">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="SectionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -230,8 +269,20 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="TeacherCourses" EntitySet="TeacherCourses" />
           </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Section" Association="Self.FK_TeacherCourses_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Users" Association="Self.FK_TeacherCourses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
+          </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Course1" Association="Self.FK_TimeTable_Course1">
             <End Role="Course" EntitySet="Course" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Section" Association="Self.FK_TimeTable_Section">
+            <End Role="Section" EntitySet="Section" />
             <End Role="TimeTable" EntitySet="TimeTable" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Users" Association="Self.FK_TimeTable_Users">
@@ -277,6 +328,8 @@
           <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Section_Course" FromRole="Section" ToRole="Course" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Section_Room" FromRole="Section" ToRole="Room" />
+          <NavigationProperty Name="TimeTables" Relationship="SchoolMSModel.FK_TimeTable_Section" FromRole="Section" ToRole="TimeTable" />
+          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Section" FromRole="Section" ToRole="TeacherCours" />
         </EntityType>
         <EntityType Name="StudentGrade">
           <Key>
@@ -301,6 +354,10 @@
           <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="SchoolMSModel.FK_TeacherCourses_Course" FromRole="TeacherCours" ToRole="Course" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_TeacherCourses_Section" FromRole="TeacherCours" ToRole="Section" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="SchoolMSModel.FK_TeacherCourses_Users" FromRole="TeacherCours" ToRole="User" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
@@ -319,6 +376,8 @@
           <Property Name="Examdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_TimeTable_Course1" FromRole="TimeTable" ToRole="Course" />
           <NavigationProperty Name="User" Relationship="Self.FK_TimeTable_Users" FromRole="TimeTable" ToRole="Users" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_TimeTable_Section" FromRole="TimeTable" ToRole="Section" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -336,6 +395,7 @@
           <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_User" FromRole="Users" ToRole="StudentGrade" />
           <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Users" FromRole="Users" ToRole="TimeTable" />
+          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Users" FromRole="User" ToRole="TeacherCours" />
         </EntityType>
         <EntityType Name="Year">
           <Key>
@@ -458,6 +518,18 @@
             <End Role="Course" EntitySet="Courses" />
             <End Role="TeacherCours" EntitySet="TeacherCourses" />
           </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Section" Association="SchoolMSModel.FK_TimeTable_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="TimeTable" EntitySet="TimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Section" Association="SchoolMSModel.FK_TeacherCourses_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="TeacherCours" EntitySet="TeacherCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Users" Association="SchoolMSModel.FK_TeacherCourses_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TeacherCours" EntitySet="TeacherCourses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Announcement">
           <Key>
@@ -490,6 +562,42 @@
             </Principal>
             <Dependent Role="TeacherCours">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Section">
+          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
+          <End Type="SchoolMSModel.TimeTable" Role="TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Section">
+          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
+          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TeacherCours">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Users">
+          <End Type="SchoolMSModel.User" Role="User" Multiplicity="1" />
+          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TeacherCours">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -545,6 +653,8 @@
           <EntitySetMapping Name="TeacherCourses">
             <EntityTypeMapping TypeName="SchoolMSModel.TeacherCours">
               <MappingFragment StoreEntitySet="TeacherCourses">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="TID" ColumnName="TID" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
@@ -555,6 +665,7 @@
           <EntitySetMapping Name="TimeTables">
             <EntityTypeMapping TypeName="SchoolMSModel.TimeTable">
               <MappingFragment StoreEntitySet="TimeTable">
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />

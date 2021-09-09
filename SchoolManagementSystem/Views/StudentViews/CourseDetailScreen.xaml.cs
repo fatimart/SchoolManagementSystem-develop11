@@ -116,7 +116,6 @@ namespace SchoolManagementSystem.Views.StudentViews
                 course_combo_box.SelectedIndex = -1;
                 course_combo_box.DisplayMemberPath = "CodeSection";
                 course_combo_box.SelectedValuePath = "CourseID";
-                //    var CID = course_combo_box.Text.Split('-');
 
                 con.Close();
             }
@@ -126,8 +125,6 @@ namespace SchoolManagementSystem.Views.StudentViews
                 MessageBox.Show(ex.Message);
 
             }
-
-
         }
 
         private void Course_combo_box_DropDownClosed ( object sender, EventArgs e )

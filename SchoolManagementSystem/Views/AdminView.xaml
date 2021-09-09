@@ -15,10 +15,10 @@
                 <Frame Name="course" Source="AdminViews/CourseListScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
-            <!--<TabItem Header="TeacherCourse">
+            <TabItem Header="TeacherCourse">
                 <Frame Name="teacherc" Source="AdminViews/TeacherCourseView.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
-            </TabItem>-->
-            
+            </TabItem>
+
             <TabItem Header="Room Screen">
                 <Frame Name="room" Source="AdminViews/RoomScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
@@ -27,9 +27,9 @@
                 <Frame Name="section" Source="AdminViews/SectionScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
             </TabItem>
 
-            <!--<TabItem Header="Upload Users">
+            <TabItem Header="Upload Users">
                 <Frame Name="usersuplod" Source="AdminViews/UsersUpload.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>
-            </TabItem>-->
+            </TabItem>
 
             <TabItem Header="Year Screen">
                 <Frame Name="Year" Source="AdminViews/YearScreen.xaml" Margin="0,0,0,0" NavigationUIVisibility="Hidden" ></Frame>

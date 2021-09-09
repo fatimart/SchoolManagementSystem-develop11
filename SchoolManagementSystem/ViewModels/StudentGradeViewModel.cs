@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
@@ -12,7 +10,6 @@ namespace SchoolManagementSystem.ViewModels
     class StudentGradeViewModel : ViewModelBase
     {
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
-        public StudentGrade SGrades ;
 
         private ObservableCollection<StudentGrade> _GradeRecords;
         public ObservableCollection<StudentGrade> AllGrades
@@ -88,7 +85,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
-    private bool _Done;
+        private bool _Done;
         public bool Done
         {
             get { return _Done; }

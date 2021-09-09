@@ -68,7 +68,6 @@ namespace SchoolManagementSystem.ViewModels
         }
 
         private int _Year;
-
         public int Year
         {
             get { return _Year; }
@@ -153,6 +152,18 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        private int _SectionID;
+        public int SectionID
+        {
+            get { return _SectionID; }
+            set
+            {
+                _SectionID = value;
+                OnPropertyChanged("SectionNo");
+
+            }
+        }
+
         private DateTime _Examdate;
         public DateTime Examdate
         {
@@ -187,7 +198,8 @@ namespace SchoolManagementSystem.ViewModels
            
         }
 
-        public void InsertTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName, string coursename, string time, string courseCode, int SectionNo, DateTime Examdate)
+        public void InsertTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName, 
+            string coursename, string time, string courseCode, int SectionNo, DateTime Examdate, int sectionID)
         {
             if (checkifRecordTableExsist(courseCode, userID))
             {
@@ -206,6 +218,7 @@ namespace SchoolManagementSystem.ViewModels
                     TTable.CourseCode = courseCode;
                     TTable.SectionNo = SectionNo;
                     TTable.Examdate = Examdate;
+                    TTable.SectionID = sectionID;
 
                     ty.TimeTables.Add(TTable);
                     ty.SaveChanges();
@@ -247,7 +260,9 @@ namespace SchoolManagementSystem.ViewModels
                 Time = data.Time,
                 CourseCode = data.CourseCode,
                 SectionNo = data.SectionNo,
-                Examdate = Convert.ToDateTime(data.Examdate)
+                Examdate = Convert.ToDateTime(data.Examdate),
+                SectionID = Convert.ToInt32(data.SectionID)
+
 
             }));
 
@@ -268,7 +283,8 @@ namespace SchoolManagementSystem.ViewModels
 
 
         //MARK: Need to edit based on the updtaed database
-        public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename, string time, string courseCode, int SectionNo, DateTime Examdate )
+        public void AddTimeTable(int userID, int CourseID, string RoomID, int YearID,  string TeacherName, string coursename,
+            string time, string courseCode, int SectionNo, DateTime Examdate, int sectionID )
         {
 
             try
@@ -284,6 +300,7 @@ namespace SchoolManagementSystem.ViewModels
                 TTable.CourseCode = courseCode;
                 TTable.SectionNo = SectionNo;
                 TTable.Examdate = Examdate;
+                TTable.SectionID = sectionID;
 
 
                 ty.TimeTables.Add(TTable);

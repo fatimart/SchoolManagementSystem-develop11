@@ -1,4 +1,5 @@
-﻿using SchoolManagementSystem.ViewModels;
+﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,12 +25,15 @@ namespace SchoolManagementSystem.Views.StudentViews
     public partial class CourseRegistrationScreen : Page
     {
         TimeTableViewModel table = new TimeTableViewModel();
+        public static int courseID;
+        public static int sectionID;
 
         public CourseRegistrationScreen ()
         {
             InitializeComponent();
             FillDataGrid();
             fillCourseBox();
+
 
         }
 
@@ -42,7 +46,7 @@ namespace SchoolManagementSystem.Views.StudentViews
 
                 table.InsertTimeTable(
                                     Convert.ToInt32(UserViewModel.userSession.UserID),
-                                    Convert.ToInt32(txtcourseID.Text),
+                                    courseID,
                                     roomNotxt.Text.ToString(),
                                     2021,
                                     teachernametxt.Text.ToString(),
@@ -50,7 +54,8 @@ namespace SchoolManagementSystem.Views.StudentViews
                                     timetxt.Text.ToString(),
                                     course_combo_box.Text.ToString(),
                                     Convert.ToInt32(sectionnotxt.Text.ToString()),
-                                    Convert.ToDateTime(examDatetxt.Text.ToString())
+                                    Convert.ToDateTime(examDatetxt.Text.ToString()),
+                                    sectionID
                                    );
                 FillDataGrid();
 
@@ -121,37 +126,109 @@ namespace SchoolManagementSystem.Views.StudentViews
             }
         }
 
-        
+        public void fillSectionComboBox ()
+        {
+            if (courseID >0)
+            {
+                try
+                {
+
+                    string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                    SqlConnection con = new SqlConnection(strcon);
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                    SqlCommand cmd = new SqlCommand("select SectionNum, SectionID, CourseID from Section where CourseID = '" + courseID + "'", con);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt); //db have all the courses names
+
+                    sectionno_combo_box.ItemsSource = dt.DefaultView;
+                    sectionno_combo_box.SelectedIndex = -1;
+                    sectionno_combo_box.DisplayMemberPath = "SectionNum";
+                    sectionno_combo_box.SelectedValuePath = "SectionID";
+
+                    con.Close();
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
+
+            }
+        }
+
+
 
         //MARK: to fill the course detail group box with the selected course code
         public void fillCourseDetails ()
         {
+            if (courseID > 0 && sectionID > 0)
+            {
+                try
+                {
+
+                    string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                    using (SqlConnection connection = new SqlConnection(strcon))
+                    {
+                        SqlCommand cmd = new SqlCommand("select TeacherCourses.TeacherName, Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room, TeacherCourses where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND TeacherCourses.CourseID=Course.CourseID AND Course.CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
+                            examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString();
+                            sectionnotxt.Text = dt.Rows[0]["SectionNum"].ToString();
+                            timetxt.Text = dt.Rows[0]["Time"].ToString();
+                            roomNotxt.Text = dt.Rows[0]["RoomNum"].ToString();
+                            teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
+                            txtcourseID.Text = dt.Rows[0]["CourseID"].ToString();
+
+                        }
+                        connection.Close();
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
+            }
+        }
+
+
+        //MARK: get course id
+        public void getcourseIDD ()
+        {
+
             try
             {
-
                 string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
-                using (SqlConnection connection = new SqlConnection(strcon))
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
                 {
-                    SqlCommand cmd = new SqlCommand("select TeacherCourses.TeacherName, Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room, TeacherCourses where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND TeacherCourses.CourseID=Course.CourseID AND Course.CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-
-                    if (dt.Rows.Count > 0)
-                    {
-                        coursenametxt.Text = dt.Rows[0]["CourseName"].ToString();
-                        examDatetxt.Text = dt.Rows[0]["ExamDate"].ToString();
-                        sectionnotxt.Text = dt.Rows[0]["SectionNum"].ToString();
-                        timetxt.Text = dt.Rows[0]["Time"].ToString();
-                        roomNotxt.Text = dt.Rows[0]["RoomNum"].ToString();
-                        teachernametxt.Text = dt.Rows[0]["TeacherName"].ToString();
-                        txtcourseID.Text = dt.Rows[0]["CourseID"].ToString();
-
-                    }
-                    connection.Close();
+                    con.Open();
                 }
+
+                SqlCommand cmd = new SqlCommand("SELECT CourseCode,CourseID from Course where CourseCode='" + course_combo_box.Text.ToString() + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt); //db have all the courses names
+
+                courseID = Convert.ToInt32(dt.Rows[0]["CourseID"].ToString());
+
+                con.Close();
             }
 
             catch (Exception ex)
@@ -161,9 +238,44 @@ namespace SchoolManagementSystem.Views.StudentViews
             }
         }
 
-       
+        //MARK: Get Section Id
+        public void getSectionIDD ()
+        {
+
+            try
+            {
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT SectionNum,SectionID from Section where SectionNum='" + sectionno_combo_box.Text.ToString() + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt); //db have all the courses names
+
+                sectionID = Convert.ToInt32(dt.Rows[0]["SectionID"].ToString());
+
+                con.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
 
         private void cancel_Click ( object sender, RoutedEventArgs e )
+        {
+            Clear();
+        }
+
+        public void Clear()
         {
             course_combo_box.SelectedItem = "";
             course_combo_box.Text = "";
@@ -174,22 +286,56 @@ namespace SchoolManagementSystem.Views.StudentViews
             roomNotxt.Text = "";
             teachernametxt.Text = "";
             txtcourseID.Text = "";
+            sectionno_combo_box.Text = "";
+            sectionno_combo_box.SelectedItem = "";
         }
-
         public bool notEmpty ()
         {
-            if(course_combo_box.Text == "" )
+            if(course_combo_box.Text == "" && sectionno_combo_box.Text == "")
             { return false; }
             else { return true; }
         }
 
         private void course_combo_box_DropDownClosed ( object sender, EventArgs e )
         {
-            fillCourseDetails();
+            if (course_combo_box.Text != "")
+            {
+                getcourseIDD();
+                fillSectionComboBox();
+
+            }
+            else
+            {
+                Clear();
+
+            }
+            if (sectionno_combo_box.Text == "")
+            {
+                coursenametxt.Text = "";
+                examDatetxt.Text = "";
+                sectionnotxt.Text = "";
+                timetxt.Text = "";
+                roomNotxt.Text = "";
+                teachernametxt.Text = "";
+                txtcourseID.Text = "";
+                sectionno_combo_box.Text = "";
+                sectionno_combo_box.SelectedItem = "";
+            }
             course_details_groupbox.Visibility = Visibility.Visible;
 
 
         }
+
+        private void sectionno_combo_box_DropDownClosed ( object sender, EventArgs e )
+        {
+            if (sectionno_combo_box.Text != "")
+            {
+                getSectionIDD();
+                fillCourseDetails();
+
+            }
+        }
+
 
         private void btnRemove_Click ( object sender, RoutedEventArgs e )
         {
@@ -214,5 +360,6 @@ namespace SchoolManagementSystem.Views.StudentViews
             }
         }
 
+        
     }
 }
