@@ -84,7 +84,7 @@ namespace SchoolManagementSystem.Views.StudentViews
             using (SqlConnection connection = new SqlConnection(strcon))
             {
                 SqlCommand command = new SqlCommand(
-                     "select TimeTable.CourseCode,TimeTable.CourseName,TimeTable.SectionNo,TimeTable.RoomNo, TimeTable.Time, Course.Examdate,TimeTable.TeacherName from TimeTable, Course, Section where Course.CourseID=TimeTable.CourseID AND Course.CourseID=Section.CourseID AND UserID='" + UserViewModel.userSession.UserID + "'", connection);
+                     "select TimeTable.CourseCode,TimeTable.CourseName,TimeTable.SectionNo,TimeTable.RoomNo, TimeTable.Time, Course.Examdate,TimeTable.TeacherName from TimeTable, Course, Section where Course.CourseID=TimeTable.CourseID AND Course.CourseID=Section.CourseID AND Section.SectionID =TimeTable.SectionID AND UserID ='" + UserViewModel.userSession.UserID + "'", connection);
                 connection.Open();
 
                 SqlDataAdapter sda = new SqlDataAdapter(command);
@@ -186,7 +186,7 @@ namespace SchoolManagementSystem.Views.StudentViews
 
                     using (SqlConnection connection = new SqlConnection(strcon))
                     {
-                        SqlCommand cmd = new SqlCommand("select TeacherCourses.TeacherName, Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room, TeacherCourses where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND TeacherCourses.CourseID=Course.CourseID AND Course.CourseCode='" + course_combo_box.Text.ToString() + "'", connection);
+                        SqlCommand cmd = new SqlCommand("select TeacherCourses.TeacherName, Course.CourseCode, Course.CourseID ,Course.CourseName,Course.ExamDate, Section.SectionNum, Section.Time, Room.RoomNum from Course, Section, Room, TeacherCourses where Section.CourseID= Course.CourseID AND Section.RoomID= Room.RoomID AND TeacherCourses.CourseID=Course.CourseID AND Course.CourseCode='" + course_combo_box.Text.ToString() + "'AND Section.SectionNum='" + sectionno_combo_box.Text.ToString() + "'", connection);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         da.Fill(dt);
@@ -357,6 +357,11 @@ namespace SchoolManagementSystem.Views.StudentViews
                 try
                 {
                     table.DeleteTimeTable(UserViewModel.userSession.UserID, CourseCode);
+                    grade.deleteStudentGrade(courseID,
+                                      Convert.ToInt32(UserViewModel.userSession.UserID),
+                                      sectionID);
+
+                    FillDataGrid();
                 }
                 catch (Exception ex)
                 {
@@ -369,6 +374,9 @@ namespace SchoolManagementSystem.Views.StudentViews
             }
         }
 
-        
+        private void sectionno_combo_box_SelectionChanged ( object sender, SelectionChangedEventArgs e )
+        {
+
+        }
     }
 }

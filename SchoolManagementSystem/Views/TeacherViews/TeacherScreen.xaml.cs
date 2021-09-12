@@ -23,6 +23,8 @@ namespace SchoolManagementSystem.Views.TeacherViews
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
+        StudentGradeViewModel viewmodel = new StudentGradeViewModel();
+
         public TeacherScreen ()
         {
 
@@ -30,6 +32,7 @@ namespace SchoolManagementSystem.Views.TeacherViews
             DataFill();
             CourseComboBox();
             comboBoxValue();
+            DataContext = viewmodel;
         }
 
         DataSet ds;
@@ -163,11 +166,10 @@ namespace SchoolManagementSystem.Views.TeacherViews
 
         private void Reset_Click ( object sender, RoutedEventArgs e )
         {
-            if (CheckComboBox())
-            {
-                CourseDataFill1();
-            }
-            else { return; }
+
+            course_combo_box.SelectedItem = "";
+            course_combo_box.Text = "";
+            DataFill();
 
 
         }

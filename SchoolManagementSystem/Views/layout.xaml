@@ -309,9 +309,11 @@
                         <StackPanel Name="msg_stk" Orientation="Horizontal"
                                         Width="230">
                             <Button Name="msg_btn" Click="Button_Click_1">
-                                <Image Source="/Assets/img_message.png"
+                                <Image x:Name="timetable" Source="/Assets/timetable.png"
                                        Stretch="None"
-                                       Margin="12,0,0,0"/>
+                                       Margin="12,0,0,0" RenderTransformOrigin="0.375,-4.44" Width="34" Height="35"/>
+                                
+                                
                             </Button>
                             <TextBlock Text="Messages"
                                            Margin="25,0,0,0"

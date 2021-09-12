@@ -89,24 +89,32 @@ namespace SchoolManagementSystem.ViewModels
 
         public void AddTeacherCourse(string teacherName,string courseCode, int CourseID, int sectionID, int UserID )
         {
-            try
-
+            if (!checkifRecordTableExsist(CourseID, sectionID))
             {
-               TeacherCours TCourse1= new TeacherCours();
-                TCourse1.TeacherName = teacherName;
-                TCourse1.CourseCode = courseCode;
-                TCourse1.CourseID = CourseID;
-                TCourse1.SectionID = sectionID;
-                TCourse1.UserID = UserID;
+                try
 
-                ty.TeacherCourses.Add(TCourse1);
-                ty.SaveChanges();
-                MessageBox.Show("Course Added to the schedule.");
+                {
+                    TeacherCours TCourse1 = new TeacherCours();
+                    TCourse1.TeacherName = teacherName;
+                    TCourse1.CourseCode = courseCode;
+                    TCourse1.CourseID = CourseID;
+                    TCourse1.SectionID = sectionID;
+                    TCourse1.UserID = UserID;
 
+                    ty.TeacherCourses.Add(TCourse1);
+                    ty.SaveChanges();
+                    MessageBox.Show("Course Added to the schedule.");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.InnerException.Message);
+                MessageBox.Show("Course Already registered");
+
             }
 
         }
@@ -129,7 +137,7 @@ namespace SchoolManagementSystem.ViewModels
 
         public void DeleteTeacherCourse( int courseID, int sectionID, int userID )
         {
-            if (checkifRecordTableExsist(courseID, sectionID, userID))
+            if (checkifRecordTableExsist(courseID, sectionID))
             {
                 var DeleteTeacherCourses = ty.TeacherCourses.Where(o => o.CourseID == courseID && o.UserID == userID && o.SectionID == sectionID).Single();
                 ty.TeacherCourses.Remove(DeleteTeacherCourses);
@@ -151,9 +159,9 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public bool checkifRecordTableExsist ( int courseID, int sectionID, int userID )
+        public bool checkifRecordTableExsist ( int courseID, int sectionID )
         {
-            if (ty.TeacherCourses.Any(o => o.CourseID == courseID && o.UserID == userID && o.SectionID == sectionID ))
+            if (ty.TeacherCourses.Any(o => o.CourseID == courseID && o.SectionID == sectionID ))
             {
                 return true;
             }

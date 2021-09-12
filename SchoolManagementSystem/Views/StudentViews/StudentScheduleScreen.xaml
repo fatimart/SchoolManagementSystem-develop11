@@ -7,14 +7,14 @@
       mc:Ignorable="d" d:DesignWidth="800"
       Title="StudentScheduleScreen" Height="443.789">
 
-    <Grid Margin="32,36,21,62">
-        <GroupBox Header="Schedule" HorizontalAlignment="Left" Height="249" Margin="31,23,0,0" VerticalAlignment="Top" Width="686" RenderTransformOrigin="0.5,0.5">
-            <Grid HorizontalAlignment="Left" Height="202" Margin="10,10,0,0" VerticalAlignment="Top" Width="653">
+    <Grid Margin="10">
+        <GroupBox Header="Schedule" HorizontalAlignment="Left" Height="275" Margin="19,49,0,0" VerticalAlignment="Top" Width="741" RenderTransformOrigin="0.5,0.5">
+            <Grid HorizontalAlignment="Left" Height="202" Margin="10,10,-2,0" VerticalAlignment="Top" Width="721">
                 <DataGrid x:Name="tableDataGrid"
                   HorizontalAlignment="Left"
-                  Height="152" Margin="10,30,0,0"
+                  Height="152" Margin="0,30,0,0"
                   VerticalAlignment="Top"
-                  Width="633"
+                  Width="711"
                   IsReadOnly="True"
                   AutoGenerateColumns="False" 
                   CanUserAddRows="False" 

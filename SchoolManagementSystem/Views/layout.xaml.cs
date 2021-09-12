@@ -31,24 +31,31 @@ namespace SchoolManagementSystem.Views
             if (type == "Admin" || type == "admin")
             {
                 pages.Source = new Uri("AdminView.xaml", UriKind.Relative);
-                
 
-            }
-            else if (type == "Student" || type == "student")
-            {
                 msg_btn.Visibility = Visibility.Collapsed;
                 tt_messages.Visibility = Visibility.Collapsed;
                 msg_stk.Visibility = Visibility.Collapsed;
                 msg_LV.Visibility = Visibility.Collapsed;
+            }
+            else if (type == "Student" || type == "student")
+            {
+               
 
                 pages.Source = new Uri("StudentView.xaml", UriKind.Relative);
 
+                msg_btn.Visibility = Visibility.Collapsed;
+                tt_messages.Visibility = Visibility.Collapsed;
+                msg_stk.Visibility = Visibility.Collapsed;
+                msg_LV.Visibility = Visibility.Collapsed;
             }
             else if (type == "Teacher" || type == "teacher")
             {
                 //add teacher view
                 pages.Source = new Uri("TeacherView.xaml", UriKind.Relative);
-
+                msg_btn.Visibility = Visibility.Collapsed;
+                tt_messages.Visibility = Visibility.Collapsed;
+                msg_stk.Visibility = Visibility.Collapsed;
+                msg_LV.Visibility = Visibility.Collapsed;
             }
 
 
@@ -163,7 +170,9 @@ namespace SchoolManagementSystem.Views
 
         private void Button_Click_1 ( object sender, RoutedEventArgs e )
         {
-            //pages.Source = new Uri("RoomScreen.xaml", UriKind.Relative);
+           pages.Source = new Uri("StudentViews/StudentScheduleScreen.xaml", UriKind.Relative);
+
+
         }
 
         private void pages_Navigated ( object sender, NavigationEventArgs e )

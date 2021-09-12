@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="AnnounID" />
           </Key>
-          <Property Name="AnnounID" Type="int" Nullable="false" />
+          <Property Name="AnnounID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
           <Property Name="Announcement" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="TimeAnnounced" Type="datetime" Nullable="false" />
@@ -86,7 +86,7 @@
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />

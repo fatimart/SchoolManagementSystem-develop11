@@ -29,7 +29,7 @@ namespace SchoolManagementSystem.Views
 
         public void Load()
         {
-            
+            FillDataGrid();
         }
 
         private void Button_Click1(object sender, RoutedEventArgs e)

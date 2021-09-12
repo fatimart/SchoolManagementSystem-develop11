@@ -23,7 +23,6 @@ namespace SchoolManagementSystem.Views.TeacherViews
 
         private SqlConnection GetConnection ()
         {
-            //return new SqlConnection(@"Data Source=PIE-RD-DESK-079\FADHELWORK2;Initial Catalog=SchoolMS;User Id=sa;Password=Fad4work;");
             return new SqlConnection(strcon);
 
         }
@@ -114,8 +113,11 @@ namespace SchoolManagementSystem.Views.TeacherViews
         private void Button_Click_2 ( object sender, RoutedEventArgs e )
         {
             object item = dgvDocuments.SelectedItem;
-            string ID = (dgvDocuments.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-            OpenFile(Convert.ToInt32(ID));
+            if (item != null)
+            {
+                string ID = (dgvDocuments.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+                OpenFile(Convert.ToInt32(ID));
+            }
         }
 
 

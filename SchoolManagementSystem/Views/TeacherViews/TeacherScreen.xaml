@@ -8,22 +8,22 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TeacherScreen">
 
-    <Page.Resources>
+    <!--<Page.Resources>
         <SchoolManagementSystem:SchoolMSDataSet x:Key="schoolMSDataSet"/>
         <CollectionViewSource x:Key="studentGradeViewSource" Source="{Binding StudentGrade, Source={StaticResource schoolMSDataSet}}"/>
-    </Page.Resources>
+    </Page.Resources>-->
 
     <Grid  >
-        <Label Content="Course" HorizontalAlignment="Left" Margin="115,23,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="course_combo_box" HorizontalAlignment="Left" Margin="179,27,0,0" VerticalAlignment="Top" Width="178"  DisplayMemberPath="CourseCode"  DropDownClosed="Course_combo_box_DropDownClosed" SelectionChanged="course_combo_box_SelectionChanged" />
-        <DataGrid ColumnWidth="Auto" Height="330" Margin="62,110,0,0" VerticalAlignment="Top" x:Name="dGrid" HorizontalAlignment="Left" Width="728" IsTextSearchEnabled="True" IsSynchronizedWithCurrentItem="True" RowEditEnding="DataGrid_RowEditEnding"/>
-        <Button x:Name="open_btn" Content="Open" HorizontalAlignment="Left" Margin="375,29,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.333,0.5" Click="open_btn_Click"/>
-        <Button x:Name="Reset" Content="Reset" HorizontalAlignment="Left" Margin="465,29,0,0" VerticalAlignment="Top" Width="75" Click="Reset_Click"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="555,29,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Label Content="Course" HorizontalAlignment="Left" Margin="33,23,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="course_combo_box" HorizontalAlignment="Left" Margin="97,27,0,0" VerticalAlignment="Top" Width="178"  DisplayMemberPath="CourseCode"  DropDownClosed="Course_combo_box_DropDownClosed" SelectionChanged="course_combo_box_SelectionChanged" />
+        <DataGrid ColumnWidth="Auto" Height="330" Margin="32,73,0,0" VerticalAlignment="Top" x:Name="dGrid" HorizontalAlignment="Left" Width="728" IsTextSearchEnabled="True" IsSynchronizedWithCurrentItem="True" RowEditEnding="DataGrid_RowEditEnding"/>
+        <Button x:Name="open_btn" Content="Open" HorizontalAlignment="Left" Margin="293,29,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.333,0.5" Click="open_btn_Click"/>
+        <Button x:Name="Reset" Content="Reset" HorizontalAlignment="Left" Margin="383,29,0,0" VerticalAlignment="Top" Width="75" Click="Reset_Click"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="473,29,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label x:Name="CourseTxt" HorizontalAlignment="Left" Height="38" Margin="62,67,0,0"   VerticalAlignment="Top" Width="150" FontSize="15"/>
         <TextBox x:Name="SectionTxt" HorizontalAlignment="Left" Height="19" Margin="740,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60" RenderTransformOrigin="1.083,0.947" IsReadOnly="True" Visibility="Hidden"/>
         <Label Content="section" HorizontalAlignment="Left" Margin="692,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.423" Visibility="Hidden"/>
-        <Button Content="Upload" HorizontalAlignment="Left" Margin="635,30,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="Button_Click_1"/>
+        <Button Content="Upload" HorizontalAlignment="Left" Margin="687,30,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="Button_Click_1"/>
 
     </Grid>
 </Page>

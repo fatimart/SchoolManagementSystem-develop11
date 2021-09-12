@@ -263,7 +263,6 @@ namespace SchoolManagementSystem.Views.AdminViews
                 var CID = teacher_combo_box.Text.Split('-');
                 string user_id = CID[0];
                 string teacher_name = CID[1];
-                MessageBox.Show(user_id);
 
                 TeacherCourse.AddTeacherCourse(teacher_name,
                                                course_combo_box.Text.ToString(),
@@ -281,17 +280,33 @@ namespace SchoolManagementSystem.Views.AdminViews
         private void Button_Click_1 ( object sender, RoutedEventArgs e )
         {//update
 
-            var CID = teacher_combo_box.Text.Split('-');
-            string user_id = CID[0];
-            string teacher_name = CID[1];
+            if (TIDTextBox.Text != "")
+            {
+                var CID = teacher_combo_box.Text.Split('-');
+                string user_id = CID[0];
+                string teacher_name = CID[1];
 
-            TeacherCourse.UpdateTeacherCourse(Convert.ToInt32(TIDTextBox.Text),
-                                              teacher_name,
-                                              course_combo_box.Text.ToString(),
-                                              courseID,
-                                              sectionID,
-                                              Convert.ToInt32(user_id));
-            FillCourseDetails();
+                if (TeacherCourse.checkifRecordTableExsist(courseID, sectionID))
+                {
+                    TeacherCourse.UpdateTeacherCourse(Convert.ToInt32(TIDTextBox.Text),
+                                                  teacher_name,
+                                                  course_combo_box.Text.ToString(),
+                                                  courseID,
+                                                  sectionID,
+                                                  Convert.ToInt32(user_id));
+                    FillCourseDetails();
+                }
+                else
+                {
+                    MessageBox.Show("No course found!!");
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter the tid !!");
+
+            }
         }
 
         private void Button_Click_2 ( object sender, RoutedEventArgs e )
@@ -302,23 +317,31 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             if (MessageBox.Show("Are You sure you want to delete ?", "Course", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                try
+                if (TIDTextBox.Text != "")
                 {
-                    TeacherCourse.DeleteTeacherCourse(courseID,
-                                                      sectionID,
-                                                      Convert.ToInt32(user_id));
-                }
+                    try
+                    {
+                        TeacherCourse.DeleteTeacherCourse(courseID,
+                                                          sectionID,
+                                                          Convert.ToInt32(user_id));
+                    }
 
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
-                finally
-                {
-                    FillCourseDetails();
+                    finally
+                    {
+                        FillCourseDetails();
+                    }
                 }
-            }
+                else
+                {
+                    MessageBox.Show("Please enter the tid !!");
+
+                }
+                }
         }
 
         private void find_Click ( object sender, RoutedEventArgs e )

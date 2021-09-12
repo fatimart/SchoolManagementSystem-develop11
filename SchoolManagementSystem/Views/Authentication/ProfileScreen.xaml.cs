@@ -49,6 +49,8 @@ namespace SchoolManagementSystem.Views
                                       pass,
                                       contactNoTextBox.Text.Trim()
                                );
+           
+
         }
 
     }

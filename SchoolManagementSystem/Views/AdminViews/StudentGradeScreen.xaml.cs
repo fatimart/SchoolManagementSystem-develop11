@@ -69,18 +69,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         private void Button_Click4(object sender, RoutedEventArgs e)
         {//delete
 
-            if (SGrades.CheckSGID(Convert.ToInt32(iDTextBox.Text)))
-            {
-
-                SGrades.deleteStudentGrade(Convert.ToInt32(iDTextBox.Text));
-                Load();
-
-            }
-
-            else
-            {
-                MessageBox.Show("ID not existed");
-            }
+           
         }
 
         private void Button_Clear(object sender, RoutedEventArgs e)

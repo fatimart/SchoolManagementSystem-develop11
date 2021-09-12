@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
@@ -76,8 +77,6 @@ namespace SchoolManagementSystem.ViewModels
         public List<Announcement> GetAll1 ()
         {
             return ty.Announcements.ToList();
-
-            //return ty.Announcements.Where(m => m.CourseID ==).ToList();
         }
 
         public AnnoucnmentViewModel ()
@@ -96,6 +95,70 @@ namespace SchoolManagementSystem.ViewModels
                 TimeAnnounced = Convert.ToDateTime(data.TimeAnnounced)
 
             }));
+
+        }
+        public void AddAnnoun ( int CourseID, string Announ, DateTime AnnoTime)
+        {
+
+            Announcement anno = new Announcement();
+            anno.CourseID = CourseID;
+            anno.Announcement1 = Announ;
+            anno.TimeAnnounced = AnnoTime;
+
+
+            ty.Announcements.Add(anno);
+            ty.SaveChanges();
+            GetAll();
+
+        }
+
+        public void UpdateAnnoun ( int announID, int CourseID, string Announ, DateTime AnnoTime )
+        {
+            if (CheckAnnounID(AnnounID))
+            {
+                Announcement anno = (from m in ty.Announcements where m.AnnounID == announID select m).Single();
+                anno.AnnounID = announID;
+                anno.CourseID = CourseID;
+                anno.Announcement1 = Announ;
+                anno.TimeAnnounced = AnnoTime;
+
+                ty.SaveChanges();
+                GetAll();
+            }
+            else
+            {
+                MessageBox.Show(" not fouund");
+
+            }
+        }
+
+        public void DeleteAnnoun ( int AnnounID )
+        {
+            if (CheckAnnounID(AnnounID))
+            {
+                var deleteanno = ty.Announcements.Where(m => m.AnnounID == AnnounID).Single();
+                ty.Announcements.Remove(deleteanno);
+                ty.SaveChanges();
+                GetAll();
+            }
+            else
+            {
+                MessageBox.Show(" not fouund");
+
+            }
+        }
+
+        public bool CheckAnnounID ( int AnnounID )
+        {
+
+            if (ty.Announcements.Any(o => o.AnnounID == AnnounID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
 

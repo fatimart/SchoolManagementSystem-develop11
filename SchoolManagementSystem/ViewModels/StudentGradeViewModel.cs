@@ -187,10 +187,10 @@ namespace SchoolManagementSystem.ViewModels
 
         }
 
-        public void deleteStudentGrade(int ID)
+        public void deleteStudentGrade(int UserID, int courseID, int sectionID)
         {
 
-            var deleteStudentGrade = ty.StudentGrades.Where(m => m.ID == ID).Single();
+            var deleteStudentGrade = ty.StudentGrades.Where(m => m.SectionID == sectionID).Where(m => m.StudentID == UserID).Where(m => m.CourseID == courseID).Single();
             ty.StudentGrades.Remove(deleteStudentGrade);
             ty.SaveChanges();
 

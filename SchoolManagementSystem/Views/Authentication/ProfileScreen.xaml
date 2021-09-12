@@ -49,7 +49,7 @@
                     <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="User ID:"/>
                     <TextBox x:Name="userIDTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserID, Mode=OneWay}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Background="#FFC5C0C0" IsReadOnly="True"/>
                     <Label VerticalAlignment="Center" Margin="141,4,0,2" HorizontalAlignment="Left" Grid.Column="1" Content="User Name:" RenderTransformOrigin="3.238,3.19" Grid.Row="2"/>
-                    <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="224,4,-78,4" Height="24" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"/>
+                    <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="224,4,-78,4" Height="24"  IsReadOnly="True" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"/>
                     <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Name:"/>
                     <TextBox x:Name="nameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
                     <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Email:"/>

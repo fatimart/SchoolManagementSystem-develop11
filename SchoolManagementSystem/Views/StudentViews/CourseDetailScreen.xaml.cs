@@ -1,4 +1,5 @@
 ﻿using SchoolManagementSystem.ViewModels;
+using SchoolManagementSystem.Views.TeacherViews;
 using System;
 using System.Configuration;
 using System.Data;
@@ -67,7 +68,7 @@ namespace SchoolManagementSystem.Views.StudentViews
                     string cCode = CID[1];
                     string CSection = CID[3];
                     SqlCommand command = new SqlCommand(
-            "select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade, TimeTable, Users, Section where Users.UserID = TimeTable.UserID AND TimeTable.UserID = StudentGrade.StudentID AND Users.UserID = StudentGrade.StudentID AND TimeTable.SectionID = StudentGrade.SectionID AND TimeTable.SectionID = Section.SectionID AND Section.SectionID = StudentGrade.SectionID AND TimeTable.CourseID = StudentGrade.CourseID AND TimeTable.CourseID = Section.CourseID AND Section.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'", connection);
+                    "select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade, TimeTable, Users, Section where Users.UserID = TimeTable.UserID AND TimeTable.UserID = StudentGrade.StudentID AND Users.UserID = StudentGrade.StudentID AND TimeTable.SectionID = StudentGrade.SectionID AND TimeTable.SectionID = Section.SectionID AND Section.SectionID = StudentGrade.SectionID AND TimeTable.CourseID = StudentGrade.CourseID AND TimeTable.CourseID = Section.CourseID AND Section.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "AND UserID='" +UserViewModel.userSession.UserID + "'", connection);
                     dataAdapter = new SqlDataAdapter(command);
                     //   DataTable dt = new DataTable();
 
@@ -171,10 +172,26 @@ namespace SchoolManagementSystem.Views.StudentViews
             string cid = CID[0];
 
             SqlConnection con = new SqlConnection(strcon);
-            sda1 = new SqlDataAdapter("select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance from Users,Course,StudentGrade where Users.UserID=StudentGrade.StudentID AND Course.CourseID=StudentGrade.CourseID  AND StudentGrade.CourseID='" + cid + "'", con);
+            sda1 = new SqlDataAdapter(
+                    "select StudentGrade.ID,StudentGrade.StudentID,Users.Name,StudentGrade.Score,StudentGrade.Attendance,StudentGrade.Done from StudentGrade, TimeTable, Users, Section where Users.UserID = TimeTable.UserID AND TimeTable.UserID = StudentGrade.StudentID AND Users.UserID = StudentGrade.StudentID AND TimeTable.SectionID = StudentGrade.SectionID AND TimeTable.SectionID = Section.SectionID AND Section.SectionID = StudentGrade.SectionID AND TimeTable.CourseID = StudentGrade.CourseID AND TimeTable.CourseID = Section.CourseID AND Section.CourseID = StudentGrade.CourseID AND StudentGrade.CourseID='" + cid + "'AND StudentGrade.StudentID='" + UserViewModel.userSession.UserID + "'", con);
             dt1 = new DataTable();
             sda1.Fill(dt1);
             dGrid.ItemsSource = dt1.DefaultView;
+
+        }
+
+        private void Button_Click_1 ( object sender, RoutedEventArgs e )
+        {//Upload
+
+            if (CheckComboBox())
+            {
+                var CID = course_combo_box.Text.Split('-');
+                string cid = CID[0];
+                FileUpload1 FUpload = new FileUpload1(cid);
+                FUpload.Owner = Application.Current.MainWindow;
+                FUpload.Show();
+            }
+            else { return; }
 
         }
 

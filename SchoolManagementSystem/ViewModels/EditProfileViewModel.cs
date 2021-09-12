@@ -15,6 +15,13 @@ namespace SchoolManagementSystem.ViewModels
 
         public EditProfileViewModel ()
         {
+
+            getAll();
+        }
+
+
+        public void getAll ()
+        {
             string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(strcon))
@@ -45,11 +52,7 @@ namespace SchoolManagementSystem.ViewModels
                 }
                 reader.Close();
             }
-
         }
-
-
-
 
         public void UpdateUser ( int userID, string name, string email, decimal cpr, string address, DateTime dob, string password, string contactNo )
         {
@@ -78,6 +81,11 @@ namespace SchoolManagementSystem.ViewModels
                 {
                     MessageBox.Show(ex.Message);
                 }
+            finally
+            {
+                getAll();
+
+            }
         }
 
     }

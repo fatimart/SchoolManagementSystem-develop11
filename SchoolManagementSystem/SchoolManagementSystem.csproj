@@ -150,6 +150,9 @@
     <Compile Include="Views\AdminViews\CourseListScreen.xaml.cs">
       <DependentUpon>CourseListScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AdminViews\CourseListScreen2.xaml.cs">
+      <DependentUpon>CourseListScreen2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AdminViews\TeacherCourseView.xaml.cs">
       <DependentUpon>TeacherCourseView.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,9 @@
     <Compile Include="Views\TeacherView.xaml.cs">
       <DependentUpon>TeacherView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeacherViews\CreateAnnoun.xaml.cs">
+      <DependentUpon>CreateAnnoun.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TeacherViews\FileUpload1.xaml.cs">
       <DependentUpon>FileUpload1.xaml</DependentUpon>
     </Compile>
@@ -230,6 +236,10 @@
     <Page Include="Views\AdminViews\CourseListScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AdminViews\CourseListScreen2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdminViews\TeacherCourseView.xaml">
       <SubType>Designer</SubType>
@@ -337,6 +347,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TeacherViews\CreateAnnoun.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TeacherViews\FileUpload1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -427,6 +441,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Assets\timetable.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
