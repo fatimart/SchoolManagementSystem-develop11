@@ -83,6 +83,7 @@ namespace SchoolManagementSystemAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+        [HttpPost]
         public HttpResponseMessage Post([FromBody] TeacherCours teacherCourse)
         {
             try

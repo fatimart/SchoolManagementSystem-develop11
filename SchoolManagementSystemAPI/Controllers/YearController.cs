@@ -75,6 +75,31 @@ namespace SchoolManagementSystemAPI.Controllers
 
             }
         }
+        [HttpGet]
+        public IHttpActionResult Get(string yearNum)
+        {
+            try
+            {
+                using (SchoolMSEntities entities = new SchoolMSEntities())
+                {
+                    var Year = entities.Years.FirstOrDefault(y => y.YearNum == yearNum);
+                    if (Year != null)
+                    {
+                        return Ok(Year);
+                    }
+                    else
+                    {
+                        return Content(HttpStatusCode.NotFound, "Year with YearNumber: " + yearNum + " not found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+
+            }
+        }
+
 
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
