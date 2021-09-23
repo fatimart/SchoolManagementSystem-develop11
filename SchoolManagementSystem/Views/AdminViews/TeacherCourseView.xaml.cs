@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -203,7 +204,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
-        public void FillCourseDetails ()
+        public void FillCourseDetails()
         {
             try
             {
@@ -227,6 +228,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             }
         }
+      //  Teacher course View Model
 
 
         private void Course_combo_box_DropDownClosed ( object sender, EventArgs e )

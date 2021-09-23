@@ -90,7 +90,7 @@ namespace SchoolManagementSystem.ViewModels
         {
 
             Room updateRoom = (from m in ty.Rooms where m.RoomID == RoomID select m).Single();
-            updateRoom.RoomID = RoomID;
+         //   updateRoom.RoomID = RoomID;
             updateRoom.RoomNum = RoomNum;
             ty.SaveChanges();
 
