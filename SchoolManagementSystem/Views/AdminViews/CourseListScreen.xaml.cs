@@ -8,6 +8,8 @@ using SchoolManagementSystem.Models;
 using System.Windows;
 using System.Data.OleDb;
 using DataGrid = System.Windows.Controls.DataGrid;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -17,27 +19,34 @@ namespace SchoolManagementSystem.Views.AdminViews
     public partial class CourseListScreen : Page
     {
         CourseViewModel course = new CourseViewModel();
-        private bool isUpdateMode;
-        private SchoolMSEntities1 ty = new SchoolMSEntities1();
+        public HttpClient apiClient;
 
         public CourseListScreen ()
         {
             InitializeComponent();
-               
-
+            InitielizeClient();
             // The DataContext serves as the starting point of Binding Paths
             DataContext = course;
             FillDataGrid();
 
         }
 
+        private void InitielizeClient ()
+        {
+            string api = ConfigurationManager.AppSettings["api"];
+
+            apiClient = new HttpClient();
+            apiClient.BaseAddress = new Uri(api);
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            course.GetAll();
+            //course.GetAll();
         }
         public void Load()
         {
-            course.GetAll();
+            //course.GetAll();
         }
 
         //MARK: fill datagrid need for the selection
@@ -100,15 +109,10 @@ namespace SchoolManagementSystem.Views.AdminViews
                     try
 
                     {
-                        if (course.CheckCourseID(Convert.ToInt32(courseIDTextBox.Text)))
-                        {
-                            course.DeleteCourse((courseCodeTextBox.Text));
+                        Console.WriteLine("");
+                            //course.DeleteCourseDetails((courseCodeTextBox.Text));
 
-                        }
-                        else
-                        {
-                            System.Windows.MessageBox.Show("ID not existed");
-                        }
+                       
                     }
                     catch (Exception ex)
                     {
@@ -145,12 +149,12 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             if (courseIDtEmpty())
             {
-                if (course.CheckCourseID(Convert.ToInt32(courseIDTextBox.Text.Trim())))
-                {
+                //if (course.CheckCourseID(Convert.ToInt32(courseIDTextBox.Text.Trim())))
+                //{
                     try
                     {
 
-                        course.UpdateCourse(Convert.ToInt32(courseIDTextBox.Text.Trim()),
+                        course.UpdateCourseDetails(
                                      courseNameTextBox.Text.Trim(),
                                      courseCodeTextBox.Text.Trim(),
                                      descriptionTextBox.Text.Trim(),
@@ -167,13 +171,13 @@ namespace SchoolManagementSystem.Views.AdminViews
                         Clear();
 
                     }
-                }
+                
 
-                else
-                {
-                    System.Windows.MessageBox.Show("Invalid course Id");
+                //else
+                //{
+                //    System.Windows.MessageBox.Show("Invalid course Id");
 
-                }
+                //}
 
             }
             else
@@ -191,19 +195,19 @@ namespace SchoolManagementSystem.Views.AdminViews
                 //add button 
                 try
                 {
-                    if (course.checkCourseCode(courseCodeTextBox.Text.Trim().ToString()))
-                    {
+                    //if (course.checkCourseCode(courseCodeTextBox.Text.Trim().ToString()))
+                    //{
                         System.Windows.MessageBox.Show("Course Already Exists");
 
-                    }
-                    else
-                    {
-                        course.AddCourse(courseNameTextBox.Text.Trim(),
+                    //}
+                   // else
+                   // {
+                        course.CreateNewCourse(courseNameTextBox.Text.Trim(),
                                          courseCodeTextBox.Text.Trim(),
                                          descriptionTextBox.Text.Trim(),
                                          Convert.ToDateTime(examDateDatePicker.Text)
                                          );
-                    }
+                  //  }
                 }
                 catch (Exception ex)
                 {
@@ -326,6 +330,9 @@ namespace SchoolManagementSystem.Views.AdminViews
                 System.Windows.MessageBox.Show(ex.Message);
             }
         }
+
+        //MARK: Need to update the function to upload file update course 
+
         private void savetry2_Click ( object sender, RoutedEventArgs e )
         {
             string CourseName = "";
@@ -352,7 +359,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                     Description = o_dr[3].ToString();
                     ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
 
-                    course.UpdateCourse1(
+                    course.UpdateCourseDetails(
                                                     CourseName,
                                                     CourseCode,
                                                     Description,

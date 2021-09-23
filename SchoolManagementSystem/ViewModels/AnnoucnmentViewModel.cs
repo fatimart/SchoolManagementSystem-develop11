@@ -1,18 +1,15 @@
 ﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Net.Http;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
     class AnnoucnmentViewModel : ViewModelBase
     {
-        public SchoolMSEntities1 ty = new SchoolMSEntities1();
-
         private ObservableCollection<Announcement> _AnnoucnRecords;
-
         public ObservableCollection<Announcement> AllAnnounc
         {
             get
@@ -73,94 +70,111 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        private string _responseMessage = "";
 
-        public List<Announcement> GetAll1 ()
+        public string ResponseMessage
         {
-            return ty.Announcements.ToList();
+            get { return _responseMessage; }
+            set
+            {
+                _responseMessage = value;
+                OnPropertyChanged("ResponseMessage");
+            }
         }
 
+      
         public AnnoucnmentViewModel ()
         {
-            GetAll();
+
         }
 
-        public void GetAll ()
+        #region CRUD
+
+        /// <summary>
+        /// Fetches Announcement details
+        /// </summary>
+        public void GetAnnouncDetails ()
+
         {
-            AllAnnounc = new ObservableCollection<Announcement>();
-            GetAll1().ForEach(data => AllAnnounc.Add(new Announcement()
+            var announcDetails = WebAPI.GetCall(API_URIs.announcements);
+            if (announcDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                AnnounID = Convert.ToInt32(data.AnnounID),
-                CourseID = Convert.ToInt32(data.CourseID),
-                Announcement1 = data.Announcement1,
-                TimeAnnounced = Convert.ToDateTime(data.TimeAnnounced)
-
-            }));
-
-        }
-        public void AddAnnoun ( int CourseID, string Announ, DateTime AnnoTime)
-        {
-
-            Announcement anno = new Announcement();
-            anno.CourseID = CourseID;
-            anno.Announcement1 = Announ;
-            anno.TimeAnnounced = AnnoTime;
-
-
-            ty.Announcements.Add(anno);
-            ty.SaveChanges();
-            GetAll();
-
+                AllAnnounc = announcDetails.Result.Content.ReadAsAsync<ObservableCollection<Announcement>>().Result;
+            }
         }
 
-        public void UpdateAnnoun ( int announID, int CourseID, string Announ, DateTime AnnoTime )
+        /// <summary>
+        /// Adds new Announcement
+        /// </summary>
+        public void CreateNewAnnounc ( int CourseID, string Announ, DateTime AnnoTime )
         {
-            if (CheckAnnounID(AnnounID))
+            Announcement anno = new Announcement()
             {
-                Announcement anno = (from m in ty.Announcements where m.AnnounID == announID select m).Single();
-                anno.AnnounID = announID;
-                anno.CourseID = CourseID;
-                anno.Announcement1 = Announ;
-                anno.TimeAnnounced = AnnoTime;
+                CourseID = CourseID,
+                Announcement1 = Announ,
+                TimeAnnounced = AnnoTime
+            };
 
-                ty.SaveChanges();
-                GetAll();
+            var announcDetails = WebAPI.PostCall(API_URIs.announcements, anno);
+            if (announcDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                ResponseMessage = anno.AnnounID + "'s details has successfully been added!";
+                MessageBox.Show("created ");
             }
             else
             {
-                MessageBox.Show(" not fouund");
-
+                ResponseMessage = "Failed to update" + anno.AnnounID + "'s details.";
             }
         }
 
-        public void DeleteAnnoun ( int AnnounID )
+
+        /// <summary>
+        /// Updates Announcement's record
+        /// </summary>
+        /// <param name="announcements"></param>
+        public void UpdateAnnouncrDetails (int CourseID, string Announ, DateTime AnnoTime )
         {
-            if (CheckAnnounID(AnnounID))
+            Announcement updateAnnounc = new Announcement()
             {
-                var deleteanno = ty.Announcements.Where(m => m.AnnounID == AnnounID).Single();
-                ty.Announcements.Remove(deleteanno);
-                ty.SaveChanges();
-                GetAll();
+                CourseID = CourseID,
+                Announcement1 = Announ,
+                TimeAnnounced = AnnoTime
+            };
+
+
+            var announcDetails = WebAPI.PutCall(API_URIs.announcements + "?id=" + updateAnnounc.AnnounID, updateAnnounc);
+            if (announcDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = updateAnnounc.AnnounID + "'s details has successfully been updated!";
             }
             else
             {
-                MessageBox.Show(" not fouund");
-
+                ResponseMessage = "Failed to update" + updateAnnounc.AnnounID + "'s details.";
             }
         }
 
-        public bool CheckAnnounID ( int AnnounID )
+        /// <summary>
+        /// Deletes Announcement's record
+        /// </summary>
+        public void DeleteAnnounceDetails ( int AnnounID )
         {
 
-            if (ty.Announcements.Any(o => o.AnnounID == AnnounID))
+            Announcement deleteanno = new Announcement()
             {
-                return true;
+                AnnounID = AnnounID
+            };
+
+            var announcDetails = WebAPI.DeleteCall(API_URIs.announcements + "?id=" + deleteanno.AnnounID);
+            if (announcDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = deleteanno.AnnounID + "'s details has successfully been deleted!";
             }
             else
             {
-                return false;
+                ResponseMessage = "Failed to delete" + deleteanno.AnnounID + "'s details.";
             }
-
         }
+        #endregion
 
     }
     }

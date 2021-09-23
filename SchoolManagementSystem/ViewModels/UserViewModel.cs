@@ -244,18 +244,12 @@ namespace SchoolManagementSystem.ViewModels
                             Application.Current.Resources["userref"] = user2;
                             Application.Current.Resources["UserID"] = user2.UserID;
                             Application.Current.Resources["Type"] = user2.Type;
-
-
-
                         }
                       
                         reader.Close();
-                        //MessageBox.Show(userSession.UserName);
-                        //MessageBox.Show( Application.Current.Resources["UserID"].ToString());
-
+                        
                         return true;
-                    
-                 
+
                     }
                     else
                     {
@@ -369,40 +363,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
-        public void getUserd ()
-        {
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(strcon))
-            {
-                SqlCommand command = new SqlCommand(
-                     "select * from Users where UserID='" + userSession.UserID + "'", connection);
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        user = new User
-                        {
-                            UserID = Convert.ToInt32(reader["UserID"]),
-                            UserName = reader["UserName"].ToString(),
-                            Name = reader["Name"].ToString(),
-                            Email = reader["Email"].ToString(),
-                            CPR = Convert.ToInt32(reader["CPR"]),
-                            Address = reader["Address"].ToString(),
-                            DOB = Convert.ToDateTime(reader["DOB"]),
-                            Type = reader["Type"].ToString(),
-                            Password = reader["Password"].ToString(),
-                            ContactNo = reader["ContactNo"].ToString(),
-                        };
-                    }
-                }
-                reader.Close();
-            }
-
-        }
+      
 
         public bool CheckIfUserExists ( int userID )
         {
@@ -436,85 +397,6 @@ namespace SchoolManagementSystem.ViewModels
             return user;
 
         }
-
-
-        //Sayed function get list of all users
-        public List<User> getUsers ( string username, string pass )
-        {
-            List<User> users = new List<User>();
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(strcon))
-            {
-                SqlCommand command = new SqlCommand(
-                  "SELECT * FROM Users;",
-                  connection);
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        users.Add(new User
-                        {
-                            UserName = reader["UserName"].ToString(),
-                            Name = reader["Name"].ToString(),
-                            Email = reader["Email"].ToString(),
-                            CPR = Convert.ToInt32(reader["CPR"]),
-                            Address = reader["Address"].ToString(),
-                            //DOB = Convert.ToDateTime(DateTime.ParseExact(, "dd-MM-yyyy", CultureInfo.InvariantCulture)),
-                            Type = reader["Type"].ToString(),
-                            Password = reader["Password"].ToString(),
-                            ContactNo = reader["ContactNo"].ToString(),
-                        });
-                    }
-                }
-                reader.Close();
-            }
-            return users;
-
-        }
-
-        //MARK: Get A list of all users
-        /**
-         * public List<User> getAllUsers ()
-{
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(strcon))
-            {
-                SqlCommand command = new SqlCommand(
-                  "SELECT * FROM Users;",
-                  connection);
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    AllUsers.Add(new User()
-                    {
-                        UserName = reader["UserName"].ToString(),
-                        Name = reader["Name"].ToString(),
-                        Email = reader["Email"].ToString(),
-                        CPR = Convert.ToInt32(reader["CPR"]),
-                        Address = reader["Address"].ToString(),
-                        //DOB = 
-                        Type = reader["Type"].ToString(),
-                        Password = reader["Password"].ToString(),
-                        ContactNo = reader["ContactNo"].ToString(),
-
-                    });
-                }
-
-                reader.Close();
-                return AllUsers;
-            }
-}
-            **/
-
-
     }
 }
  

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SchoolMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Announcement">
           <Key>
             <PropertyRef Name="AnnounID" />
@@ -24,6 +24,16 @@
           <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="ExamDate" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Extension" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Room">
           <Key>
             <PropertyRef Name="RoomID" />
@@ -41,6 +51,11 @@
           <Property Name="RoomID" Type="int" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'SchoolMS.dbo.SMS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="SMS">
+          <Property Name="USE  master " Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
         <EntityType Name="StudentGrade">
           <Key>
             <PropertyRef Name="ID" />
@@ -112,6 +127,18 @@
               <PropertyRef Name="CourseID" />
             </Principal>
             <Dependent Role="Announcement">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Documents">
               <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -251,6 +278,7 @@
         <EntityContainer Name="SchoolMSModelStoreContainer">
           <EntitySet Name="Announcement" EntityType="Self.Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
@@ -261,6 +289,10 @@
           <AssociationSet Name="FK_Announcement_Course" Association="Self.FK_Announcement_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="Announcement" EntitySet="Announcement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Course" Association="Self.FK_Documents_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Documents" EntitySet="Documents" />
           </AssociationSet>
           <AssociationSet Name="FK_Section_Course" Association="Self.FK_Section_Course">
             <End Role="Course" EntitySet="Course" />
@@ -307,10 +339,21 @@
             <End Role="TimeTable" EntitySet="TimeTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Announcement">
+          <Key>
+            <PropertyRef Name="AnnounID" />
+          </Key>
+          <Property Name="AnnounID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="Announcement1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TimeAnnounced" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Announcement_Course" FromRole="Announcement" ToRole="Course" />
+        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
@@ -320,11 +363,23 @@
           <Property Name="CourseCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ExamDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Announcements" Relationship="Self.FK_Announcement_Course" FromRole="Course" ToRole="Announcement" />
+          <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_Course" FromRole="Course" ToRole="Documents" />
           <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Course" FromRole="Course" ToRole="Section" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_Course" FromRole="Course" ToRole="StudentGrade" />
+          <NavigationProperty Name="TeacherCourses" Relationship="Self.FK_TeacherCourses_Course" FromRole="Course" ToRole="TeacherCourses" />
           <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Course1" FromRole="Course" ToRole="TimeTable" />
-          <NavigationProperty Name="Announcements" Relationship="SchoolMSModel.FK_Announcement_Course" FromRole="Course" ToRole="Announcement" />
-          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Course" FromRole="Course" ToRole="TeacherCours" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Extension" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Documents_Course" FromRole="Documents" ToRole="Course" />
         </EntityType>
         <EntityType Name="Room">
           <Key>
@@ -345,9 +400,9 @@
           <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Section_Course" FromRole="Section" ToRole="Course" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Section_Room" FromRole="Section" ToRole="Room" />
-          <NavigationProperty Name="TimeTables" Relationship="SchoolMSModel.FK_TimeTable_Section" FromRole="Section" ToRole="TimeTable" />
-          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Section" FromRole="Section" ToRole="TeacherCours" />
-          <NavigationProperty Name="StudentGrades" Relationship="SchoolMSModel.FK_StudentGrade_Section" FromRole="Section" ToRole="StudentGrade" />
+          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_Section" FromRole="Section" ToRole="StudentGrade" />
+          <NavigationProperty Name="TeacherCourses" Relationship="Self.FK_TeacherCourses_Section" FromRole="Section" ToRole="TeacherCourses" />
+          <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Section" FromRole="Section" ToRole="TimeTable" />
         </EntityType>
         <EntityType Name="StudentGrade">
           <Key>
@@ -355,39 +410,40 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Int32" Nullable="false" />
           <Property Name="Attendance" Type="Int32" Nullable="false" />
           <Property Name="Done" Type="Boolean" Nullable="false" />
           <Property Name="year" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_StudentGrade_Course" FromRole="StudentGrade" ToRole="Course" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_StudentGrade_Section" FromRole="StudentGrade" ToRole="Section" />
           <NavigationProperty Name="User" Relationship="Self.FK_StudentGrade_User" FromRole="StudentGrade" ToRole="Users" />
-          <Property Name="SectionID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_StudentGrade_Section" FromRole="StudentGrade" ToRole="Section" />
         </EntityType>
         <EntityType Name="TeacherCours">
           <Key>
             <PropertyRef Name="TID" />
           </Key>
           <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Course" Relationship="SchoolMSModel.FK_TeacherCourses_Course" FromRole="TeacherCours" ToRole="Course" />
           <Property Name="SectionID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_TeacherCourses_Section" FromRole="TeacherCours" ToRole="Section" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="SchoolMSModel.FK_TeacherCourses_Users" FromRole="TeacherCours" ToRole="User" />
+          <Property Name="CourseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_TeacherCourses_Course" FromRole="TeacherCourses" ToRole="Course" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_TeacherCourses_Section" FromRole="TeacherCourses" ToRole="Section" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TeacherCourses_Users" FromRole="TeacherCourses" ToRole="Users" />
         </EntityType>
         <EntityType Name="TimeTable">
           <Key>
             <PropertyRef Name="TimeTableID" />
           </Key>
+          <Property Name="TimeTableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
           <Property Name="RoomNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="TimeTableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -395,15 +451,14 @@
           <Property Name="SectionNo" Type="Int32" Nullable="false" />
           <Property Name="Examdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_TimeTable_Course1" FromRole="TimeTable" ToRole="Course" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_TimeTable_Section" FromRole="TimeTable" ToRole="Section" />
           <NavigationProperty Name="User" Relationship="Self.FK_TimeTable_Users" FromRole="TimeTable" ToRole="Users" />
-          <Property Name="SectionID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Section" Relationship="SchoolMSModel.FK_TimeTable_Section" FromRole="TimeTable" ToRole="Section" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -414,8 +469,8 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="StudentGrades" Relationship="Self.FK_StudentGrade_User" FromRole="Users" ToRole="StudentGrade" />
+          <NavigationProperty Name="TeacherCourses" Relationship="Self.FK_TeacherCourses_Users" FromRole="Users" ToRole="TeacherCourses" />
           <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Users" FromRole="Users" ToRole="TimeTable" />
-          <NavigationProperty Name="TeacherCourses" Relationship="SchoolMSModel.FK_TeacherCourses_Users" FromRole="User" ToRole="TeacherCours" />
         </EntityType>
         <EntityType Name="Year">
           <Key>
@@ -424,6 +479,30 @@
           <Property Name="YearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="YearNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Announcement_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Announcement" Type="Self.Announcement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Announcement">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Section_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Section" Type="Self.Section" Multiplicity="*" />
@@ -444,6 +523,18 @@
               <PropertyRef Name="CourseID" />
             </Principal>
             <Dependent Role="StudentGrade">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
               <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -472,6 +563,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentGrade_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StudentGrade_User">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
@@ -481,6 +608,18 @@
             </Principal>
             <Dependent Role="StudentGrade">
               <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourses_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="TeacherCourses" Type="Self.TeacherCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TeacherCourses">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -496,8 +635,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SchoolMSEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SchoolMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Announcements" EntityType="Self.Announcement" />
           <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Documents" EntityType="Self.Document" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="Sections" EntityType="Self.Section" />
           <EntitySet Name="StudentGrades" EntityType="Self.StudentGrade" />
@@ -505,6 +646,14 @@
           <EntitySet Name="TimeTables" EntityType="Self.TimeTable" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Years" EntityType="Self.Year" />
+          <AssociationSet Name="FK_Announcement_Course" Association="Self.FK_Announcement_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Announcement" EntitySet="Announcements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Course" Association="Self.FK_Documents_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Section_Course" Association="Self.FK_Section_Course">
             <End Role="Course" EntitySet="Courses" />
             <End Role="Section" EntitySet="Sections" />
@@ -512,6 +661,10 @@
           <AssociationSet Name="FK_StudentGrade_Course" Association="Self.FK_StudentGrade_Course">
             <End Role="Course" EntitySet="Courses" />
             <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Course" Association="Self.FK_TeacherCourses_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Course1" Association="Self.FK_TimeTable_Course1">
             <End Role="Course" EntitySet="Courses" />
@@ -521,128 +674,47 @@
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Section" EntitySet="Sections" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentGrade_Section" Association="Self.FK_StudentGrade_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Section" Association="Self.FK_TeacherCourses_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Section" Association="Self.FK_TimeTable_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="TimeTable" EntitySet="TimeTables" />
+          </AssociationSet>
           <AssociationSet Name="FK_StudentGrade_User" Association="Self.FK_StudentGrade_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourses_Users" Association="Self.FK_TeacherCourses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TeacherCourses" EntitySet="TeacherCourses" />
           </AssociationSet>
           <AssociationSet Name="FK_TimeTable_Users" Association="Self.FK_TimeTable_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="TimeTable" EntitySet="TimeTables" />
           </AssociationSet>
-          <EntitySet Name="Announcements" EntityType="SchoolMSModel.Announcement" />
-          <AssociationSet Name="FK_Announcement_Course" Association="SchoolMSModel.FK_Announcement_Course">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Announcement" EntitySet="Announcements" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeacherCourses_Course" Association="SchoolMSModel.FK_TeacherCourses_Course">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="TeacherCours" EntitySet="TeacherCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TimeTable_Section" Association="SchoolMSModel.FK_TimeTable_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="TimeTable" EntitySet="TimeTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeacherCourses_Section" Association="SchoolMSModel.FK_TeacherCourses_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="TeacherCours" EntitySet="TeacherCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeacherCourses_Users" Association="SchoolMSModel.FK_TeacherCourses_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="TeacherCours" EntitySet="TeacherCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentGrade_Section" Association="SchoolMSModel.FK_StudentGrade_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Announcement">
-          <Key>
-            <PropertyRef Name="AnnounID" />
-          </Key>
-          <Property Name="AnnounID" Type="Int32" Nullable="false" />
-          <Property Name="CourseID" Type="Int32" Nullable="false" />
-          <Property Name="Announcement1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TimeAnnounced" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Course" Relationship="SchoolMSModel.FK_Announcement_Course" FromRole="Announcement" ToRole="Course" />
-        </EntityType>
-        <Association Name="FK_Announcement_Course">
-          <End Type="SchoolMSModel.Course" Role="Course" Multiplicity="1" />
-          <End Type="SchoolMSModel.Announcement" Role="Announcement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="CourseID" />
-            </Principal>
-            <Dependent Role="Announcement">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TeacherCourses_Course">
-          <End Type="SchoolMSModel.Course" Role="Course" Multiplicity="1" />
-          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="CourseID" />
-            </Principal>
-            <Dependent Role="TeacherCours">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TimeTable_Section">
-          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
-          <End Type="SchoolMSModel.TimeTable" Role="TimeTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionID" />
-            </Principal>
-            <Dependent Role="TimeTable">
-              <PropertyRef Name="SectionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TeacherCourses_Section">
-          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
-          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionID" />
-            </Principal>
-            <Dependent Role="TeacherCours">
-              <PropertyRef Name="SectionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TeacherCourses_Users">
-          <End Type="SchoolMSModel.User" Role="User" Multiplicity="1" />
-          <End Type="SchoolMSModel.TeacherCours" Role="TeacherCours" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="TeacherCours">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentGrade_Section">
-          <End Type="SchoolMSModel.Section" Role="Section" Multiplicity="1" />
-          <End Type="SchoolMSModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionID" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="SectionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SchoolMSModelStoreContainer" CdmEntityContainer="SchoolMSEntities1">
+        <EntityContainerMapping StorageEntityContainer="SchoolMSModelStoreContainer" CdmEntityContainer="SchoolMSEntities">
+          <EntitySetMapping Name="Announcements">
+            <EntityTypeMapping TypeName="SchoolMSModel.Announcement">
+              <MappingFragment StoreEntitySet="Announcement">
+                <ScalarProperty Name="AnnounID" ColumnName="AnnounID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Announcement1" ColumnName="Announcement" />
+                <ScalarProperty Name="TimeAnnounced" ColumnName="TimeAnnounced" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="SchoolMSModel.Course">
               <MappingFragment StoreEntitySet="Course">
@@ -651,6 +723,17 @@
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="SchoolMSModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -676,9 +759,9 @@
           <EntitySetMapping Name="StudentGrades">
             <EntityTypeMapping TypeName="SchoolMSModel.StudentGrade">
               <MappingFragment StoreEntitySet="StudentGrade">
-                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
@@ -690,24 +773,24 @@
           <EntitySetMapping Name="TeacherCourses">
             <EntityTypeMapping TypeName="SchoolMSModel.TeacherCours">
               <MappingFragment StoreEntitySet="TeacherCourses">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="TID" ColumnName="TID" />
-                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TimeTables">
             <EntityTypeMapping TypeName="SchoolMSModel.TimeTable">
               <MappingFragment StoreEntitySet="TimeTable">
-                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
                 <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
@@ -738,16 +821,6 @@
               <MappingFragment StoreEntitySet="Year">
                 <ScalarProperty Name="YearID" ColumnName="YearID" />
                 <ScalarProperty Name="YearNum" ColumnName="YearNum" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Announcements">
-            <EntityTypeMapping TypeName="SchoolMSModel.Announcement">
-              <MappingFragment StoreEntitySet="Announcement">
-                <ScalarProperty Name="TimeAnnounced" ColumnName="TimeAnnounced" />
-                <ScalarProperty Name="Announcement1" ColumnName="Announcement" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-                <ScalarProperty Name="AnnounID" ColumnName="AnnounID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

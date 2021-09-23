@@ -2,19 +2,15 @@
 using SchoolManagementSystem.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
     class YearViewModel : ViewModelBase
-    {
-        public SchoolMSEntities1 ty = new SchoolMSEntities1();
-        public Year year;
+    { 
 
         private List<Year> _year;
-
         public List<Year> Years
         {
             get { return _year; }
@@ -64,8 +60,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
-        private string _responseMessage = "Welcome to REST API Tutorials";
-
+        private string _responseMessage = "";
         public string ResponseMessage
         {
             get { return _responseMessage; }
@@ -77,7 +72,6 @@ namespace SchoolManagementSystem.ViewModels
         }
 
         private string _showPostMessage = "Fill the form to add new year!";
-
         public string ShowPostMessage
         {
             get { return _showPostMessage; }
@@ -93,26 +87,6 @@ namespace SchoolManagementSystem.ViewModels
             //GetAll1();
         }
         
-        //MARK: Get All years
-        public List<Year> GetAll1 ()
-        {
-            return ty.Years.ToList();
-
-
-        }
-
-        public void GetAll ()
-        {
-            AllYears = new ObservableCollection<Year>();
-            GetAll1().ForEach(data => AllYears.Add(new Year()
-            {
-                YearID = data.YearID,
-                YearNum = data.YearNum
-
-            }));
-
-        }
-
         #region CRUD
 
         /// <summary>
@@ -125,7 +99,6 @@ namespace SchoolManagementSystem.ViewModels
             if (yearDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)  
             {
                 Years = yearDetails.Result.Content.ReadAsAsync<List<Year>>().Result;  
-                //IsLoadData = true;  
             }
         }
 

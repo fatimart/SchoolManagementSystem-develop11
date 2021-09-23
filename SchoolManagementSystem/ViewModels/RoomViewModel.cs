@@ -1,15 +1,16 @@
 ﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
     class RoomViewModel : ViewModelBase
     {
-        public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public Room Room;
 
         private ObservableCollection<Room> _RoomRecord;
@@ -50,74 +51,107 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
 
+        private string _responseMessage = "";
+        public string ResponseMessage
+        {
+            get { return _responseMessage; }
+            set
+            {
+                _responseMessage = value;
+                OnPropertyChanged("ResponseMessage");
+            }
+        }
+
         public RoomViewModel()
         {
-            GetAll();
+            //GetAll();
         }
 
-        public List<Room> GetAll1 ()
-        {
-            return ty.Rooms.ToList();
-        }
+        #region CRUD
 
-        public void GetAll ()
+        /// <summary>
+        /// Fetches Room details
+        /// </summary>
+        public void GetRoomDetails ()
+
         {
-            AllRooms = new ObservableCollection<Room>();
-            GetAll1().ForEach(data => AllRooms.Add(new Room()
+            var roomDetails = WebAPI.GetCall(API_URIs.rooms);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-
-                RoomID = data.RoomID,
-                RoomNum = data.RoomNum
-
-            }));
-
-        }
-
-        //MARK: DataAccess function
-        public void AddRoom(string RoomNum)
-        {
-
-            Room room = new Room();
-            room.RoomNum = RoomNum;
-
-            ty.Rooms.Add(room);
-            ty.SaveChanges();
-
-        }
-
-
-        public void UpdateRoom(int RoomID, string RoomNum)
-        {
-
-            Room updateRoom = (from m in ty.Rooms where m.RoomID == RoomID select m).Single();
-            updateRoom.RoomID = RoomID;
-            updateRoom.RoomNum = RoomNum;
-            ty.SaveChanges();
-
-        }
-
-        public void DeleteRoom(int RoomID)
-        {
-
-            var deleteRoom = ty.Rooms.Where(m => m.RoomID == RoomID).Single();
-            ty.Rooms.Remove(deleteRoom);
-            ty.SaveChanges();
-
-        }
-        public bool CheckRoomID(int roomID)
-        {
-            try
-            {
-                var RoomID = ty.Rooms.Where(m => m.RoomID == roomID).Single();
-                return true;
+                AllRooms = roomDetails.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return false;
-
         }
+
+        /// <summary>
+        /// Adds new Room
+        /// </summary>
+        public void CreateNewRoom ( string RoomNum )
+        {
+            Room newRoom = new Room()
+            {
+                RoomNum = RoomNum
+            };
+
+            var roomDetails = WebAPI.PostCall(API_URIs.rooms, newRoom);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                ResponseMessage = newRoom.RoomNum + "'s details has successfully been added!";
+                MessageBox.Show("created ");
+            }
+            else
+            {
+                ResponseMessage = "Failed to update" + newRoom.RoomNum + "'s details.";
+            }
+        }
+
+
+        /// <summary>
+        /// Updates Room's record
+        /// </summary>
+        /// <param name="years"></param>
+        public void UpdateRoomDetails ( int RoomID, string RoomNum )
+        {
+            Room updateRoom = new Room()
+            {
+                RoomID = RoomID,
+                RoomNum = RoomNum,
+
+            };
+
+
+            var roomDetails = WebAPI.PutCall(API_URIs.rooms + "?id=" + updateRoom.RoomID, updateRoom);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = updateRoom.RoomID + "'s details has successfully been updated!";
+            }
+            else
+            {
+                ResponseMessage = "Failed to update" + updateRoom.RoomID + "'s details.";
+            }
+        }
+
+        /// <summary>
+        /// Deletes Year's record
+        /// </summary>
+        public void DeleteRoomeDetails ( int RoomID )
+        {
+
+            Room deleteRoom = new Room()
+            {
+                RoomID = RoomID
+            };
+
+            var roomDetails = WebAPI.DeleteCall(API_URIs.rooms + "?id=" + deleteRoom.RoomID);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = deleteRoom.RoomID + "'s details has successfully been deleted!";
+            }
+            else
+            {
+                ResponseMessage = "Failed to delete" + deleteRoom.RoomID + "'s details.";
+            }
+        }
+        #endregion
 
 
 

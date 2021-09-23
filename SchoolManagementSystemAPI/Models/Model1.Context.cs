@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolManagementSystem.Models
+namespace SchoolManagementSystemAPI.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SchoolMSEntities1 : DbContext
+    public partial class SchoolMSEntities : DbContext
     {
-        public SchoolMSEntities1()
-            : base("name=SchoolMSEntities1")
+        public SchoolMSEntities()
+            : base("name=SchoolMSEntities")
         {
         }
     
@@ -25,7 +25,9 @@ namespace SchoolManagementSystem.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Announcement> Announcements { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }
@@ -33,6 +35,5 @@ namespace SchoolManagementSystem.Models
         public virtual DbSet<TimeTable> TimeTables { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Year> Years { get; set; }
-        public virtual DbSet<Announcement> Announcements { get; set; }
     }
 }

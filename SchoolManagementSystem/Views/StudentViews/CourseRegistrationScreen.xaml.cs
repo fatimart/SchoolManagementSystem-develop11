@@ -45,7 +45,7 @@ namespace SchoolManagementSystem.Views.StudentViews
             if (notEmpty())
             {
 
-                table.InsertTimeTable(
+                table.CreateNewTimeTable(
                                     Convert.ToInt32(UserViewModel.userSession.UserID),
                                     courseID,
                                     roomNotxt.Text.ToString(),
@@ -356,7 +356,7 @@ namespace SchoolManagementSystem.Views.StudentViews
             {
                 try
                 {
-                    table.DeleteTimeTable(UserViewModel.userSession.UserID, CourseCode);
+                    //table.DeleteTimeTableDetails(UserViewModel.userSession.UserID, CourseCode);
                     grade.deleteStudentGrade(courseID,
                                       Convert.ToInt32(UserViewModel.userSession.UserID),
                                       sectionID);

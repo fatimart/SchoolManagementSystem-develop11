@@ -1,8 +1,10 @@
 ﻿using SchoolManagementSystem.Models;
+using SchoolManagementSystem.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,7 +13,6 @@ namespace SchoolManagementSystem.ViewModels
 {
     class SectionViewModel : ViewModelBase
     {
-        public SchoolMSEntities1 ty = new SchoolMSEntities1();
         public Section Section;
 
         private ObservableCollection<Section> _sectionRecord;
@@ -87,98 +88,116 @@ namespace SchoolManagementSystem.ViewModels
 
             }
         }
-
-        public List<Section> GetAll1 ()
+        private string _responseMessage = "";
+        public string ResponseMessage
         {
-            return ty.Sections.ToList();
+            get { return _responseMessage; }
+            set
+            {
+                _responseMessage = value;
+                OnPropertyChanged("ResponseMessage");
+            }
         }
 
-        public void GetAll ()
+        public SectionViewModel ()
         {
-            AllSections = new ObservableCollection<Section>();
-            GetAll1().ForEach(data => AllSections.Add(new Section()
-            {
-                SectionID = data.SectionID,
-                SectionNum = data.SectionNum,
-                CourseID = data.CourseID,
-                RoomID = data.RoomID,
-                Time = data.Time
-                
-
-            }));
-
+            //GetAll();
         }
 
-        //MARK: DataAcesss
-        public void AddSection( int sectionNum, int courseID, int RoomID, string time)
-        {
-            if (!checkSectionExists(sectionNum, courseID))
-            {
-                Section section = new Section();
-                section.SectionNum = sectionNum;
-                section.CourseID = courseID;
-                section.RoomID = RoomID;
-                section.Time = time;
+        #region CRUD
 
-                ty.Sections.Add(section);
-                ty.SaveChanges();
+        /// <summary>
+        /// Fetches Section details
+        /// </summary>
+        public void GetSectionetails ()
+
+        {
+            var roomDetails = WebAPI.GetCall(API_URIs.sections);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                AllSections = roomDetails.Result.Content.ReadAsAsync<ObservableCollection<Section>>().Result;
+            }
+        }
+
+        /// <summary>
+        /// Adds new Section
+        /// </summary>
+        public void CreateNewSection ( int sectionNum, int courseID, int RoomID, string time )
+        {
+            Section newSection = new Section()
+            {
+                SectionNum = sectionNum,
+                CourseID = courseID,
+                RoomID = RoomID,
+                Time = time
+            };
+
+            var roomDetails = WebAPI.PostCall(API_URIs.sections, newSection);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                ResponseMessage = newSection.SectionNum + "'s details has successfully been added!";
+                MessageBox.Show("created ");
             }
             else
             {
-                MessageBox.Show("Section with course code already exists please choose another section number!");
-
+                ResponseMessage = "Failed to update" + newSection.SectionNum + "'s details.";
             }
         }
 
 
-        public void UpdateSection(int sectionNum, int courseID, int RoomID, string time )
+        /// <summary>
+        /// Updates Section's record
+        /// </summary>
+        /// <param name="sections"></param>
+        public void UpdateSectionDetails ( int sectionNum, int courseID, int RoomID, string time )
         {
-            
-                Section updateSection = (from m in ty.Sections
-                                         where m.SectionNum == sectionNum
-                                         where m.CourseID == courseID
-                                         select m).Single();
+            Section updateSection = new Section()
+            {
+                SectionNum = sectionNum,
+                CourseID = courseID,
+                RoomID = RoomID,
+                Time = time
+            };
 
-                updateSection.SectionNum = sectionNum;
-                updateSection.CourseID = courseID;
-                updateSection.RoomID = RoomID;
-                updateSection.Time = time;
 
-                ty.SaveChanges();
-            
-           
-        }
-
-        public void DeleteSection ( int sectionNum, int courseID )
-        {
-
-            if (checkSectionExists(sectionNum, courseID))
-            { 
-                var deleteSection = (from m in ty.Sections
-                                     where m.SectionNum == sectionNum
-                                     where m.CourseID == courseID
-                                     select m).Single();
-            
-                ty.Sections.Remove(deleteSection);
-                ty.SaveChanges();
-        }
+            var roomDetails = WebAPI.PutCall(API_URIs.sections + "?id=" + updateSection.SectionID, updateSection);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = updateSection.SectionID + "'s details has successfully been updated!";
+            }
             else
             {
-                MessageBox.Show("course with section number " + sectionNum + " does not exists!");
-
+                ResponseMessage = "Failed to update" + updateSection.SectionID + "'s details.";
             }
-
         }
 
-        public bool checkSectionExists ( int sectionNum, int CourseID )
+        /// <summary>
+        /// Deletes Section's record
+        /// </summary>
+        public void DeleteSectionDetails ( int SectionID, int courseID )
         {
-            if (ty.Sections.Any(o => o.CourseID == CourseID && o.SectionNum == sectionNum))
-            { return true; }
+
+            Section deleteSection = new Section()
+            {
+                SectionID = SectionID,
+                CourseID = courseID
+
+            };
+
+            var roomDetails = WebAPI.DeleteCall(API_URIs.sections + "?id=" + deleteSection.SectionID);
+            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ResponseMessage = deleteSection.SectionID + "'s details has successfully been deleted!";
+            }
             else
             {
-                return false;
+                ResponseMessage = "Failed to delete" + deleteSection.SectionID + "'s details.";
             }
         }
+        #endregion
+
+
+
 
     }
 }

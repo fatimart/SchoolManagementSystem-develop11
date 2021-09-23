@@ -11,9 +11,16 @@ namespace SchoolManagementSystem.Utilities
         //MARK: change the url to the new Api project
         public const string baseURI = "https://localhost:44310/api/";
 
-        public const string years = "Year";
         public const string users = "User";
+        public const string students = "Student";
+        public const string teachers = "Teachers";
         public const string courses = "Course";
         public const string timetables = "TimeTable";
+        public const string announcements = "Announcement";
+        public const string years = "Year";
+        public const string rooms = "Room";
+        public const string sections = "Section";
+
+
     }
 }

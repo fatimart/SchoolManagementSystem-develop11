@@ -1,8 +1,11 @@
-﻿using SchoolManagementSystem.ViewModels;
+﻿using SchoolManagementSystem.Utilities;
+using SchoolManagementSystem.ViewModels;
 using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,17 +18,22 @@ namespace SchoolManagementSystem.Views.AdminViews
     {
 
         SectionViewModel sectionViewModel = new SectionViewModel();
+        InitielizeHttpClient initielizeHttpClient = new InitielizeHttpClient();
         public static  int courseID;
         public static int roomID;
 
-        public SectionScreen()
+        public SectionScreen ()
         {
             InitializeComponent();
+            initielizeHttpClient.InitielizeClient();
 
             fillCourseBox();
             fillSectioneBox();
             FillDataGrid();
         }
+
+
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             FillDataGrid();
@@ -39,7 +47,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             {
                 try
                 {
-                    sectionViewModel.AddSection((Convert.ToInt32(sectionnumtxtbox.Text)),
+                    sectionViewModel.CreateNewSection((Convert.ToInt32(sectionnumtxtbox.Text)),
                                                 courseID,
                                                 roomID,
                                                 timetxtbox.Text.Trim().ToString()
@@ -73,19 +81,19 @@ namespace SchoolManagementSystem.Views.AdminViews
 
                 try
                 {
-                    if (sectionViewModel.checkSectionExists(Convert.ToInt32(sectionnumtxtbox.Text), courseID))
-                    {
-                        sectionViewModel.UpdateSection((Convert.ToInt32(sectionnumtxtbox.Text)),
+                    //if (sectionViewModel.checkSectionExists(Convert.ToInt32(sectionnumtxtbox.Text), courseID))
+                    //{
+                        sectionViewModel.UpdateSectionDetails((Convert.ToInt32(sectionnumtxtbox.Text)),
                                                     courseID,
                                                     roomID,
                                                     timetxtbox.Text.Trim().ToString()
                                                       );
-                    }
-                    else
-                    {
-                        MessageBox.Show("course with section number " + Convert.ToInt32(sectionnumtxtbox.Text) + " does not exists!");
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("course with section number " + Convert.ToInt32(sectionnumtxtbox.Text) + " does not exists!");
 
-                    }
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +123,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 if (fillNotEmpty())
                 {
                     
-                        sectionViewModel.DeleteSection((Convert.ToInt32(sectionnumtxtbox.Text)), courseID);
+                        sectionViewModel.DeleteSectionDetails((Convert.ToInt32(sectionnumtxtbox.Text)), courseID);
                    
                         //Clear();
                         FillDataGrid();

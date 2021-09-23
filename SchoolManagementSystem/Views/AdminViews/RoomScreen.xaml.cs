@@ -1,6 +1,9 @@
 ﻿using SchoolManagementSystem.ViewModels;
 using System;
+using System.Configuration;
 using System.Data;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,10 +15,24 @@ namespace SchoolManagementSystem.Views.AdminViews
     public partial class RoomScreen : Page
     {
         RoomViewModel room = new RoomViewModel();
-        public RoomScreen()
+        public HttpClient apiClient;
+
+        public RoomScreen ()
         {
             InitializeComponent();
+            InitielizeClient();
             DataContext = room;
+
+        }
+
+        private void InitielizeClient ()
+        {
+            string api = ConfigurationManager.AppSettings["api"];
+
+            apiClient = new HttpClient();
+            apiClient.BaseAddress = new Uri(api);
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void roomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,7 +54,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             //add room 
             if (roomNotEmpty())
             {
-                room.AddRoom(roomNumTextBox.Text.Trim());
+                room.CreateNewRoom(roomNumTextBox.Text.Trim());
                 Load();
             }
             else
@@ -50,18 +67,18 @@ namespace SchoolManagementSystem.Views.AdminViews
         {//update
             if (roomIDtEmpty())
             {
-                if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
-                {
+                //if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+                //{
 
-                    room.UpdateRoom(Convert.ToInt32(roomIDTextBox.Text), roomNumTextBox.Text.Trim());
+                    room.UpdateRoomDetails(Convert.ToInt32(roomIDTextBox.Text), roomNumTextBox.Text.Trim());
                     Load();
 
-                }
+                //}
 
-                else
-                {
-                    MessageBox.Show("ID not existed");
-                }
+                //else
+                //{
+                //    MessageBox.Show("ID not existed");
+                //}
             }
             else
             {
@@ -74,14 +91,14 @@ namespace SchoolManagementSystem.Views.AdminViews
         {//delete
             if (roomIDtEmpty())
             {
-                if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
-                {
-                    room.DeleteRoom(Convert.ToInt32(roomIDTextBox.Text));
-                }
-                else
-                {
-                    MessageBox.Show("ID not existed");
-                }
+                //if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
+                //{
+                    room.DeleteRoomeDetails(Convert.ToInt32(roomIDTextBox.Text));
+                //}
+                //else
+                //{
+                //    MessageBox.Show("ID not existed");
+                //}
             }
             else
             {
