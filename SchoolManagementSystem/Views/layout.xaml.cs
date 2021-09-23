@@ -1,4 +1,4 @@
-﻿using SchoolManagementSystem.Models;
+﻿using SchoolManagementSystem.ModelEntity;
 using SchoolManagementSystem.ViewModels;
 using SchoolManagementSystem.Views.AdminViews;
 using System;

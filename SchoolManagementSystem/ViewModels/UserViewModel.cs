@@ -1,4 +1,4 @@
-﻿using SchoolManagementSystem.Models;
+﻿using SchoolManagementSystem.ModelEntity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -167,37 +167,7 @@ namespace SchoolManagementSystem.ViewModels
        {
 
 
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-             using (SqlConnection connection = new SqlConnection(strcon))
-             {
-                 SqlCommand command = new SqlCommand(
-                   "SELECT TOP 1 * FROM Users;",
-                   connection);
-                 connection.Open();
-
-                 SqlDataReader reader = command.ExecuteReader();
-                 if (reader.HasRows)
-                 {
-                     while (reader.Read())
-                     {
-                         user = new User
-                         {
-                             UserID = Convert.ToInt32(reader["UserID"]),
-                             UserName = reader["UserName"].ToString(),
-                             Name = reader["Name"].ToString(),
-                             Email = reader["Email"].ToString(),
-                             CPR = Convert.ToInt32(reader["CPR"]),
-                             Address = reader["Address"].ToString(),
-                             DOB = Convert.ToDateTime(reader["DOB"]),
-                             Type = reader["Type"].ToString(),
-                             Password = reader["Password"].ToString(),
-                             ContactNo = reader["ContactNo"].ToString(),
-                         };
-                     }
-                 }
-                 reader.Close();
-             }
+           
 
 
         }

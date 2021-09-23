@@ -74,36 +74,36 @@ namespace SchoolManagementSystem.Views.TeacherViews
         {
             //Save Button
 
-            try
-            {
-                DateTime now = DateTime.Now;
+            //try
+            //{
+            //    DateTime now = DateTime.Now;
 
-                viewmodel.AddAnnoun(Convert.ToInt32(CID),
-                                    announ_txtbox.Document.Blocks.ToString(),
-                                    now);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            //    viewmodel.AddAnnoun(Convert.ToInt32(CID),
+            //                        announ_txtbox.Document.Blocks.ToString(),
+            //                        now);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
 
-            }
+            //}
         }
 
         //Delete Button
         private void Button_Click ( object sender, RoutedEventArgs e )
         {
-            if (notEmpty())
-            {
-                try
-                {
-                    viewmodel.DeleteAnnoun(Convert.ToInt32(CID));
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+            //if (notEmpty())
+            //{
+            //    try
+            //    {
+            //        viewmodel.DeleteAnnoun(Convert.ToInt32(CID));
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message);
 
-                }
-            }
+            //    }
+            //}
         }
 
         private void clear_Click ( object sender, RoutedEventArgs e )

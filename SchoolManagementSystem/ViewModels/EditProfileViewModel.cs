@@ -1,4 +1,4 @@
-﻿using SchoolManagementSystem.Models;
+﻿using SchoolManagementSystem.ModelEntity;
 using System;
 using System.Configuration;
 using System.Data.SqlClient;

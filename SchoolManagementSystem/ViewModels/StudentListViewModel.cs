@@ -1,4 +1,4 @@
-﻿using SchoolManagementSystem.Models;
+﻿using SchoolManagementSystem.ModelEntity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -150,7 +150,7 @@ namespace SchoolManagementSystem.ViewModels
 
         public StudentListViewModel ()
         {
-            AllUsers = GetAll();
+            //AllUsers = GetAll();
             
 
         }

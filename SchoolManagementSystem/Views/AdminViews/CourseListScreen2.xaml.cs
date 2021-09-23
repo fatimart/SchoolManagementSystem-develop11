@@ -26,7 +26,6 @@ namespace SchoolManagementSystem.Views.AdminViews
             InitializeComponent();
             InitielizeClient();
 
-
             // The DataContext serves as the starting point of Binding Paths
             DataContext = course;
             FillDataGrid();
@@ -205,7 +204,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 {
                     //if (course.checkCourseCode(courseCodeTextBox.Text.Trim().ToString()))
                     //{
-                    System.Windows.MessageBox.Show("Course Already Exists");
+                    //System.Windows.MessageBox.Show("Course Already Exists");
 
                     //}
                     // else

@@ -6,16 +6,11 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SchoolManagementSystem.Views.StudentViews
 {
@@ -28,14 +23,25 @@ namespace SchoolManagementSystem.Views.StudentViews
         StudentGradeViewModel grade = new StudentGradeViewModel();
         public static int courseID;
         public static int sectionID;
+        public HttpClient apiClient;
 
         public CourseRegistrationScreen ()
         {
+            InitielizeClient();
             InitializeComponent();
             FillDataGrid();
             fillCourseBox();
 
+        }
 
+        private void InitielizeClient ()
+        {
+            string api = ConfigurationManager.AppSettings["api"];
+
+            apiClient = new HttpClient();
+            apiClient.BaseAddress = new Uri(api);
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void Register_Click ( object sender, RoutedEventArgs e )
@@ -45,34 +51,61 @@ namespace SchoolManagementSystem.Views.StudentViews
             if (notEmpty())
             {
 
-                table.CreateNewTimeTable(
-                                    Convert.ToInt32(UserViewModel.userSession.UserID),
-                                    courseID,
-                                    roomNotxt.Text.ToString(),
-                                    2021,
-                                    teachernametxt.Text.ToString(),
-                                    coursenametxt.Text.ToString(),
-                                    timetxt.Text.ToString(),
-                                    course_combo_box.Text.ToString(),
-                                    Convert.ToInt32(sectionnotxt.Text.ToString()),
-                                    Convert.ToDateTime(examDatetxt.Text.ToString()),
-                                    sectionID
-                                   );
+                //table.CreateNewTimeTable(
+                //                    Convert.ToInt32(UserViewModel.userSession.UserID),
+                //                    courseID,
+                //                    roomNotxt.Text.ToString(),
+                //                    2021,
+                //                    teachernametxt.Text.ToString(),
+                //                    coursenametxt.Text.ToString(),
+                //                    timetxt.Text.ToString(),
+                //                    course_combo_box.Text.ToString(),
+                //                    Convert.ToInt32(sectionnotxt.Text.ToString()),
+                //                    Convert.ToDateTime(examDatetxt.Text.ToString()),
+                //                    sectionID
+                //                   );
 
-                grade.AddStudentGrade(courseID,
-                                      Convert.ToInt32(UserViewModel.userSession.UserID),
-                                      0,
-                                      0,
-                                      false,
-                                      2021,
-                                      sectionID);
-                FillDataGrid();
+                TimeTable TTable = new TimeTable()
+                {
+                    UserID = Convert.ToInt32(UserViewModel.userSession.UserID),
+                    CourseID = courseID,
+                    RoomNo = roomNotxt.Text.ToString(),
+                    Year = 2021,
+                    TeacherName = teachernametxt.Text.ToString(),
+                    CourseName = coursenametxt.Text.ToString(),
+                    Time = timetxt.Text.ToString(),
+                    CourseCode = course_combo_box.Text.ToString(),
+                    SectionNo = Convert.ToInt32(sectionnotxt.Text.ToString()),
+                    Examdate = Convert.ToDateTime(examDatetxt.Text.ToString()),
+                    SectionID = sectionID
+
+
+                };
+
+                SaveYear(TTable);
+
+
+                //grade.AddStudentGrade(courseID,
+                //                      Convert.ToInt32(UserViewModel.userSession.UserID),
+                //                      0,
+                //                      0,
+                //                      false,
+                //                      2021,
+                //                      sectionID);
+                //FillDataGrid();
 
             }
             else
             {
                 MessageBox.Show("Please Select a course!!");
             }
+        }
+
+
+        private async void SaveYear ( TimeTable TTable )
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            await apiClient.PostAsJsonAsync("TimeTable", TTable);
         }
 
 

@@ -57,18 +57,18 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private void Button_Click4(object sender, RoutedEventArgs e)
         {
-            //delete
-            if (TimeTable.CheckTimeTableID(Convert.ToInt32(timeTableIDTextBox.Text)))
-            {
-                TimeTable.DeleteTimeTable(Convert.ToInt32(timeTableIDTextBox.Text));
-                Load();
+            ////delete
+            //if (TimeTable.CheckTimeTableID(Convert.ToInt32(timeTableIDTextBox.Text)))
+            //{
+            //    TimeTable.DeleteTimeTable(Convert.ToInt32(timeTableIDTextBox.Text));
+            //    Load();
 
-            }
+            //}
 
-            else
-            {
-                MessageBox.Show("ID not existed");
-            }
+            //else
+            //{
+            //    MessageBox.Show("ID not existed");
+            //}
         }
 
         private void Button_Clear(object sender, RoutedEventArgs e)

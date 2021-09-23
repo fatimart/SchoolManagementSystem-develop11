@@ -45,6 +45,8 @@ namespace SchoolManagementSystem
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
                 string apiUrl = API_URIs.baseURI + url;
                 using (HttpClient client = new HttpClient())
                 {

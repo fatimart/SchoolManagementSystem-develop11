@@ -25,9 +25,10 @@ namespace SchoolManagementSystem.Views
         {
             InitializeComponent();
             InitielizeClient();
-            GetYears();
+            
+            //GetYears();
             DataContext = year.AllYears;
-            //FillDataGrid();
+            FillDataGrid();
         }
 
         private void InitielizeClient ()

@@ -9,7 +9,10 @@ namespace SchoolManagementSystem.Utilities
     class API_URIs
     {
         //MARK: change the url to the new Api project
-        public const string baseURI = "https://localhost:44310/api/";
+        //public const string sayedbaseURI = "https://localhost:44361/api/";
+
+        public const string baseURI = "https://localhost:44361/api/";
+
 
         public const string users = "User";
         public const string students = "Student";

@@ -15,14 +15,14 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             using (var db = new SchoolMSEntities())
             {
-                var query = from year in db.Years
-                            orderby year.YearID
+                var query = from year in db.TimeTables
+                            orderby year.TimeTableID
                             select year;
 
 
                 foreach (var item in query)
                 {
-                  yield return ("YearID: " + item.YearID + ", Year Number: " + item.YearNum);
+                  yield return ("YearID: " + item.TimeTableID);
 
                 }
             }
