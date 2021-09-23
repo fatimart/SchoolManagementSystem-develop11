@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolManagementSystem", "SchoolManagementSystem\SchoolManagementSystem.csproj", "{93455E16-1241-4580-807E-DD201E898E87}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6DEE1ACA-1F57-4FF4-81C9-DC20C95A2D96} = {6DEE1ACA-1F57-4FF4-81C9-DC20C95A2D96}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolManagementSystemAPI", "SchoolManagementSystemAPI\SchoolManagementSystemAPI.csproj", "{6DEE1ACA-1F57-4FF4-81C9-DC20C95A2D96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolManagementSystemAPI", "SchoolManagementSystemAPI\SchoolManagementSystemAPI.csproj", "{635974E6-EF6F-4399-9E8D-6935B8E4E46A}"
 EndProject

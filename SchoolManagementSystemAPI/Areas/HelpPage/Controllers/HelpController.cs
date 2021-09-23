@@ -1,8 +1,8 @@
+using SchoolManagementSystemAPI.Areas.HelpPage.ModelDescriptions;
+using SchoolManagementSystemAPI.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using SchoolManagementSystemAPI.Areas.HelpPage.ModelDescriptions;
-using SchoolManagementSystemAPI.Areas.HelpPage.Models;
 
 namespace SchoolManagementSystemAPI.Areas.HelpPage.Controllers
 {

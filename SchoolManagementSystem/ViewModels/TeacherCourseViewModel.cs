@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
@@ -13,6 +14,16 @@ namespace SchoolManagementSystem.ViewModels
         public SchoolMSEntities1 ty = new SchoolMSEntities1();
 
         public TeacherCours TCourse;
+        HttpClient client = new HttpClient();
+        public TeacherCourseViewModel()
+        {
+            client.BaseAddress = new Uri("https://localhost:44361/api/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        
+        }
+
 
         private int _TID;
         public int TID
