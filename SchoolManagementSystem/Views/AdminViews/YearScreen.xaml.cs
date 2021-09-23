@@ -1,8 +1,13 @@
-﻿using SchoolManagementSystem.ViewModels;
+﻿using Newtonsoft.Json;
+using SchoolManagementSystem.Models;
+using SchoolManagementSystem.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,17 +19,31 @@ namespace SchoolManagementSystem.Views
     public partial class YearScreen : Page
     {
         YearViewModel year = new YearViewModel();
+        public HttpClient apiClient;
 
-        public YearScreen()
+        public YearScreen ()
         {
             InitializeComponent();
-            DataContext = year;
-            FillDataGrid();
+            InitielizeClient();
+            GetYears();
+            DataContext = year.AllYears;
+            //FillDataGrid();
+        }
+
+        private void InitielizeClient ()
+        {
+            string api = ConfigurationManager.AppSettings["api"];
+
+            apiClient = new HttpClient();
+            apiClient.BaseAddress = new Uri(api);
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            //GetYears();
+          //  GetYears1();
         }
 
         public void Load()
@@ -37,7 +56,7 @@ namespace SchoolManagementSystem.Views
 
             if (yearNotEmpty())
             {
-                year.AddYear(yearNumTextBox.Text.Trim());
+                year.CreateNewYear(yearNumTextBox.Text);
                 Load();
             }
             else
@@ -53,43 +72,28 @@ namespace SchoolManagementSystem.Views
 
             if (yearIDtEmpty() && yearNotEmpty())
             {
-                if (year.CheckYearID(Convert.ToInt32(yearIDTextBox.Text)))
-                {
-
-                    year.UpdateYear(Convert.ToInt32(yearIDTextBox.Text),
-                                        yearNumTextBox.Text.Trim()
-                                    );
+                year.UpdateYearDetails(Convert.ToInt32(yearIDTextBox.Text),
+                                        yearNumTextBox.Text
+                                       );
                     Load();
 
-                }
-
-                else
-                {
-                    MessageBox.Show("YearID not existed");
-                }
-
             }
+
             else
             {
                 MessageBox.Show("Please Enter the Year ID and YearNum");
             }
+
         }
 
         private void Button_Click4(object sender, RoutedEventArgs e)
         {//delete
             if (yearIDtEmpty())
             {
-                if (year.CheckYearID(Convert.ToInt32(yearIDTextBox.Text)))
-                {
+               
 
-                    year.DeleteYear(Convert.ToInt32(yearIDTextBox.Text));
+                    year.DeleteYeareDetails(Convert.ToInt32(yearIDTextBox.Text));
                     Load();
-
-                }
-                else
-                {
-                    MessageBox.Show("YearID not existed");
-                }
             }
 
             else
@@ -98,6 +102,7 @@ namespace SchoolManagementSystem.Views
             }
 
         }
+
         private void Button_Clear(object sender, RoutedEventArgs e)
         {
             yearIDTextBox.Text = yearNumTextBox.Text = "";
@@ -152,7 +157,20 @@ namespace SchoolManagementSystem.Views
 
         }
 
-        private void yearDataGrid_SelectionChanged_1 ( object sender, SelectionChangedEventArgs e )
+        public async void GetYears ()
+        {
+            var response = await apiClient.GetStringAsync("Year");
+            var years = JsonConvert.DeserializeObject<List<Year>>(response);
+
+            yearDataGrid.DataContext = years;
+        }
+
+        public async void GetYears1 ()
+        {
+            year.GetYearDetails();
+        }
+
+            private void yearDataGrid_SelectionChanged_1 ( object sender, SelectionChangedEventArgs e )
         {
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;

@@ -1,19 +1,12 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using SchoolManagementSystem.Utilities;
 
 namespace SchoolManagementSystem
 {
@@ -25,9 +18,14 @@ namespace SchoolManagementSystem
         SchoolMSEntities1 dataEntities = new SchoolMSEntities1();
         private readonly EditProfileViewModel _viewModel;
 
+        private HttpClient client = new HttpClient();
+        
+        //client.DefaultRequestHeaders.Accept.Clear();  
+
 
         public MainWindow ()
         {
+            client.BaseAddress = new Uri("");
             InitializeComponent();
 
 
@@ -35,6 +33,7 @@ namespace SchoolManagementSystem
             DataContext = _viewModel;
         }
 
+       
         private void Window_Loaded ( object sender, RoutedEventArgs e )
         {
 
@@ -44,5 +43,7 @@ namespace SchoolManagementSystem
         {
             
         }
+
+        
     }
 }

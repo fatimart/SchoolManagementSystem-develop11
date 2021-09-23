@@ -16,7 +16,7 @@
         <Button Content="clear" HorizontalAlignment="Left" Margin="550,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Clear"/>
         <Button Content="Update" HorizontalAlignment="Left" Margin="350,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click3"/>
         <Button Content="delete" HorizontalAlignment="Left" Margin="450,182,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click4"/>
-        
+
         <DataGrid x:Name="yearDataGrid" ItemsSource="{Binding AllYears, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="yearDataGrid_SelectionChanged_1" HorizontalAlignment="Left" Width="73">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="yearIDColumn" Binding="{Binding YearID, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="ID" Width="Auto"/>

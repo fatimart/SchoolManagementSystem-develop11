@@ -7,8 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-      <Frame x:Name="Main" />
-        <Button x:Name="StudentList" Content="Button" HorizontalAlignment="Left" Margin="137,66,0,0" VerticalAlignment="Top" Width="75" Click="StudentList_Click"/>
+        <Label x:Name="lblName" Content="Name:" HorizontalAlignment="Left" Margin="60,74,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblRoll" Content="Roll:" HorizontalAlignment="Left" Margin="60,118,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="136,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtRoll" HorizontalAlignment="Left" Height="23" Margin="136,118,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtStudentId"  Visibility="Hidden" HorizontalAlignment="Left" Height="23" Margin="136,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnSaveStudent" Content="Save Student" HorizontalAlignment="Left" Margin="136,169,0,0" VerticalAlignment="Top" Width="120"/>
+        <DataGrid x:Name="dgStudent" HorizontalAlignment="Left" Height="316" Margin="299,78,0,0" VerticalAlignment="Top" Width="461"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="299,33,0,0" VerticalAlignment="Top" Width="461"/>
+
+        <!--<Frame x:Name="Main" />-->
+        <!--<Button x:Name="StudentList" Content="Button" HorizontalAlignment="Left" Margin="137,66,0,0" VerticalAlignment="Top" Width="75" Click="StudentList_Click"/>-->
     </Grid>
 
 
