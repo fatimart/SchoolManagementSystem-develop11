@@ -84,7 +84,7 @@ namespace SchoolManagementSystemAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public HttpResponseMessage Post(Course course)
+        public HttpResponseMessage Post([FromBody] Course course)
         {
             try
             {

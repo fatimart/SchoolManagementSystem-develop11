@@ -176,11 +176,13 @@ namespace SchoolManagementSystem.ViewModels
             var courseDetails = WebAPI.DeleteCall(API_URIs.courses + "?id=" + deleteCourse.CourseID);
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                ResponseMessage = deleteCourse.CourseID + "'s details has successfully been deleted!";
+               ResponseMessage = deleteCourse.CourseID + "'s details has successfully been deleted!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to delete" + deleteCourse.CourseID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
         #endregion

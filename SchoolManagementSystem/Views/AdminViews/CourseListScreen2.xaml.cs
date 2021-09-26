@@ -100,7 +100,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
 
 
-        //private void DeleteCourse_Click ( object sender, RoutedEventArgs e )
+        //private void DeleteCourse_Click1(object sender, RoutedEventArgs e)
         //{
         //    //delete button 
         //    if (System.Windows.MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
@@ -111,9 +111,9 @@ namespace SchoolManagementSystem.Views.AdminViews
         //            try
 
         //            {
-        //                if (course.CheckCourseID(Convert.ToInt32(courseIDTextBox.Text)))
+        //                if (!string.IsNullOrEmpty(courseIDTextBox.Text))
         //                {
-        //                    course.DeleteCourseDetails((courseCodeTextBox.Text));
+        //                    course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
 
         //                }
         //                else
@@ -262,7 +262,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         public bool courseIDtEmpty ()
         {
-            if (courseIDTextBox.Text != "")
+            if (courseIDTextBox.Text.Length>0)
             {
                 return true;
             }
@@ -407,5 +407,40 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
+        private void DeleteCourse_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (courseIDtEmpty()) { 
+                //delete button 
+                if (System.Windows.MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
+            == MessageBoxResult.Yes)
+            {
+                
+                
+                    try
+
+                    {
+                        if (!string.IsNullOrEmpty(courseIDTextBox.Text))
+                        {
+                            course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
+
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("ID not existed");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.Message);
+                    }
+
+                    finally
+                    {
+                        FillDataGrid();
+                        Clear();
+                    }
+                }
+            }
+        }
     }
 }

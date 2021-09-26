@@ -58,7 +58,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,198,376,0" />
+        <Button x:Name="DeleteCourse" Content="DELETE" RenderTransformOrigin="1.426,1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Width="86" Margin="0,198,376,0" Click="DeleteCourse_Click_1" />
         <Button x:Name="UpdateCourse" Content="UPDATE" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="88" Height="21" VerticalAlignment="Bottom" Margin="0,0,488,330" Click="UpdateCourse_Click" />
         <Button x:Name="AddNewCourse" Content="INSERT" RenderTransformOrigin="1.426,1" HorizontalAlignment="Right" Width="86" Height="22" VerticalAlignment="Bottom" Margin="0,0,603,330" Click="AddNewCourse_Click"/>
         <Button x:Name="Reset" Content="RESET" RenderTransformOrigin="1.426,1" Margin="398,198,262,0" Height="22" VerticalAlignment="Top" Click="Reset_Click"/>
