@@ -112,6 +112,7 @@ namespace SchoolManagementSystemAPI.Models
 
         public void DeleteCourse ( string courseCode )
         {
+
             var deleteCourse = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
             ty.Courses.Remove(deleteCourse);
             ty.SaveChanges();

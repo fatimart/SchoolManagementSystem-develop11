@@ -89,6 +89,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
                     return res;
                 }
+               // return res;
             }
             catch (Exception ex)
             {

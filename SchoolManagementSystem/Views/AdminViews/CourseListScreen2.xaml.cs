@@ -10,6 +10,7 @@ using DataGrid = System.Windows.Controls.DataGrid;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using SchoolManagementSystem.Models;
+using System.Text;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -39,6 +40,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             apiClient.BaseAddress = new Uri(api);
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
         }
 
         private void Window_Loaded ( object sender, RoutedEventArgs e )
@@ -220,7 +222,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
                     //  }
 
-                    Course newcourse = new Course() 
+                    Course newcourse = new Course()
                     {
                         CourseCode = courseCodeTextBox.Text.Trim(),
                         CourseName = courseNameTextBox.Text.Trim(),
@@ -251,12 +253,23 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private async void SaveCourse ( Course course )
         {
-
-            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Course", course);
-            if (response.IsSuccessStatusCode)
+            using (var client = new HttpClient())
             {
-                Console.WriteLine("Success");
+                string api = ConfigurationManager.AppSettings["api"];
+
+                client.BaseAddress = new Uri(api);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                await client.PostAsJsonAsync("Course", course);
             }
+
+
+
+            //HttpResponseMessage response = await apiClient.PostAsJsonAsync("Course", course);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    Console.WriteLine("Success");
+            //}
         }
 
 

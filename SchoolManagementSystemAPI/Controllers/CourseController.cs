@@ -84,7 +84,7 @@ namespace SchoolManagementSystemAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public HttpResponseMessage Post(Course course)
+        public HttpResponseMessage Post( [FromBody] Course course)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     entities.Courses.Add(course);
                     entities.SaveChanges();
                     var res = Request.CreateResponse(HttpStatusCode.Created, course);
-                    //res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
+                    res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
                     return res;
                 }
             }

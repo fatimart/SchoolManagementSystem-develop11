@@ -26,7 +26,7 @@ namespace SchoolManagementSystem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PIE-RD-DESK-056\\FATIMASQLSERVER;Initial Catalog=SchoolMS;Integrated S" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PIE-RD-DESK-056\\FatimaSqlServer;Initial Catalog=SchoolMS;Integrated S" +
             "ecurity=True")]
         public string SchoolMSConnectionString {
             get {

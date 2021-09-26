@@ -22,8 +22,7 @@ namespace SchoolManagementSystemAPI
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
-.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
+           
         }
     }
 }

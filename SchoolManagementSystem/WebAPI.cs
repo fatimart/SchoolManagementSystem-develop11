@@ -60,7 +60,9 @@ namespace SchoolManagementSystem
             }
             catch (Exception ex)
             {
-                throw;
+               
+                System.Windows.MessageBox.Show("Invalid Course ID");
+                return null;
             }
         }
 
