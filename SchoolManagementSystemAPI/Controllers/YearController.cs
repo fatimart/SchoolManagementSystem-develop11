@@ -76,31 +76,7 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        [HttpDelete]
-        public HttpResponseMessage Delete(int id)
-        {
-            try
-            {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
-                    if (Year != null)
-                    {
-                        entities.Years.Remove(Year);
-                        entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Year with id " + id + " Deleted");
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with id " + id + " is not found!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
+        
         public HttpResponseMessage Post([FromBody] Year year)
         {
             try
@@ -151,6 +127,37 @@ namespace SchoolManagementSystemAPI.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
+        }
+
+
+       
+        // DELETE api/<controller>/5
+        [HttpDelete]
+        public HttpResponseMessage Delete ( int id )
+        {
+            try
+            {
+                using (SchoolMSEntities entities = new SchoolMSEntities())
+                {
+                    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
+                    if (Year != null)
+                    {
+                        entities.Years.Remove(Year);
+                        entities.SaveChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK, "Year with id " + id + " Deleted");
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
         }
     }
 }

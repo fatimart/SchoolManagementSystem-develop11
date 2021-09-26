@@ -119,12 +119,12 @@ namespace SchoolManagementSystem.Views.AdminViews
                     Description = o_dr[3].ToString();
                     ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
 
-                    courseViewModel.UpdateCourseDetails(
-                                                    CourseName,
-                                                    CourseCode,
-                                                    Description,
-                                                    Convert.ToDateTime(ExamDate)
-                                                 );
+                    //courseViewModel.UpdateCourseDetails(
+                    //                                CourseName,
+                    //                                CourseCode,
+                    //                                Description,
+                    //                                Convert.ToDateTime(ExamDate)
+                    //                             );
                 }
 
                 MessageBox.Show("Data Have Been Updated!!");

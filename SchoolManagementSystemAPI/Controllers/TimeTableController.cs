@@ -22,7 +22,7 @@ namespace SchoolManagementSystemAPI.Controllers
 
                 foreach (var item in query)
                 {
-                  yield return ("YearID: " + item.TimeTableID);
+                  yield return ("TimeTableID: " + item.TimeTableID);
 
                 }
             }

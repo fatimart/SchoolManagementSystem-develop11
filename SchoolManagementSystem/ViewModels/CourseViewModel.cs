@@ -137,10 +137,11 @@ namespace SchoolManagementSystem.ViewModels
         /// Updates Course's record
         /// </summary>
         /// <param name="courses"></param>
-        public void UpdateCourseDetails ( string courseName, string courseCode, string description, DateTime examDate )
+        public void UpdateCourseDetails ( int CourseID, string courseName, string courseCode, string description, DateTime examDate )
         {
             Course updateCourse = new Course()
             {
+                CourseID = CourseID,
                 CourseName = courseName,
                 CourseCode = courseCode,
                 Description = description,

@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using SchoolManagementSystem.ViewModels;
 using System.Data;
 using System.Configuration;
-using SchoolManagementSystem.Models;
 using System.Windows;
 using System.Data.OleDb;
 using DataGrid = System.Windows.Controls.DataGrid;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using SchoolManagementSystem.Models;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -162,6 +162,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 {
 
                     course.UpdateCourseDetails(
+                                 Convert.ToInt32(courseIDTextBox.Text.Trim()),
                                  courseNameTextBox.Text.Trim(),
                                  courseCodeTextBox.Text.Trim(),
                                  descriptionTextBox.Text.Trim(),
@@ -195,7 +196,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         }
 
-        private void AddNewCourse_Click ( object sender, RoutedEventArgs e )
+        private  void AddNewCourse_Click ( object sender, RoutedEventArgs e )
         {
             if (courseCodeTextBox.Text != "")
             {
@@ -209,12 +210,25 @@ namespace SchoolManagementSystem.Views.AdminViews
                     //}
                     // else
                     // {
-                    course.CreateNewCourse(courseNameTextBox.Text.Trim(),
-                                     courseCodeTextBox.Text.Trim(),
-                                     descriptionTextBox.Text.Trim(),
-                                     Convert.ToDateTime(examDateDatePicker.Text)
-                                     );
+                    //course.CreateNewCourse(courseNameTextBox.Text.Trim(),
+                    //                 courseCodeTextBox.Text.Trim(),
+                    //                 descriptionTextBox.Text.Trim(),
+                    //                 Convert.ToDateTime(examDateDatePicker.Text)
+                    //                 );
+
+
+
                     //  }
+
+                    Course newcourse = new Course() 
+                    {
+                        CourseCode = courseCodeTextBox.Text.Trim(),
+                        CourseName = courseNameTextBox.Text.Trim(),
+                        Description = descriptionTextBox.Text.Trim(),
+                        ExamDate = Convert.ToDateTime(examDateDatePicker.Text)
+                    };
+
+                    SaveCourse(newcourse);
                 }
                 catch (Exception ex)
                 {
@@ -234,6 +248,17 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
 
         }
+
+        private async void SaveCourse ( Course course )
+        {
+
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Course", course);
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Success");
+            }
+        }
+
 
         public bool courseIDtEmpty ()
         {
@@ -363,12 +388,12 @@ namespace SchoolManagementSystem.Views.AdminViews
                     Description = o_dr[3].ToString();
                     ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
 
-                    course.UpdateCourseDetails(
-                                                    CourseName,
-                                                    CourseCode,
-                                                    Description,
-                                                    Convert.ToDateTime(ExamDate)
-                                                 );
+                    //course.UpdateCourseDetails(
+                    //                                CourseName,
+                    //                                CourseCode,
+                    //                                Description,
+                    //                                Convert.ToDateTime(ExamDate)
+                    //                             );
                 }
 
                 MessageBox.Show("Data Have Been Updated!!");

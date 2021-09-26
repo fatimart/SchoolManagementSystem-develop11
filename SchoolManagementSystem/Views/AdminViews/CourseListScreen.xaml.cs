@@ -155,6 +155,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                     {
 
                         course.UpdateCourseDetails(
+                                     Convert.ToInt32(courseIDTextBox.Text.Trim()),
                                      courseNameTextBox.Text.Trim(),
                                      courseCodeTextBox.Text.Trim(),
                                      descriptionTextBox.Text.Trim(),
@@ -359,12 +360,12 @@ namespace SchoolManagementSystem.Views.AdminViews
                     Description = o_dr[3].ToString();
                     ExamDate = Convert.ToDateTime(o_dr[4]).ToString();
 
-                    course.UpdateCourseDetails(
-                                                    CourseName,
-                                                    CourseCode,
-                                                    Description,
-                                                    Convert.ToDateTime(ExamDate)
-                                                 );
+                    //course.UpdateCourseDetails(
+                    //                                CourseName,
+                    //                                CourseCode,
+                    //                                Description,
+                    //                                Convert.ToDateTime(ExamDate)
+                    //                             );
                 }
 
                 MessageBox.Show("Data Have Been Updated!!");

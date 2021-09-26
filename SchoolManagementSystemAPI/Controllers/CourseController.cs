@@ -1,15 +1,19 @@
 ﻿using SchoolManagementSystemAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace SchoolManagementSystemAPI.Controllers
 {
     public class CourseController : ApiController
     {
+        SchoolMSEntities entities1 = new SchoolMSEntities();
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -54,10 +58,33 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
+        [Route("{id:int}/details")]
+        [ResponseType(typeof(Course))]
+        public async Task<IHttpActionResult> GetCourseDetail ( int id )
+        {
+            var book = await (from b in entities1.Courses
+                              where b.CourseID == id
+                              select new Course
+                              {
+                                  CourseID = b.CourseID,
+                                  CourseName = b.CourseName,
+                                  CourseCode = b.CourseCode,
+                                  Description = b.Description,
+                                  ExamDate = b.ExamDate
+
+                              }).FirstOrDefaultAsync();
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
+        }
+
 
         // POST api/<controller>
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Course course)
+        public HttpResponseMessage Post(Course course)
         {
             try
             {
@@ -66,7 +93,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     entities.Courses.Add(course);
                     entities.SaveChanges();
                     var res = Request.CreateResponse(HttpStatusCode.Created, course);
-                    res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
+                    //res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
                     return res;
                 }
             }
@@ -89,7 +116,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     {
                         if (!string.IsNullOrWhiteSpace(course.CourseID.ToString()))
                      
-                            Course.CourseName = course.CourseName;
+                        Course.CourseName = course.CourseName;
                         Course.CourseCode = course.CourseCode;
                         Course.Description = course.Description;
                         Course.ExamDate = course.ExamDate;
@@ -101,7 +128,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id" + id + " is not found!");
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + id + " is not found!");
                     }
                 }
             }

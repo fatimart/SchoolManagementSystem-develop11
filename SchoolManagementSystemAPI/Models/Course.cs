@@ -62,15 +62,10 @@ namespace SchoolManagementSystemAPI.Models
             }
         }
 
-        public void AddCourse ( string courseName, string courseCode, string description, DateTime examDate )
+        public void AddCourse ( Course course1 )
         {
 
-            Course course1 = new Course();
-            course1.CourseName = courseName;
-            course1.CourseCode = courseCode;
-            course1.Description = description;
-            course1.ExamDate = examDate;
-
+            
             if (course1.CourseID <= 0)
             {
                 ty.Courses.Add(course1);
@@ -82,29 +77,32 @@ namespace SchoolManagementSystemAPI.Models
         }
 
 
-        public void UpdateCourse ( string courseName, string courseCode, string description, DateTime examDate )
+        public void UpdateCourse ( Course updateCourse)
         {
 
+            if (updateCourse != null)
+            {
+                updateCourse = (from m in ty.Courses where m.CourseCode == CourseCode select m).Single();
+                updateCourse.CourseName = CourseName;
+                updateCourse.CourseCode = CourseCode;
+                updateCourse.Description = Description;
+                updateCourse.ExamDate = ExamDate;
 
-            Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
-            updateCourse.CourseName = courseName;
-            updateCourse.CourseCode = courseCode;
-            updateCourse.Description = description;
-            updateCourse.ExamDate = examDate;
-
-            ty.SaveChanges();
-
+                ty.SaveChanges();
+            }
         }
 
+       
         //MARK: Update by course code 
-        public void UpdateCourseV2 ( string courseName, string courseCode, string description, DateTime examDate )
+        public void UpdateCourseV2 ( Course updateCourse )
         {
 
-            Course updateCourse = (from m in ty.Courses where m.CourseCode == courseCode select m).Single();
-            updateCourse.CourseName = courseName;
-            updateCourse.CourseCode = courseCode;
-            updateCourse.Description = description;
-            updateCourse.ExamDate = examDate;
+            updateCourse = (from m in ty.Courses where m.CourseCode == CourseCode select m).Single();
+            updateCourse.CourseName = CourseName;
+            updateCourse.CourseCode = CourseCode;
+            updateCourse.Description = Description;
+            updateCourse.ExamDate = ExamDate;
+
             ty.SaveChanges();
 
         }
@@ -145,19 +143,19 @@ namespace SchoolManagementSystemAPI.Models
         }
 
         //MARK: update and insert when uploading new excel sheet
-        public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
-        {
+        //public void UpdateCourse1 ( string courseName, string courseCode, string description, DateTime examDate )
+        //{
 
-            if (ty.Courses.Any(o => o.CourseCode == courseCode))
-            {
-                UpdateCourseV2(courseName, courseCode, description, examDate);
-            }
+        //    if (ty.Courses.Any(o => o.CourseCode == courseCode))
+        //    {
+        //        UpdateCourseV2(courseName, courseCode, description, examDate);
+        //    }
 
-            else
-            {
-                AddCourse(courseName, courseCode, description, examDate);
-            }
-        }
+        //    else
+        //    {
+        //        AddCourse(courseName, courseCode, description, examDate);
+        //    }
+        //}
 
         public void ResetData ()
         {
