@@ -10,6 +10,8 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class YearController : ApiController
     {
+        private readonly Year yearModel = new Year();
+
         List<Year> year = new List<Year>();
     
         public List<Year> Get()
@@ -76,52 +78,45 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        
-        public HttpResponseMessage Post([FromBody] Year year)
+
+        // POST api/<controller>
+        public HttpResponseMessage Post ( [FromBody] Year year )
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    entities.Years.Add(year);
-                    entities.SaveChanges();
-                    var res = Request.CreateResponse(HttpStatusCode.Created, year);
+                year.AddYear(year);
+
+                var res = Request.CreateResponse(HttpStatusCode.Created, year);
+                res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
+        // PUT api/<controller>/5
+        [HttpPut]
+        public HttpResponseMessage Put ( int id, [FromBody] Year year )
+        {
+            try
+            {
+                //if (yearModel.CheckYearID(id))
+                //{
+                    yearModel.UpdateYear( id, year);
+
+                    var res = Request.CreateResponse(HttpStatusCode.OK, "Year with id" + id + " updated");
                     res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
                     return res;
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
-        [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody] Year year)
-        {
-            try
-            {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
-                    if (Year != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(year.YearNum))
-                            Year.YearNum = year.YearNum;
+                //}
+                //else
+                //{
+                //    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
+                //}
 
-
-                        //if (year.YearID != 0 || year.YearID <= 0)
-                        //   Year.YearID = year.YearID;
-
-                        entities.SaveChanges();
-                        var res = Request.CreateResponse(HttpStatusCode.OK, "Year with id" + id + " updated");
-                        res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
-                        return res;
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id" + id + " is not found!");
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -130,27 +125,25 @@ namespace SchoolManagementSystemAPI.Controllers
         }
 
 
-       
+
         // DELETE api/<controller>/5
         [HttpDelete]
         public HttpResponseMessage Delete ( int id )
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
-                    if (Year != null)
-                    {
-                        entities.Years.Remove(Year);
-                        entities.SaveChanges();
+                //using (SchoolMSEntities entities = new SchoolMSEntities())
+                //{
+                //    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
+                //    if (Year != null)
+                //    {
+               
+                    yearModel.DeleteYear(id);
+                        //entities.Years.Remove(Year);
+                        //entities.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, "Year with id " + id + " Deleted");
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
-                    }
-                }
+                   
+                
 
             }
             catch (Exception ex)

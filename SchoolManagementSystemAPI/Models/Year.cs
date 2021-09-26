@@ -61,26 +61,34 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
-        public void UpdateYear ( Year updateYears )
+        public void UpdateYear ( int yearID, Year updateYears )
         {
-            if (updateYears != null)
+            using (SchoolMSEntities entities = new SchoolMSEntities())
             {
-                if (!string.IsNullOrWhiteSpace(updateYears.YearNum))
-                    updateYears = (from m in ty.Years where m.YearID == YearID select m).Single();
-                updateYears.YearID = YearID;
-                updateYears.YearNum = YearNum;
+                
 
-                ty.SaveChanges();
+                if (updateYears != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(updateYears.YearNum))
+                    {
+                        updateYears = (from m in entities.Years where m.YearID == yearID select m).Single();
+                        updateYears.YearID = YearID;
+                        updateYears.YearNum = YearNum;
+
+                        entities.SaveChanges();
+                    }
+                }
             }
         }
 
         public void DeleteYear ( int yearID )
         {
-
-            var deleteYears = ty.Years.Where(m => m.YearID == yearID).Single();
-            ty.Years.Remove(deleteYears);
-            ty.SaveChanges();
-
+            if (yearID != null)
+            {
+                var deleteYears = ty.Years.Where(m => m.YearID == yearID).Single();
+                ty.Years.Remove(deleteYears);
+                ty.SaveChanges();
+            }
 
 
         }

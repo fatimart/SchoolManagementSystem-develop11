@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SchoolManagementSystem
 {
@@ -118,8 +119,10 @@ namespace SchoolManagementSystem
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message);
+                return null;
             }
+            
         }
     }
 }

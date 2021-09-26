@@ -10,6 +10,8 @@ using DataGrid = System.Windows.Controls.DataGrid;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using SchoolManagementSystem.Models;
+using System.Web.Script.Serialization;
+using System.Text;
 
 namespace SchoolManagementSystem.Views.AdminViews
 {
@@ -100,36 +102,36 @@ namespace SchoolManagementSystem.Views.AdminViews
 
 
 
-        //private void DeleteCourse_Click1(object sender, RoutedEventArgs e)
+        //private void deletecourse_click1(object sender, routedeventargs e)
         //{
         //    //delete button 
-        //    if (System.Windows.MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
-        //    == MessageBoxResult.Yes)
+        //    if (system.windows.messagebox.show("confirm delete of this record?", "course", messageboxbutton.yesno)
+        //    == messageboxresult.yes)
         //    {
-        //        if (courseIDtEmpty())
+        //        if (courseidtempty())
         //        {
         //            try
 
         //            {
-        //                if (!string.IsNullOrEmpty(courseIDTextBox.Text))
+        //                if (!string.isnullorempty(courseidtextbox.text))
         //                {
-        //                    course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
+        //                    course.deletecoursedetails(convert.toint32(courseidtextbox.text));
 
         //                }
         //                else
         //                {
-        //                    System.Windows.MessageBox.Show("ID not existed");
+        //                    system.windows.messagebox.show("id not existed");
         //                }
         //            }
-        //            catch (Exception ex)
+        //            catch (exception ex)
         //            {
-        //                System.Windows.MessageBox.Show(ex.Message);
+        //                system.windows.messagebox.show(ex.message);
         //            }
 
         //            finally
         //            {
-        //                FillDataGrid();
-        //                Clear();
+        //                filldatagrid();
+        //                clear();
         //            }
         //        }
         //    }
@@ -220,7 +222,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
                     //  }
 
-                    Course newcourse = new Course() 
+                    Course newcourse = new Course()
                     {
                         CourseCode = courseCodeTextBox.Text.Trim(),
                         CourseName = courseNameTextBox.Text.Trim(),
@@ -407,6 +409,14 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
+
+        private async void DeleteYear ( int CourseID )
+        {
+
+            await apiClient.DeleteAsync("Course/" + CourseID);
+        }
+
+
         private void DeleteCourse_Click_1(object sender, RoutedEventArgs e)
         {
             if (courseIDtEmpty()) { 
@@ -417,11 +427,12 @@ namespace SchoolManagementSystem.Views.AdminViews
                 
                 
                     try
-
                     {
-                        if (!string.IsNullOrEmpty(courseIDTextBox.Text))
-                        {
-                            course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
+                     
+                            if (!string.IsNullOrEmpty(courseIDTextBox.Text))
+                            {
+                        course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
+                        //DeleteYear(Convert.ToInt32(courseIDTextBox.Text));
 
                         }
                         else
