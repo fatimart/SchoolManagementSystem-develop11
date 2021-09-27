@@ -230,7 +230,7 @@ namespace SchoolManagementSystemAPI.Controllers
 
                     SqlDataAdapter sda = new SqlDataAdapter(command);
 
-                    DataTable dt = new DataTable("Section");
+                    DataTable dt = new DataTable();
                     con.Close();
                     sda.Fill(dt);
                     return Ok(dt);
@@ -260,14 +260,16 @@ namespace SchoolManagementSystemAPI.Controllers
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode,CourseID from Course where CourseCode='" + CCodeBox + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT CourseID from Course where CourseCode='" + CCodeBox + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt); //db have all the courses names
 
               int courseID = Convert.ToInt32(dt.Rows[0]["CourseID"].ToString());
-                return Ok(courseID);
                 con.Close();
+                return Ok(courseID);
+
+              
             }
 
             catch (Exception ex)

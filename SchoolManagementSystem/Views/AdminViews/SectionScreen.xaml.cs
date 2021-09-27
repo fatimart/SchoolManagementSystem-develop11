@@ -21,7 +21,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         InitielizeHttpClient initielizeHttpClient = new InitielizeHttpClient();
         public static  int courseID;
         public static int roomID;
-        string CourseComboBox;
+        public static string CourseComboBox;
         public SectionScreen ()
         {
             InitializeComponent();
@@ -30,10 +30,10 @@ namespace SchoolManagementSystem.Views.AdminViews
             fillCourseBox();
             fillRoomBox();
             FillDataGrid();
-            CourseCodeComboBox(course_code_combobox.Text.ToString());
+            
 
         }
-        public string CourseCodeComboBox(string c)
+        public static string CourseCodeComboBox(string c)
         {
             CourseComboBox = c;
             return CourseComboBox;
@@ -51,11 +51,13 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             if (fillNotEmpty())
             {
+                MessageBox.Show(courseID.ToString());
+                MessageBox.Show(roomID.ToString());
                 try
                 {
                     sectionViewModel.CreateNewSection(Convert.ToInt32(sectionnumtxtbox.Text),
-                                                courseID,
-                                                roomID,
+                                                1,
+                                                2,
                                                 timetxtbox.Text.Trim().ToString()
                                                   );
 
@@ -162,6 +164,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 course_code_combobox.SelectedIndex = -1;
                 course_code_combobox.DisplayMemberPath = "CourseCode";
                 course_code_combobox.SelectedValuePath = "CourseCode";
+           
 
             }
 
@@ -192,9 +195,9 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
-        public void getroomIDD(string c)
+        public void getroomIDD()
         {
-
+            sectionViewModel.GetRoomBox();
         }
         
         public void getcourseIDD ()
@@ -206,6 +209,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         private void FillDataGrid ()
 
         {
+  
                 sectionViewModel.GetSectionetails();
                 sectionDataGrid.ItemsSource =sectionViewModel.AllSections;
 
@@ -221,6 +225,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             if (course_code_combobox.Text != "")
             {
+                CourseCodeComboBox(course_code_combobox.Text.ToString());
                 getcourseIDD();
             }
         }
@@ -229,7 +234,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             if (roomNo_combobox.Text != "")
             {
-              //  getroomIDD();
+               getroomIDD();
             }
         }
 
@@ -268,7 +273,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             }
             getcourseIDD();
-          //  getroomIDD();
+           getroomIDD();
         }
     }
 }

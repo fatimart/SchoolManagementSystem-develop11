@@ -1,5 +1,6 @@
 ﻿using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Utilities;
+using SchoolManagementSystem.Views.AdminViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,20 @@ namespace SchoolManagementSystem.ViewModels
         private ObservableCollection<Room> _RoomBoxRecord;
         private ObservableCollection<Section> _sectionRecord;
         private ObservableCollection<Course> _CourseRecord;
+        private ObservableCollection<Course> _courseBox;
+
+        public ObservableCollection<Course> courseBox
+        {
+            get
+            {
+                return _courseBox;
+            }
+            set
+            {
+                _courseBox = value;
+                OnPropertyChanged("courseBox");
+            }
+        }
         public ObservableCollection<Room> RoomBox
         {
             get
@@ -164,14 +179,15 @@ namespace SchoolManagementSystem.ViewModels
                 RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
             }
         }
+        
         public void getcourseIDD()
-
+            //
         {
-            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD");
+            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD?CCodeBox='"+SectionScreen.CourseComboBox+"'");
 
             if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+                courseBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Course>>().Result;
             }
         }
        
