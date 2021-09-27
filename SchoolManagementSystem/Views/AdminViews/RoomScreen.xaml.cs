@@ -94,6 +94,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 //if (room.CheckRoomID(Convert.ToInt32(roomIDTextBox.Text)))
                 //{
                     room.DeleteRoomeDetails(Convert.ToInt32(roomIDTextBox.Text));
+          
                 //}
                 //else
                 //{
@@ -131,7 +132,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         public bool roomIDtEmpty ()
         {
-            if (roomIDTextBox.Text != "")
+            if (roomIDTextBox.Text.Length>0)
             {
                 return true;
             }
