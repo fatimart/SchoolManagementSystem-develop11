@@ -34,16 +34,17 @@ namespace SchoolManagementSystemAPI.Controllers
         }
 
         // GET api/<controller>/5
+        [Route("api/courses/CheckCourseCode/")]
         [HttpGet]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(string CourseCode)
         {
             try
             {
-                var result = courseModel.Get(id);
+                var result = courseModel.GetCourseCode(CourseCode);
 
                 if (result == null)
                 {
-                    return Content(HttpStatusCode.NotFound, "course with Id: " + id + " not found");
+                    return Content(HttpStatusCode.NotFound, "course with Course Code: " + CourseCode + " not found");
                 }
 
                 return Ok(result);

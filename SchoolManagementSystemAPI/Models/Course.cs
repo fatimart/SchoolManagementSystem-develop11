@@ -75,6 +75,13 @@ namespace SchoolManagementSystemAPI.Models
             return ty.Courses.Find(id);
         }
 
+        public Course GetCourseCode ( string CourseCode)
+        {
+            return ty.Courses
+                      .Where(s => s.CourseCode == CourseCode)
+                      .FirstOrDefault() as Course;
+        }
+
         public List<Course> GetAll1 ()
         {
             return ty.Courses.ToList();
@@ -146,19 +153,7 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
-        public bool CheckCourseID ( int courseID )
-        {
-            try
-            {
-                var CourseID = ty.Courses.Where(m => m.CourseID == courseID).SingleOrDefault();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
-        }
+        
 
         public bool checkCourseCode ( string CourseCode )
         {

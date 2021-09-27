@@ -205,36 +205,36 @@ namespace SchoolManagementSystem.Views.AdminViews
                 //add button 
                 try
                 {
-                    //if (course.checkCourseCode(courseCodeTextBox.Text.Trim().ToString()))
-                    //{
-                    //System.Windows.MessageBox.Show("Course Already Exists");
-
-                    //}
-                    // else
-                    // {
-                    //course.CreateNewCourse(courseNameTextBox.Text.Trim(),
-                    //                 courseCodeTextBox.Text.Trim(),
-                    //                 descriptionTextBox.Text.Trim(),
-                    //                 Convert.ToDateTime(examDateDatePicker.Text)
-                    //                 );
-
-
-
-                    //  }
-
-                    Course newcourse = new Course()
+                    if (course.CheckCourseCode(courseCodeTextBox.Text.Trim().ToString()))
                     {
-                        CourseCode = courseCodeTextBox.Text.Trim(),
-                        CourseName = courseNameTextBox.Text.Trim(),
-                        Description = descriptionTextBox.Text.Trim(),
-                        ExamDate = Convert.ToDateTime(examDateDatePicker.Text)
-                    };
+                        MessageBox.Show("Course Already Exists");
 
-                    SaveCourse(newcourse);
+                    }
+                    else
+                    {
+                        course.CreateNewCourse(courseNameTextBox.Text.Trim(),
+                                                courseCodeTextBox.Text.Trim(),
+                                                descriptionTextBox.Text.Trim(),
+                                                Convert.ToDateTime(examDateDatePicker.Text)
+                                         );
+
+
+
+                    }
+
+                    //Course newcourse = new Course()
+                    //{
+                    //    CourseCode = courseCodeTextBox.Text.Trim(),
+                    //    CourseName = courseNameTextBox.Text.Trim(),
+                    //    Description = descriptionTextBox.Text.Trim(),
+                    //    ExamDate = Convert.ToDateTime(examDateDatePicker.Text)
+                    //};
+
+                    //SaveCourse(newcourse);
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message);
                 }
                 finally
                 {
@@ -245,7 +245,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
             else
             {
-                System.Windows.MessageBox.Show("Please fill the fields");
+                MessageBox.Show("Please fill the fields");
 
             }
 

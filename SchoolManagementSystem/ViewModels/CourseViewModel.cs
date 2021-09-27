@@ -94,6 +94,23 @@ namespace SchoolManagementSystem.ViewModels
         }
 
         #region CRUD
+        /// <summary>
+        /// Check Course Code
+        /// </summary>
+        public bool CheckCourseCode ( string courseCode)
+
+        {
+            var courseDetails = WebAPI.GetCall(API_URIs.courses + "/CheckCourseCode?CourseCode='" + courseCode + "'");
+            if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Fetches Course details
