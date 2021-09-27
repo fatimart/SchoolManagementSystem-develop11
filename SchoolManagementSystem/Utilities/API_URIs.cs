@@ -22,7 +22,7 @@ namespace SchoolManagementSystem.Utilities
         public const string announcements = "Announcement";
         public const string years = "Year";
         public const string rooms = "Room";
-        public const string sections = "Section";
+        public const string sections = "Sections";
 
 
     }

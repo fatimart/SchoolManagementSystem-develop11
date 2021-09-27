@@ -14,8 +14,33 @@ namespace SchoolManagementSystem.ViewModels
     class SectionViewModel : ViewModelBase
     {
         public Section Section;
-
+        private ObservableCollection<Room> _RoomBoxRecord;
         private ObservableCollection<Section> _sectionRecord;
+        private ObservableCollection<Course> _CourseRecord;
+        public ObservableCollection<Room> RoomBox
+        {
+            get
+            {
+                return _RoomBoxRecord;
+            }
+            set
+            {
+                _RoomBoxRecord = value;
+                OnPropertyChanged("RoomBox");
+            }
+        }
+        public ObservableCollection<Course> AllCourse
+        {
+            get
+            {
+                return _CourseRecord;
+            }
+            set
+            {
+                _CourseRecord = value;
+                OnPropertyChanged("AllCourse");
+            }
+        }
         public ObservableCollection<Section> AllSections
         {
             get
@@ -112,12 +137,44 @@ namespace SchoolManagementSystem.ViewModels
         public void GetSectionetails ()
 
         {
-            var roomDetails = WebAPI.GetCall(API_URIs.sections);
+            var roomDetails = WebAPI.GetCall(API_URIs.sections+ "/FillDataGrid");
             if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 AllSections = roomDetails.Result.Content.ReadAsAsync<ObservableCollection<Section>>().Result;
             }
         }
+        //[Route("api/sections/FillCourseBox")]
+        public void GetCourseDetails()
+
+        {
+            var Course = WebAPI.GetCall(API_URIs.sections+ "/FillCourseBox");
+  
+            if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                AllCourse = Course.Result.Content.ReadAsAsync<ObservableCollection<Course>>().Result;
+            }
+        }
+        public void GetRoomBox()
+
+        {
+            var Course = WebAPI.GetCall(API_URIs.sections + "/FillRoomBox");
+
+            if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+            }
+        }
+        public void getcourseIDD()
+
+        {
+            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD");
+
+            if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+            }
+        }
+       
 
         /// <summary>
         /// Adds new Section
@@ -132,8 +189,8 @@ namespace SchoolManagementSystem.ViewModels
                 Time = time
             };
 
-            var roomDetails = WebAPI.PostCall(API_URIs.sections, newSection);
-            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
+            var SectionDetails = WebAPI.PostCall(API_URIs.sections, newSection);
+            if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 ResponseMessage = newSection.SectionNum + "'s details has successfully been added!";
                 MessageBox.Show("created ");
@@ -149,10 +206,10 @@ namespace SchoolManagementSystem.ViewModels
         /// Updates Section's record
         /// </summary>
         /// <param name="sections"></param>
-        public void UpdateSectionDetails ( int sectionNum, int courseID, int RoomID, string time )
+        public void UpdateSectionDetails ( int sectionID,int sectionNum, int courseID, int RoomID, string time )
         {
             Section updateSection = new Section()
-            {
+            {   SectionID= sectionID,
                 SectionNum = sectionNum,
                 CourseID = courseID,
                 RoomID = RoomID,
@@ -160,8 +217,8 @@ namespace SchoolManagementSystem.ViewModels
             };
 
 
-            var roomDetails = WebAPI.PutCall(API_URIs.sections + "?id=" + updateSection.SectionID, updateSection);
-            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            var SectionDetails = WebAPI.PutCall(API_URIs.sections + "?id=" + updateSection.SectionID, updateSection);
+            if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = updateSection.SectionID + "'s details has successfully been updated!";
             }
@@ -174,18 +231,17 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Deletes Section's record
         /// </summary>
-        public void DeleteSectionDetails ( int SectionID, int courseID )
+        public void DeleteSectionDetails ( int SectionID )
         {
 
             Section deleteSection = new Section()
             {
                 SectionID = SectionID,
-                CourseID = courseID
 
             };
 
-            var roomDetails = WebAPI.DeleteCall(API_URIs.sections + "?id=" + deleteSection.SectionID);
-            if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            var SectionDetails = WebAPI.DeleteCall(API_URIs.sections + "?id=" + deleteSection.SectionID);
+            if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = deleteSection.SectionID + "'s details has successfully been deleted!";
             }

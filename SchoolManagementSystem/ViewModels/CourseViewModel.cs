@@ -172,8 +172,10 @@ namespace SchoolManagementSystem.ViewModels
                 CourseCode = CourseCode
 
             };
-
+            MessageBox.Show(deleteCourse.CourseID.ToString());
+           
             var courseDetails = WebAPI.DeleteCall(API_URIs.courses + "?id=" + deleteCourse.CourseID);
+            MessageBox.Show(courseDetails.ToString());
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                ResponseMessage = deleteCourse.CourseID + "'s details has successfully been deleted!";

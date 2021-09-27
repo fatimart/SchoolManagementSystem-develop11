@@ -21,17 +21,23 @@ namespace SchoolManagementSystem.Views.AdminViews
         InitielizeHttpClient initielizeHttpClient = new InitielizeHttpClient();
         public static  int courseID;
         public static int roomID;
-
+        string CourseComboBox;
         public SectionScreen ()
         {
             InitializeComponent();
             initielizeHttpClient.InitielizeClient();
 
             fillCourseBox();
-            fillSectioneBox();
+            fillRoomBox();
             FillDataGrid();
-        }
+            CourseCodeComboBox(course_code_combobox.Text.ToString());
 
+        }
+        public string CourseCodeComboBox(string c)
+        {
+            CourseComboBox = c;
+            return CourseComboBox;
+        }
 
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -47,7 +53,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             {
                 try
                 {
-                    sectionViewModel.CreateNewSection((Convert.ToInt32(sectionnumtxtbox.Text)),
+                    sectionViewModel.CreateNewSection(Convert.ToInt32(sectionnumtxtbox.Text),
                                                 courseID,
                                                 roomID,
                                                 timetxtbox.Text.Trim().ToString()
@@ -83,7 +89,8 @@ namespace SchoolManagementSystem.Views.AdminViews
                 {
                     //if (sectionViewModel.checkSectionExists(Convert.ToInt32(sectionnumtxtbox.Text), courseID))
                     //{
-                        sectionViewModel.UpdateSectionDetails((Convert.ToInt32(sectionnumtxtbox.Text)),
+                        sectionViewModel.UpdateSectionDetails(Convert.ToInt32(sectionIDtxtbox_Copy.Text),
+                                        Convert.ToInt32(sectionnumtxtbox.Text),
                                                     courseID,
                                                     roomID,
                                                     timetxtbox.Text.Trim().ToString()
@@ -123,7 +130,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 if (fillNotEmpty())
                 {
                     
-                        sectionViewModel.DeleteSectionDetails((Convert.ToInt32(sectionnumtxtbox.Text)), courseID);
+                        sectionViewModel.DeleteSectionDetails(Convert.ToInt32(sectionIDtxtbox_Copy.Text));
                    
                         //Clear();
                         FillDataGrid();
@@ -148,26 +155,14 @@ namespace SchoolManagementSystem.Views.AdminViews
             try
             {
                 course_code_combobox.Items.Clear();
-
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode, CourseID from Course;", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                course_code_combobox.ItemsSource = dt.DefaultView;
+                sectionViewModel.GetCourseDetails();
+                
+               
+                course_code_combobox.ItemsSource = sectionViewModel.AllCourse;
                 course_code_combobox.SelectedIndex = -1;
                 course_code_combobox.DisplayMemberPath = "CourseCode";
                 course_code_combobox.SelectedValuePath = "CourseCode";
 
-                con.Close();
             }
 
             catch (Exception ex)
@@ -177,31 +172,17 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
-        public void fillSectioneBox ()
+        public void fillRoomBox ()
         {
             try
             {
                 roomNo_combobox.Items.Clear();
+                sectionViewModel.GetRoomBox();
 
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT RoomNum,RoomID from Room;", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                roomNo_combobox.ItemsSource = dt.DefaultView;
+                roomNo_combobox.ItemsSource = sectionViewModel.RoomBox;
                 roomNo_combobox.SelectedIndex = -1;
                 roomNo_combobox.DisplayMemberPath = "RoomNum";
                 roomNo_combobox.SelectedValuePath = "RoomNum";
-
-                con.Close();
             }
 
             catch (Exception ex)
@@ -211,91 +192,30 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
-        public void getroomIDD()
+        public void getroomIDD(string c)
         {
 
-            try
-            {
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT RoomNum,RoomID from Room where RoomNum='" + roomNo_combobox.Text.ToString() + "'", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                roomID = Convert.ToInt32(dt.Rows[0]["RoomID"].ToString());
-
-                con.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
         }
-
+        
         public void getcourseIDD ()
         {
 
-            try
-            {
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode,CourseID from Course where CourseCode='" + course_code_combobox.Text.ToString() + "'", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                courseID = Convert.ToInt32(dt.Rows[0]["CourseID"].ToString());
-
-                con.Close();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
+            sectionViewModel.getcourseIDD();
         }
 
         private void FillDataGrid ()
 
         {
-            string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(strcon))
-            {
-                SqlCommand command = new SqlCommand(
-                   "select Section.SectionID, Section.Time, Course.CourseCode, Section.SectionNum, Room.RoomNum from Section,Course,Room where Section.CourseID=Course.CourseID AND Section.RoomID=Room.RoomID", connection);
-                connection.Open();
-
-                SqlDataAdapter sda = new SqlDataAdapter(command);
-
-                DataTable dt = new DataTable("Section");
-
-                sda.Fill(dt);
-                sectionDataGrid.ItemsSource = dt.DefaultView;
+                sectionViewModel.GetSectionetails();
+                sectionDataGrid.ItemsSource =sectionViewModel.AllSections;
 
                 //usersDataGrid.ItemsSource = _userViewModel.AllSections;
 
                 sectionDataGrid.Items.Refresh();
 
-            }
+         }
 
-        }
+        
 
         private void course_code_combobox_DropDownClosed ( object sender, EventArgs e )
         {
@@ -309,13 +229,13 @@ namespace SchoolManagementSystem.Views.AdminViews
         {
             if (roomNo_combobox.Text != "")
             {
-                getroomIDD();
+              //  getroomIDD();
             }
         }
 
         private bool fillNotEmpty()
         {
-            if(course_code_combobox.Text != "" && roomNo_combobox.Text != "" && sectionnumtxtbox.Text != "" && timetxtbox.Text != "")
+            if(course_code_combobox.Text.Length>0 && roomNo_combobox.Text.Length > 0 && sectionnumtxtbox.Text.Length > 0 && timetxtbox.Text.Length > 0)
             {
                 return true;
             }
@@ -340,6 +260,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             if (row_selected != null)
             {
+               sectionIDtxtbox_Copy.Text = row_selected["SectionID"].ToString();
                 course_code_combobox.Text = row_selected["CourseCode"].ToString();
                 roomNo_combobox.Text = row_selected["RoomNum"].ToString();
                 sectionnumtxtbox.Text = row_selected["SectionNum"].ToString();
@@ -347,7 +268,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
             }
             getcourseIDD();
-            getroomIDD();
+          //  getroomIDD();
         }
     }
 }

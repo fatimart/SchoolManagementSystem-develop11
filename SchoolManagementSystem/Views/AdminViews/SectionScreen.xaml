@@ -26,7 +26,7 @@
         </DataGrid>
         <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="121" Margin="90,47,0,0" VerticalAlignment="Top" Width="580">
             <Grid HorizontalAlignment="Left" Height="93" VerticalAlignment="Top" Width="534" Margin="19,0,0,0">
-                <Label Content="Section Number:" HorizontalAlignment="Left" Margin="17,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="106">
+                <Label Content="Section Number:" HorizontalAlignment="Left" Margin="15,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="106">
                     <Label.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -36,13 +36,24 @@
                         </TransformGroup>
                     </Label.RenderTransform>
                 </Label>
-                <TextBox x:Name="sectionnumtxtbox" HorizontalAlignment="Left" Height="23" Margin="127,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="79"/>
+                <TextBox x:Name="sectionnumtxtbox" HorizontalAlignment="Left" Height="23" Margin="125,31,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="79"/>
                 <ComboBox x:Name="course_code_combobox" HorizontalAlignment="Left" Margin="327,21,0,0" VerticalAlignment="Top" Width="97" DropDownClosed="course_code_combobox_DropDownClosed"/>
                 <Label Content="Course Code:" HorizontalAlignment="Left" Margin="234,17,0,0" VerticalAlignment="Top"/>
                 <ComboBox x:Name="roomNo_combobox" HorizontalAlignment="Left" Margin="125,59,0,0" VerticalAlignment="Top" Width="81" DropDownClosed="roomNo_combobox_DropDownClosed"/>
                 <Label Content="Room Number:" HorizontalAlignment="Left" Margin="19,55,0,0" VerticalAlignment="Top" Width="101"/>
                 <Label Content="Time:" HorizontalAlignment="Left" Margin="234,56,0,0" VerticalAlignment="Top" Width="72"/>
                 <TextBox x:Name="timetxtbox" HorizontalAlignment="Left" Height="23" Margin="327,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
+                <Label Content="Section ID:" HorizontalAlignment="Left" Margin="15,-4,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="106">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.326"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <TextBox x:Name="sectionIDtxtbox_Copy" HorizontalAlignment="Left" Height="23" Margin="125,1,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="79"/>
             </Grid>
         </GroupBox>
 

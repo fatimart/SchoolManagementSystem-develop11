@@ -96,7 +96,7 @@ namespace SchoolManagementSystem.ViewModels
             if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 ResponseMessage = newRoom.RoomNum + "'s details has successfully been added!";
-                MessageBox.Show("created ");
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
@@ -123,10 +123,12 @@ namespace SchoolManagementSystem.ViewModels
             if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = updateRoom.RoomID + "'s details has successfully been updated!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to update" + updateRoom.RoomID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
 
@@ -145,10 +147,12 @@ namespace SchoolManagementSystem.ViewModels
             if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = deleteRoom.RoomID + "'s details has successfully been deleted!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to delete" + deleteRoom.RoomID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
         #endregion
