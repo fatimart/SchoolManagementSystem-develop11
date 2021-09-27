@@ -170,7 +170,7 @@ namespace SchoolManagementSystem.Views.StudentViews
 
         public void fillSectionComboBox ()
         {
-            if (courseID >0)
+            if (courseID > 0)
             {
                 try
                 {

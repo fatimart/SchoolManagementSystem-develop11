@@ -10,6 +10,8 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class TimeTableController : ApiController
     {
+        private readonly TimeTable timeTableModel = new TimeTable();
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -34,18 +36,16 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                var result = timeTableModel.GetTimeTable(id);
+
+                if (result == null)
                 {
-                    var Timetable = entities.TimeTables.FirstOrDefault(y => y.TimeTableID == id);
-                    if (Timetable != null)
-                    {
-                        return Ok(Timetable);
-                    }
-                    else
-                    {
-                        return Content(HttpStatusCode.NotFound, "TimeTable reference with Id: " + id + " not found");
-                    }
+                    return Content(HttpStatusCode.NotFound, "TimeTable reference with Id: " + id + " not found");
                 }
+
+                return Ok(result);
+
+
             }
             catch (Exception ex)
             {

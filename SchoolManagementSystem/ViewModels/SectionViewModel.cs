@@ -128,6 +128,19 @@ namespace SchoolManagementSystem.ViewModels
 
             }
         }
+
+        private string _CourseCode;
+        public string CourseCode
+        {
+            get { return _CourseCode; }
+            set
+            {
+                _CourseCode = value;
+                OnPropertyChanged("CourseCode");
+
+            }
+        }
+
         private string _responseMessage = "";
         public string ResponseMessage
         {
@@ -169,6 +182,8 @@ namespace SchoolManagementSystem.ViewModels
                 AllCourse = Course.Result.Content.ReadAsAsync<ObservableCollection<Course>>().Result;
             }
         }
+
+
         public void GetRoomBox()
 
         {

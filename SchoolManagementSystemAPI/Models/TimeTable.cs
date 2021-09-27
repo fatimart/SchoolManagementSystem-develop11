@@ -54,6 +54,16 @@ namespace SchoolManagementSystemAPI.Models
         }
 
 
+        public TimeTable GetTimeTable ( int TimeTableID )
+        {
+            return ty.TimeTables
+                     .Where(s => s.TimeTableID == TimeTableID)
+                     .FirstOrDefault() as TimeTable;
+            //var Timetable = ty.TimeTables.FirstOrDefault(y => y.TimeTableID == TimeTableID);
+            //return Timetable;
+
+        }
+
 
         public void GetAll ( int UserID )
         {
@@ -95,6 +105,25 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
+        public bool checkifRecordTableExsist ( string courseCode, int userID )
+        {
+            if (!ty.TimeTables.Any(o => o.CourseCode == courseCode && o.UserID == userID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public TimeTable GetTable ( string courseCode, int userID )
+        {
+            return ty.TimeTables
+                      .Where(o => o.CourseCode == courseCode && o.UserID == userID)
+                      .FirstOrDefault() as TimeTable;
+        }
 
     }
 
