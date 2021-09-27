@@ -11,9 +11,13 @@ namespace SchoolManagementSystemAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
     public partial class StudentGrade
     {
+        public SchoolMSEntities ty = new SchoolMSEntities();
+
         public int ID { get; set; }
         public int CourseID { get; set; }
         public int SectionID { get; set; }
@@ -26,5 +30,95 @@ namespace SchoolManagementSystemAPI.Models
         public virtual Course Course { get; set; }
         public virtual Section Section { get; set; }
         public virtual User User { get; set; }
+
+        private ObservableCollection<StudentGrade> _GradeRecords;
+        public ObservableCollection<StudentGrade> AllGrades
+        {
+            get
+            {
+                return _GradeRecords;
+            }
+            set
+            {
+                _GradeRecords = value;
+            }
+        }
+
+        public IEnumerable<string> GetS ()
+        {
+
+            var query = from StudentGrade in ty.StudentGrades
+                        orderby StudentGrade.ID
+                        select StudentGrade;
+
+
+            foreach (var item in query)
+            {
+                yield return ("ID: " + item.ID + " CourseID: " + item.CourseID + " StudentID:" + item.StudentID + " Attendance: " + item.Attendance + " Score:" + item.Score + " Done:" + item.Done + " Year:" + item.year + " Section ID: " + item.SectionID);
+            }
+
+        }
+
+        public List<StudentGrade> GetAll1 ()
+        {
+            return ty.StudentGrades.ToList();
+        }
+
+        public void GetAll ()
+        {
+            AllGrades = new ObservableCollection<StudentGrade>();
+            GetAll1().ForEach(data => AllGrades.Add(new StudentGrade()
+            {
+                CourseID = data.CourseID,
+                StudentID = data.StudentID,
+                Score = data.Score,
+                Attendance = data.Attendance,
+                Done = data.Done,
+                year = data.year
+
+            }));
+
+        }
+        public StudentGrade GetById ( int id )
+        {
+            return ty.StudentGrades.Find(id);
+        } 
+
+
+        //MARK: DataAccess
+        public void AddStudentGrade ( StudentGrade SGrade1 )
+        {
+            ty.StudentGrades.Add(SGrade1);
+            ty.SaveChanges();
+
+        }
+
+
+        public void UpdateStudentGrade ( int sId, StudentGrade updateSGrade )
+        {
+
+            var result = (from m in ty.StudentGrades where m.ID == sId select m).Single();
+            if (result != null)
+            {
+                result.Score = updateSGrade.Score;
+                result.Attendance = updateSGrade.Attendance;
+                result.Done = updateSGrade.Done;
+
+                ty.SaveChanges();
+
+            }
+        }
+
+
+        public void deleteStudentGrade ( int UserID, int courseID, int sectionID )
+        {
+
+            var deleteStudentGrade = ty.StudentGrades.Where(m => m.SectionID == sectionID).Where(m => m.StudentID == UserID).Where(m => m.CourseID == courseID).Single();
+            ty.StudentGrades.Remove(deleteStudentGrade);
+            ty.SaveChanges();
+
+        }
+        
+
     }
 }

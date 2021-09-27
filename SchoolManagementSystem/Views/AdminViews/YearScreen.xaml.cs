@@ -57,6 +57,12 @@ namespace SchoolManagementSystem.Views
 
             if (yearNotEmpty())
             {
+                Year newYear = new Year()
+                {
+                    YearNum = yearNumTextBox.Text
+                };
+
+                //SaveYear(newYear);
                 year.CreateNewYear(yearNumTextBox.Text);
                 Load();
             }
@@ -66,6 +72,13 @@ namespace SchoolManagementSystem.Views
 
             }
 
+        }
+
+      
+        private async void SaveYear ( Year year )
+        {
+
+            await apiClient.PostAsJsonAsync("Year", year);
         }
 
         private void Button_Click3(object sender, RoutedEventArgs e)

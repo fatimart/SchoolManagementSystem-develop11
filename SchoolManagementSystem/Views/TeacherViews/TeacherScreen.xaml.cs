@@ -241,13 +241,13 @@ namespace SchoolManagementSystem.Views.TeacherViews
                     Done = Convert.ToBoolean(tb4.IsChecked.Value.ToString()),
                 };
                 StudentGradeViewModel SGVM = new StudentGradeViewModel();
-                SGVM.UpdateStudentGrade1(
-                                       Sgrades.ID,
-                                       Sgrades.StudentID,
-                                       Sgrades.Score,
-                                       Sgrades.Attendance,
-                                       Sgrades.Done
-                                    );
+                //SGVM.UpdateStudentGrade1(
+                //                       Sgrades.ID,
+                //                       Sgrades.StudentID,
+                //                       Sgrades.Score,
+                //                       Sgrades.Attendance,
+                //                       Sgrades.Done
+                //                    );
             }
             MessageBox.Show("The Database Updated succesfully");
 

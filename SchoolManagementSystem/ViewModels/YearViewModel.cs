@@ -105,12 +105,14 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Adds new Year
         /// </summary>
+        
         public void CreateNewYear ( string YearNum )
         {
             Year newYear = new Year()
             {
                 YearNum = YearNum
             };
+
 
             var yearsDetails = WebAPI.PostCall(API_URIs.years, newYear);
             if (yearsDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)

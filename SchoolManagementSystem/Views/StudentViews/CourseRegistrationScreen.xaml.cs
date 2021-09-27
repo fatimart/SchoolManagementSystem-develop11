@@ -390,9 +390,9 @@ namespace SchoolManagementSystem.Views.StudentViews
                 try
                 {
                     //table.DeleteTimeTableDetails(UserViewModel.userSession.UserID, CourseCode);
-                    grade.deleteStudentGrade(courseID,
-                                      Convert.ToInt32(UserViewModel.userSession.UserID),
-                                      sectionID);
+                    //grade.deleteStudentGrade(courseID,
+                                      //Convert.ToInt32(UserViewModel.userSession.UserID),
+                                      //sectionID);
 
                     FillDataGrid();
                 }

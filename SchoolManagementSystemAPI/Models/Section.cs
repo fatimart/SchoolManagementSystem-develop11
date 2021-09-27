@@ -75,6 +75,11 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
+        public Section Get ( int id )
+        {
+            return ty.Sections.Find(id);
+        }
+
         //MARK: DataAcesss
         public void AddSection ( int sectionNum, int courseID, int RoomID, string time )
         {

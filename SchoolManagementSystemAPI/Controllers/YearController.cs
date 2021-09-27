@@ -52,39 +52,26 @@ namespace SchoolManagementSystemAPI.Controllers
         //    }
         //}
 
-        // GET api/<controller>/5
+       
         [HttpGet]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get ( int id )
         {
-            try
-            {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var Year = entities.Years.FirstOrDefault(y => y.YearID == id);
-                    if (Year != null)
-                    {
-                        return Ok(Year);
-                    }
-                    else
-                    {
-                        return Content(HttpStatusCode.NotFound, "Year with Id: " + id + " not found");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest, ex);
+            var result = yearModel.GetYear(id);
 
+            if (result == null)
+            {
+                return Content(HttpStatusCode.NotFound, "Year with Id: " + id + " not found");
             }
+
+            return Ok(result);
         }
-
 
         // POST api/<controller>
         public HttpResponseMessage Post ( [FromBody] Year year )
         {
             try
             {
-                year.AddYear(year);
+                yearModel.AddYear(year);
 
                 var res = Request.CreateResponse(HttpStatusCode.Created, year);
                 res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
@@ -104,19 +91,22 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                //if (yearModel.CheckYearID(id))
-                //{
-                    yearModel.UpdateYear( id, year);
 
+                if (yearModel.GetYear(id) != null)
+                {
+
+                    yearModel.UpdateYear(id, year);
                     var res = Request.CreateResponse(HttpStatusCode.OK, "Year with id" + id + " updated");
                     res.Headers.Location = new Uri(Request.RequestUri + year.YearID.ToString());
                     return res;
-                //}
-                //else
-                //{
-                //    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
-                //}
 
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
+                }
+               
+              
             }
             catch (Exception ex)
             {
@@ -132,19 +122,15 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                //using (SchoolMSEntities entities = new SchoolMSEntities())
-                //{
-                //    var Year = entities.Years.Where(y => y.YearID == id).FirstOrDefault();
-                //    if (Year != null)
-                //    {
-               
+                if (yearModel.GetYear(id) != null)
+                {
                     yearModel.DeleteYear(id);
-                        //entities.Years.Remove(Year);
-                        //entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Year with id " + id + " Deleted");
-                   
-                
-
+                    return Request.CreateResponse(HttpStatusCode.OK, "Year with id " + id + " Deleted");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Year with id " + id + " is not found!");
+                }
             }
             catch (Exception ex)
             {

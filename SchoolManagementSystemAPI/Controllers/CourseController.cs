@@ -13,7 +13,8 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class CourseController : ApiController
     {
-        SchoolMSEntities entities1 = new SchoolMSEntities();
+        private readonly Course courseModel = new Course();
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -38,18 +39,14 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                var result = courseModel.Get(id);
+
+                if (result == null)
                 {
-                    var course = entities.Courses.FirstOrDefault(c => c.CourseID == id);
-                    if (course != null)
-                    {
-                        return Ok(course);
-                    }
-                    else
-                    {
-                        return Content(HttpStatusCode.NotFound, "course with courseID: " + id + " not found");
-                    }
+                    return Content(HttpStatusCode.NotFound, "course with Id: " + id + " not found");
                 }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -58,28 +55,6 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        [Route("{id:int}/details")]
-        [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> GetCourseDetail ( int id )
-        {
-            var book = await (from b in entities1.Courses
-                              where b.CourseID == id
-                              select new Course
-                              {
-                                  CourseID = b.CourseID,
-                                  CourseName = b.CourseName,
-                                  CourseCode = b.CourseCode,
-                                  Description = b.Description,
-                                  ExamDate = b.ExamDate
-
-                              }).FirstOrDefaultAsync();
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-            return Ok(book);
-        }
 
 
         // POST api/<controller>
@@ -88,14 +63,12 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    entities.Courses.Add(course);
-                    entities.SaveChanges();
-                    var res = Request.CreateResponse(HttpStatusCode.Created, course);
-                    //res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
-                    return res;
-                }
+
+                courseModel.AddCourse(course);
+                var res = Request.CreateResponse(HttpStatusCode.Created, course);
+                res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
+                return res;
+
             }
             catch (Exception ex)
             {
@@ -109,28 +82,19 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                if (courseModel.Get(id) != null)
                 {
-                    var Course = entities.Courses.Where(c => c.CourseID == id).FirstOrDefault();
-                    if (Course != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(course.CourseID.ToString()))
-                     
-                        Course.CourseName = course.CourseName;
-                        Course.CourseCode = course.CourseCode;
-                        Course.Description = course.Description;
-                        Course.ExamDate = course.ExamDate;
+                    courseModel.UpdateCourse(id, course);
 
-                        entities.SaveChanges();
-                        var res = Request.CreateResponse(HttpStatusCode.OK, "Course with id" + id + " updated");
-                        res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
-                        return res;
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + id + " is not found!");
-                    }
+                    var res = Request.CreateResponse(HttpStatusCode.OK, "Course with id" + id + " updated");
+                    res.Headers.Location = new Uri(Request.RequestUri + course.CourseID.ToString());
+                    return res;
                 }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + id + " is not found!");
+                }
+                
             }
             catch (Exception ex)
             {
@@ -146,21 +110,17 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                if (courseModel.Get(id) != null)
                 {
-                    var Course = entities.Courses.Where(c => c.CourseID == id).FirstOrDefault();
-                    if (Course != null)
-                    {
-                        entities.Courses.Remove(Course);
-                        entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Course with id " + id + " Deleted");
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id " + id + " is not found!");
-                    }
+                    courseModel.DeleteCourse(id);
+                    return Request.CreateResponse(HttpStatusCode.OK, "Course with id " + id + " Deleted");
                 }
-            }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id " + id + " is not found!");
+                }
+                }
+            
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);

@@ -11,15 +11,69 @@ namespace SchoolManagementSystemAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
     public partial class Document
     {
+
         public int ID { get; set; }
         public byte[] Data { get; set; }
         public string Extension { get; set; }
         public int CourseID { get; set; }
         public string FileName { get; set; }
-    
+
         public virtual Course Course { get; set; }
+
+        public SchoolMSEntities ty = new SchoolMSEntities();
+
+
+        public Document GetById ( int id )
+        {
+            return ty.Documents.Find(id);
+        }
+
+        //MARK: DataAccess
+        public void AddNewDocument ( Document document )
+        {
+            ty.Documents.Add(document);
+            ty.SaveChanges();
+
+        }
+
+
+        public void UpdateDocument ( int Id, Document documents )
+        {
+            using (SchoolMSEntities entities = new SchoolMSEntities())
+            {
+                var Document = entities.Documents.Where(y => y.ID == Id).FirstOrDefault();
+                if (Document != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(documents.ID.ToString()))
+                        Document.ID = documents.ID;
+                        Document.CourseID = documents.CourseID;
+                        Document.Data = documents.Data;
+                        Document.FileName = documents.FileName;
+                    
+                    entities.SaveChanges();
+                }
+
+            }
+        }
+
+        public void deleteDocument ( int id)
+        {
+
+            using (SchoolMSEntities entities = new SchoolMSEntities())
+            {
+                var documents = entities.Documents.Where(y => y.ID == id).FirstOrDefault();
+                if (documents != null)
+                {
+                    entities.Documents.Remove(documents);
+                    entities.SaveChanges();
+
+                }
+            }
+        }
     }
 }

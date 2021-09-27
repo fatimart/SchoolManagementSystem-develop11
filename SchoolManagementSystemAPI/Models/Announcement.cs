@@ -42,7 +42,6 @@ namespace SchoolManagementSystemAPI.Models
             return ty.Announcements.ToList();
         }
 
-        
 
         public void GetAll ()
         {
@@ -57,62 +56,48 @@ namespace SchoolManagementSystemAPI.Models
             }));
 
         }
-        public void AddAnnoun ( int CourseID, string Announ, DateTime AnnoTime )
+
+        public Announcement Get ( int id )
+        {
+            return ty.Announcements.Find(id);
+        }
+
+
+        public void AddAnnoun ( Announcement newAnnouncement )
         {
 
-            Announcement anno = new Announcement();
-            anno.CourseID = CourseID;
-            anno.Announcement1 = Announ;
-            anno.TimeAnnounced = AnnoTime;
-
-
-            ty.Announcements.Add(anno);
+            ty.Announcements.Add(newAnnouncement);
             ty.SaveChanges();
-            GetAll();
 
         }
 
-        public void UpdateAnnoun ( int announID, int CourseID, string Announ, DateTime AnnoTime )
+        public void UpdateAnnoun ( int announID, Announcement anno )
         {
-            if (CheckAnnounID(AnnounID))
+            var result = (from m in ty.Announcements where m.AnnounID == announID select m).Single();
+            if (result != null)
             {
-                Announcement anno = (from m in ty.Announcements where m.AnnounID == announID select m).Single();
-                anno.AnnounID = announID;
-                anno.CourseID = CourseID;
-                anno.Announcement1 = Announ;
-                anno.TimeAnnounced = AnnoTime;
+                result.AnnounID = anno.AnnounID;
+                result.CourseID = anno.CourseID;
+                result.Announcement1 = anno.Announcement1;
+                result.TimeAnnounced = anno.TimeAnnounced;
 
                 ty.SaveChanges();
-                GetAll();
+
             }
-            
+
         }
 
         public void DeleteAnnoun ( int AnnounID )
         {
-            if (CheckAnnounID(AnnounID))
-            {
-                var deleteanno = ty.Announcements.Where(m => m.AnnounID == AnnounID).Single();
-                ty.Announcements.Remove(deleteanno);
-                ty.SaveChanges();
-                GetAll();
-            }
-            
-        }
 
-        public bool CheckAnnounID ( int AnnounID )
-        {
+            var deleteanno = ty.Announcements.Where(m => m.AnnounID == AnnounID).Single();
+            ty.Announcements.Remove(deleteanno);
+            ty.SaveChanges();
+            GetAll();
 
-            if (ty.Announcements.Any(o => o.AnnounID == AnnounID))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
 
         }
+        
 
     }
 }

@@ -11,7 +11,6 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class UsersController : ApiController
     {
-         SchoolMSEntities ty = new SchoolMSEntities();
         public IEnumerable<string> Get()
         {
             using (var db = new SchoolMSEntities())
@@ -68,10 +67,7 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        /// <summary>  
-        /// Creates a new employee  
-        /// </summary>  
-     
+      
         /// <returns>details of newly created employee</returns>  
         [System.Web.Http.HttpPost]
         public HttpResponseMessage Post([FromBody] User user)
@@ -132,7 +128,7 @@ namespace SchoolManagementSystemAPI.Controllers
                     {
                         if (!string.IsNullOrWhiteSpace(user.UserID.ToString()))
 
-                            User.UserName = user.UserName;
+                        User.UserName = user.UserName;
                         User.Name = user.Name;
                         User.Email = user.Email;
                         User.CPR = user.CPR;

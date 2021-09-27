@@ -40,6 +40,14 @@ namespace SchoolManagementSystemAPI.Models
 
 
         }
+        public Year GetYear ( int YearID )
+        {
+                return ty.Years
+                         .Where(s => s.YearID == YearID)
+                         .FirstOrDefault() as Year;
+           
+        }
+
 
         public void GetAll ()
         {
@@ -61,29 +69,24 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
-        public void UpdateYear ( int yearID, Year updateYears )
+        public void UpdateYear ( int YearId, Year updateYears )
         {
-            using (SchoolMSEntities entities = new SchoolMSEntities())
+
+            var Year = ty.Years.Where(y => y.YearID == YearId).FirstOrDefault();
+            if (Year != null)
             {
-                
+                if (!string.IsNullOrWhiteSpace(updateYears.YearNum))
+                    Year.YearNum = updateYears.YearNum;
 
-                if (updateYears != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(updateYears.YearNum))
-                    {
-                        updateYears = (from m in entities.Years where m.YearID == yearID select m).Single();
-                        updateYears.YearID = YearID;
-                        updateYears.YearNum = YearNum;
+                ty.SaveChanges();
 
-                        entities.SaveChanges();
-                    }
-                }
+
             }
         }
 
         public void DeleteYear ( int yearID )
         {
-            if (yearID != null)
+            if (yearID >0)
             {
                 var deleteYears = ty.Years.Where(m => m.YearID == yearID).Single();
                 ty.Years.Remove(deleteYears);

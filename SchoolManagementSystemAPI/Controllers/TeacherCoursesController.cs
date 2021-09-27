@@ -13,6 +13,7 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class TeacherCoursesController : ApiController
     {
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {

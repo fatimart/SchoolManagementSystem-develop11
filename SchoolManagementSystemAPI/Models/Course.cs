@@ -62,33 +62,59 @@ namespace SchoolManagementSystemAPI.Models
             }
         }
 
-        public void AddCourse ( Course course1 )
+        public Course GetCourse ( int CourseID )
         {
-
-            
-            if (course1.CourseID <= 0)
-            {
-                ty.Courses.Add(course1);
-                ty.SaveChanges();
-
-            }
-
+            return ty.Courses
+                     .Where(s => s.CourseID == CourseID)
+                     .FirstOrDefault() as Course;
 
         }
 
+        public Course Get ( int id )
+        {
+            return ty.Courses.Find(id);
+        }
 
-        public void UpdateCourse ( Course updateCourse)
+        public List<Course> GetAll1 ()
+        {
+            return ty.Courses.ToList();
+        }
+
+        public void GetAll ()
+        {
+            AllCourses = new ObservableCollection<Course>();
+            GetAll1().ForEach(data => AllCourses.Add(new Course()
+            {
+                CourseID = Convert.ToInt32(data.CourseID),
+                CourseName = data.CourseName,
+                CourseCode = data.CourseCode,
+                Description = data.Description,
+                ExamDate = Convert.ToDateTime(data.ExamDate),
+
+            }));
+
+        }
+
+        public void AddCourse ( Course course1 )
+        {
+            ty.Courses.Add(course1);
+            ty.SaveChanges();
+
+        }
+
+        public void UpdateCourse ( int CourseId, Course updateCourse)
         {
 
-            if (updateCourse != null)
+            var result = (from m in ty.Courses where m.CourseID == CourseId select m).Single();
+            if (result != null)
             {
-                updateCourse = (from m in ty.Courses where m.CourseCode == CourseCode select m).Single();
-                updateCourse.CourseName = CourseName;
-                updateCourse.CourseCode = CourseCode;
-                updateCourse.Description = Description;
-                updateCourse.ExamDate = ExamDate;
+                result.CourseName = updateCourse.CourseName;
+                result.CourseCode = updateCourse.CourseCode;
+                result.Description = updateCourse.Description;
+                result.ExamDate = updateCourse.ExamDate;
 
                 ty.SaveChanges();
+
             }
         }
 
@@ -97,22 +123,24 @@ namespace SchoolManagementSystemAPI.Models
         public void UpdateCourseV2 ( Course updateCourse )
         {
 
-            updateCourse = (from m in ty.Courses where m.CourseCode == CourseCode select m).Single();
-            updateCourse.CourseName = CourseName;
-            updateCourse.CourseCode = CourseCode;
-            updateCourse.Description = Description;
-            updateCourse.ExamDate = ExamDate;
+            var result = (from m in ty.Courses where m.CourseCode == CourseCode select m).Single();
+            if (result != null)
+            {
+                result.CourseName = updateCourse.CourseName;
+                result.CourseCode = updateCourse.CourseCode;
+                result.Description = updateCourse.Description;
+                result.ExamDate = updateCourse.ExamDate;
 
-            ty.SaveChanges();
+                ty.SaveChanges();
+
+            }
 
         }
 
 
-
-
-        public void DeleteCourse ( string courseCode )
+        public void DeleteCourse ( int courseID )
         {
-            var deleteCourse = ty.Courses.Where(m => m.CourseCode == courseCode).Single();
+            var deleteCourse = ty.Courses.Where(m => m.CourseID == courseID).Single();
             ty.Courses.Remove(deleteCourse);
             ty.SaveChanges();
 
@@ -168,29 +196,6 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
-        public Course Get ( int id )
-        {
-            return ty.Courses.Find(id);
-        }
-
-        public List<Course> GetAll1 ()
-        {
-            return ty.Courses.ToList();
-        }
-
-        public void GetAll ()
-        {
-            AllCourses = new ObservableCollection<Course>();
-            GetAll1().ForEach(data => AllCourses.Add(new Course()
-            {
-                CourseID = Convert.ToInt32(data.CourseID),
-                CourseName = data.CourseName,
-                CourseCode = data.CourseCode,
-                Description = data.Description,
-                ExamDate = Convert.ToDateTime(data.ExamDate),
-
-            }));
-
-        }
+       
     }
 }

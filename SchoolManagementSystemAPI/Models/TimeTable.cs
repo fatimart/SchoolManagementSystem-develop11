@@ -30,7 +30,7 @@ namespace SchoolManagementSystemAPI.Models
         public string CourseCode { get; set; }
         public int SectionNo { get; set; }
         public System.DateTime Examdate { get; set; }
-    
+
         public virtual Course Course { get; set; }
         public virtual Section Section { get; set; }
         public virtual User User { get; set; }
@@ -47,24 +47,41 @@ namespace SchoolManagementSystemAPI.Models
                 _courseRecords = value;
             }
         }
-        //MARK: used in course registration page
-        public bool checkifRecordTableExsist ( string courseCode, int userID )
+
+        public List<TimeTable> GetAll1 ( int UserID )
         {
-            if (!ty.TimeTables.Any(o => o.CourseCode == courseCode && o.UserID == userID))
+            return ty.TimeTables.Where(m => m.UserID == UserID).ToList();
+        }
+
+
+
+        public void GetAll ( int UserID )
+        {
+            AllCourses = new ObservableCollection<TimeTable>();
+            GetAll1(UserID).ForEach(data => AllCourses.Add(new TimeTable()
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+                UserID = Convert.ToInt32(data.UserID),
+                CourseID = Convert.ToInt32(data.CourseID),
+                RoomNo = data.RoomNo,
+                Year = data.Year,
+                TeacherName = data.TeacherName,
+                CourseName = data.CourseName,
+                Time = data.Time,
+                CourseCode = data.CourseCode,
+                SectionNo = data.SectionNo,
+                Examdate = Convert.ToDateTime(data.Examdate),
+                SectionID = Convert.ToInt32(data.SectionID)
+
+
+            }));
 
         }
 
-        public void DeleteTimeTable ( int userID, string courseCode )
+        public void InsertTimeTable ( TimeTable TTable )
         {
-            var deleteTimeTables = ty.TimeTables.Where(m => m.UserID == userID).Where(m => m.CourseCode == courseCode).Single();
-            ty.TimeTables.Remove(deleteTimeTables);
+
+            ty.TimeTables.Add(TTable);
             ty.SaveChanges();
 
         }
@@ -79,83 +96,7 @@ namespace SchoolManagementSystemAPI.Models
         }
 
 
-        public void InsertTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName,
-            string coursename, string time, string courseCode, int SectionNo, DateTime Examdate, int sectionID )
-        {
-            if (checkifRecordTableExsist(courseCode, userID))
-            {
-                TimeTable TTable = new TimeTable();
-                TTable.UserID = userID;
-                TTable.CourseID = CourseID;
-                TTable.RoomNo = RoomID;
-                TTable.Year = YearID;
-                TTable.TeacherName = TeacherName;
-                TTable.CourseName = coursename;
-                TTable.Time = time;
-                TTable.CourseCode = courseCode;
-                TTable.SectionNo = SectionNo;
-                TTable.Examdate = Examdate;
-                TTable.SectionID = sectionID;
-
-                ty.TimeTables.Add(TTable);
-                ty.SaveChanges();
-
-            }
-               
-        }
-
-        //MARK: Need to edit based on the updtaed database
-        public void AddTimeTable ( int userID, int CourseID, string RoomID, int YearID, string TeacherName, string coursename,
-            string time, string courseCode, int SectionNo, DateTime Examdate, int sectionID )
-        {
-           
-                TimeTable TTable = new TimeTable();
-                TTable.UserID = userID;
-                TTable.CourseID = CourseID;
-                TTable.RoomNo = RoomID;
-                TTable.Year = YearID;
-                TTable.TeacherName = TeacherName;
-                TTable.CourseName = coursename;
-                TTable.Time = time;
-                TTable.CourseCode = courseCode;
-                TTable.SectionNo = SectionNo;
-                TTable.Examdate = Examdate;
-                TTable.SectionID = sectionID;
-
-
-                ty.TimeTables.Add(TTable);
-                ty.SaveChanges();
-
-        }
-
-        //public List<TimeTable> GetAll1 ()
-        //{
-        //    return ty.TimeTables.Where(m => m.UserID == UserViewModel.userSession.UserID).ToList();
-        //}
-
-
-
-        //public void GetAll ()
-        //{
-        //    AllCourses = new ObservableCollection<TimeTable>();
-        //    GetAll1().ForEach(data => AllCourses.Add(new TimeTable()
-        //    {
-
-        //        UserID = Convert.ToInt32(data.UserID),
-        //        CourseID = Convert.ToInt32(data.CourseID),
-        //        RoomNo = data.RoomNo,
-        //        Year = data.Year,
-        //        TeacherName = data.TeacherName,
-        //        CourseName = data.CourseName,
-        //        Time = data.Time,
-        //        CourseCode = data.CourseCode,
-        //        SectionNo = data.SectionNo,
-        //        Examdate = Convert.ToDateTime(data.Examdate),
-        //        SectionID = Convert.ToInt32(data.SectionID)
-
-
-        //    }));
-
-        //}
     }
+
+
 }

@@ -10,6 +10,7 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class DocumentsController : ApiController
     {
+        private readonly Document documentModel = new Document();
 
         List<Document> Documents = new List<Document>();
 
@@ -24,8 +25,6 @@ namespace SchoolManagementSystemAPI.Controllers
 
                 foreach (var item in query)
                 {
-                    //yield return ("YearID: " + item.YearID + ", Year Number: " + item.YearNum);
-
                     Documents.Add(new Document { Extension = item.Extension, Data = item.Data, CourseID = item.CourseID, ID = item.ID, FileName = item.FileName });
                 }
                 return Documents;
@@ -38,18 +37,14 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                var result = documentModel.GetById(id);
+
+                if (result == null)
                 {
-                    var documents = entities.Documents.FirstOrDefault(y => y.ID == id);
-                    if (documents != null)
-                    {
-                        return Ok(documents);
-                    }
-                    else
-                    {
-                        return Content(HttpStatusCode.NotFound, "documents with Id: " + id + " not found");
-                    }
+                    return Content(HttpStatusCode.NotFound, "course with Id: " + id + " not found");
                 }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -58,79 +53,68 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        [HttpDelete]
-        public HttpResponseMessage Delete(int id)
-        {
-            try
-            {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var documents = entities.Documents.Where(y => y.ID == id).FirstOrDefault();
-                    if (documents != null)
-                    {
-                        entities.Documents.Remove(documents);
-                        entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Documents with id " + id + " Deleted");
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Documents with id " + id + " is not found!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
+      
         public HttpResponseMessage Post([FromBody] Document documents)
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    entities.Documents.Add(documents);
-                    entities.SaveChanges();
-                    var res = Request.CreateResponse(HttpStatusCode.Created, documents);
-                    res.Headers.Location = new Uri(Request.RequestUri + documents.ID.ToString());
-                    return res;
-                }
+                documentModel.AddNewDocument(documents);
+
+                var res = Request.CreateResponse(HttpStatusCode.Created, documents);
+                res.Headers.Location = new Uri(Request.RequestUri + documents.ID.ToString());
+                return res;
+
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+
+
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody] Document documents)
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                if (documentModel.GetById(id) != null)
                 {
-                    var Document = entities.Documents.Where(y => y.ID == id).FirstOrDefault();
-                    if (Document != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(documents.ID.ToString()))
-                            Document.ID = documents.ID;
-                        Document.CourseID = documents.CourseID;
-                        Document.Data = documents.Data;
-                        Document.FileName = documents.FileName;
+                    documentModel.UpdateDocument(id, documents);
 
 
-                        //if (year.YearID != 0 || year.YearID <= 0)
-                        //   Year.YearID = year.YearID;
-
-                        entities.SaveChanges();
-                        var res = Request.CreateResponse(HttpStatusCode.OK, "Document with id" + id + " updated");
-                        res.Headers.Location = new Uri(Request.RequestUri + Document.ID.ToString());
-                        return res;
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Document with id" + id + " is not found!");
-                    }
+                    var res = Request.CreateResponse(HttpStatusCode.OK, "Document with id" + id + " updated");
+                    res.Headers.Location = new Uri(Request.RequestUri + documents.ID.ToString());
+                    return res;
                 }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Document with id" + id + " is not found!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete ( int id )
+        {
+            try
+            {
+                if (documentModel.GetById(id) != null)
+                {
+                    documentModel.deleteDocument(id);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Documents with id " + id + " Deleted");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Documents with id " + id + " is not found!");
+                }
+
             }
             catch (Exception ex)
             {

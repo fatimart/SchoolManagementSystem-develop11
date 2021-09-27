@@ -10,6 +10,8 @@ namespace SchoolManagementSystemAPI.Controllers
 {
     public class AnnouncementController : ApiController
     {
+        private readonly Announcement announcementModel = new Announcement();
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -34,18 +36,14 @@ namespace SchoolManagementSystemAPI.Controllers
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                var result = announcementModel.Get(id);
+
+                if (result == null)
                 {
-                    var announcement = entities.Announcements.FirstOrDefault(y => y.AnnounID == id);
-                    if (announcement != null)
-                    {
-                        return Ok(announcement);
-                    }
-                    else
-                    {
-                        return Content(HttpStatusCode.NotFound, "Announcement with Id: " + id + " not found");
-                    }
+                    return Content(HttpStatusCode.NotFound, "Announcement with Id: " + id + " not found");
                 }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -54,79 +52,68 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        [HttpDelete]
-        public HttpResponseMessage Delete(int id)
-        {
-            try
-            {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    var announcement = entities.Announcements.Where(y => y.AnnounID == id).FirstOrDefault();
-                    if (announcement != null)
-                    {
-                        entities.Announcements.Remove(announcement);
-                        entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Announcement with id " + id + " Deleted");
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Announcement with id " + id + " is not found!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
+        
         public HttpResponseMessage Post([FromBody] Announcement announcement)
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
-                {
-                    entities.Announcements.Add(announcement);
-                    entities.SaveChanges();
-                    var res = Request.CreateResponse(HttpStatusCode.Created, announcement);
-                    res.Headers.Location = new Uri(Request.RequestUri + announcement.AnnounID.ToString());
-                    return res;
-                }
+                announcementModel.AddAnnoun(announcement);
+
+                var res = Request.CreateResponse(HttpStatusCode.Created, announcement);
+                res.Headers.Location = new Uri(Request.RequestUri + announcement.AnnounID.ToString());
+                return res;
+
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody] Announcement announcement)
         {
             try
             {
-                using (SchoolMSEntities entities = new SchoolMSEntities())
+                if (announcementModel.Get(id) != null)
                 {
-                    var Announcement = entities.Announcements.Where(y => y.AnnounID == id).FirstOrDefault();
-                    if (Announcement != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(announcement.AnnounID.ToString()))
-                            
-                        Announcement.AnnounID = announcement.AnnounID;
-                        Announcement.CourseID = announcement.CourseID;
-                        Announcement.Announcement1 = announcement.Announcement1;
-                        Announcement.TimeAnnounced = announcement.TimeAnnounced;
+                    announcementModel.UpdateAnnoun(id, announcement);
 
-                        //if (year.YearID != 0 || year.YearID <= 0)
-                        //   Year.YearID = year.YearID;
 
-                        entities.SaveChanges();
-                        var res = Request.CreateResponse(HttpStatusCode.OK, "announcement with id" + id + " updated");
-                        res.Headers.Location = new Uri(Request.RequestUri + announcement.AnnounID.ToString());
-                        return res;
+                    var res = Request.CreateResponse(HttpStatusCode.OK, "announcement with id" + id + " updated");
+                    res.Headers.Location = new Uri(Request.RequestUri + announcement.AnnounID.ToString());
+                    return res;
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "announcement with id" + id + " is not found!");
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete ( int id )
+        {
+            try
+            {
+
+                if (announcementModel.Get(id) != null)
+                {
+                    announcementModel.DeleteAnnoun(id);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Announcement with id " + id + " Deleted");
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "announcement with id" + id + " is not found!");
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Announcement with id " + id + " is not found!");
                     }
-                }
+                
             }
             catch (Exception ex)
             {

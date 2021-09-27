@@ -60,36 +60,46 @@ namespace SchoolManagementSystemAPI.Models
 
         }
 
-        //MARK: DataAccess function
-        public void AddRoom ( string RoomNum )
+        public Room GetRoom ( int RoomID )
         {
+            return ty.Rooms
+                     .Where(s => s.RoomID == RoomID)
+                     .FirstOrDefault() as Room;
 
-            Room room = new Room();
-            room.RoomNum = RoomNum;
+        }
 
+        //MARK: DataAccess function
+        public void AddRoom ( Room room )
+        {
             ty.Rooms.Add(room);
             ty.SaveChanges();
 
         }
 
 
-        public void UpdateRoom ( int RoomID, string RoomNum )
+        public void UpdateRoom ( int RoomId, Room updateRoom )
         {
 
-            Room updateRoom = (from m in ty.Rooms where m.RoomID == RoomID select m).Single();
-            updateRoom.RoomID = RoomID;
-            updateRoom.RoomNum = RoomNum;
-            ty.SaveChanges();
+            var result = (from m in ty.Rooms where m.RoomID == RoomId select m).Single();
+            if (result != null)
+            {
+                if (!string.IsNullOrWhiteSpace(result.RoomNum))
+                    result.RoomNum = updateRoom.RoomNum;
+
+                ty.SaveChanges();
+
+            }
 
         }
 
         public void DeleteRoom ( int RoomID )
         {
-
-            var deleteRoom = ty.Rooms.Where(m => m.RoomID == RoomID).Single();
-            ty.Rooms.Remove(deleteRoom);
-            ty.SaveChanges();
-
+            if (RoomID > 0)
+            {
+                var deleteRoom = ty.Rooms.Where(m => m.RoomID == RoomID).Single();
+                ty.Rooms.Remove(deleteRoom);
+                ty.SaveChanges();
+            }
         }
         
         public bool CheckRoomID ( int roomID )
