@@ -54,6 +54,16 @@ namespace SchoolManagementSystemAPI.Models
         }
 
 
+        public TimeTable GetTimeTable ( int TimeTableID )
+        {
+            return ty.TimeTables
+                     .Where(s => s.TimeTableID == TimeTableID)
+                     .FirstOrDefault() as TimeTable;
+            //var Timetable = ty.TimeTables.FirstOrDefault(y => y.TimeTableID == TimeTableID);
+            //return Timetable;
+
+        }
+
 
         public void GetAll ( int UserID )
         {
