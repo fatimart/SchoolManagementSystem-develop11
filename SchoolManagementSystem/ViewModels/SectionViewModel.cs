@@ -1,9 +1,11 @@
-﻿using SchoolManagementSystem.Models;
+﻿using Newtonsoft.Json;
+using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Utilities;
 using SchoolManagementSystem.Views.AdminViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,6 +17,7 @@ namespace SchoolManagementSystem.ViewModels
     class SectionViewModel : ViewModelBase
     {
         public Section Section;
+        public DataTable dt = new DataTable();
         private ObservableCollection<Room> _RoomBoxRecord;
         private ObservableCollection<Section> _sectionRecord;
         private ObservableCollection<Course> _CourseRecord;
@@ -169,6 +172,19 @@ namespace SchoolManagementSystem.ViewModels
             if (roomDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 AllSections = roomDetails.Result.Content.ReadAsAsync<ObservableCollection<Section>>().Result;
+            }
+        }
+
+        public void GetSectionDetails()
+
+        {
+            var Section = WebAPI.GetCall(API_URIs.sections + "/FillDataGrid");
+
+            if (Section.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string result = Section.Result.Content.ReadAsStringAsync().Result;
+                dt = JsonConvert.DeserializeObject<DataTable>(result);
+            
             }
         }
         //[Route("api/sections/FillCourseBox")]

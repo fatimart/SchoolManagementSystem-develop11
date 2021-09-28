@@ -210,8 +210,9 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         {
   
-                sectionViewModel.GetSectionetails();
-                sectionDataGrid.ItemsSource =sectionViewModel.AllSections;
+                sectionViewModel.GetSectionDetails();
+            
+            sectionDataGrid.ItemsSource = sectionViewModel.dt.DefaultView;
 
                 //usersDataGrid.ItemsSource = _userViewModel.AllSections;
 
