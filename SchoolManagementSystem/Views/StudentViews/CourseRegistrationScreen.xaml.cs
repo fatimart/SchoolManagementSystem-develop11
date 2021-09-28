@@ -21,6 +21,8 @@ namespace SchoolManagementSystem.Views.StudentViews
     {
         TimeTableViewModel table = new TimeTableViewModel();
         StudentGradeViewModel grade = new StudentGradeViewModel();
+        SectionViewModel sectionViewModel = new SectionViewModel();
+
         public static int courseID;
         public static int sectionID;
         public HttpClient apiClient;
@@ -138,27 +140,14 @@ namespace SchoolManagementSystem.Views.StudentViews
         {
             try
             {
+              
                 course_combo_box.Items.Clear();
-                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+                sectionViewModel.GetCourseDetails();
 
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode from Course;", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt); //db have all the courses names
-
-                course_combo_box.ItemsSource = dt.DefaultView;
+                course_combo_box.ItemsSource = sectionViewModel.AllCourse;
                 course_combo_box.SelectedIndex = -1;
                 course_combo_box.DisplayMemberPath = "CourseCode";
                 course_combo_box.SelectedValuePath = "CourseCode";
-
-
-                con.Close();
             }
 
             catch (Exception ex)
@@ -167,6 +156,9 @@ namespace SchoolManagementSystem.Views.StudentViews
 
             }
         }
+
+
+
 
         public void fillSectionComboBox ()
         {

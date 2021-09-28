@@ -35,9 +35,36 @@ namespace SchoolManagementSystemAPI.Controllers
         }
 
         // GET api/<controller>/5
+        //[Route("api/courses/CheckCourseCode/")]
+        //[HttpGet]
+        //public HttpResponseMessage Get ( string CourseCode )
+        //{
+        //    try
+        //    {
+        //        var result = courseModel.GetCourseCode(CourseCode);
+
+        //        if (result == null)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
+        //        }
+        //        else
+        //        {
+        //            return  Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
+
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+
+        //    }
+        //}
+
         [Route("api/courses/CheckCourseCode/")]
         [HttpGet]
-        public HttpResponseMessage Get ( string CourseCode )
+        public IHttpActionResult Get ( string CourseCode )
         {
             try
             {
@@ -45,11 +72,11 @@ namespace SchoolManagementSystemAPI.Controllers
 
                 if (result == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
+                    return NotFound();
                 }
                 else
                 {
-                    return  Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
+                    return Ok(CourseCode);
 
                 }
 
@@ -57,12 +84,10 @@ namespace SchoolManagementSystemAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return Content(HttpStatusCode.BadRequest, ex);
 
             }
         }
-
-
         // POST api/<controller>
         [HttpPost]
         public HttpResponseMessage Post([FromBody] Course course)

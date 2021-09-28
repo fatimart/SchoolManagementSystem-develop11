@@ -157,7 +157,7 @@ namespace SchoolManagementSystem.ViewModels
             }
         }
         //[Route("api/sections/FillCourseBox")]
-        public void GetCourseDetails()
+        public  void GetCourseDetails()
 
         {
             var Course = WebAPI.GetCall(API_URIs.sections+ "/FillCourseBox");
