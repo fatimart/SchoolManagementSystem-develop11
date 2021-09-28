@@ -206,31 +206,20 @@ namespace SchoolManagementSystem.Views.AdminViews
                 try
                 {
                     if (course.CheckCourseCode(courseCodeTextBox.Text.Trim().ToString()))
-                    {//found true
+                    {
+                        //found true
                         MessageBox.Show("Course Already Exists");
 
                     }
                     else
                     {
                         course.CreateNewCourse(courseNameTextBox.Text.Trim(),
-                                                courseCodeTextBox.Text.Trim(),
-                                                descriptionTextBox.Text.Trim(),
-                                                Convert.ToDateTime(examDateDatePicker.Text)
+                                               courseCodeTextBox.Text.Trim(),
+                                               descriptionTextBox.Text.Trim(),
+                                               Convert.ToDateTime(examDateDatePicker.Text)
                                          );
-
-
-
                     }
 
-                    //Course newcourse = new Course()
-                    //{
-                    //    CourseCode = courseCodeTextBox.Text.Trim(),
-                    //    CourseName = courseNameTextBox.Text.Trim(),
-                    //    Description = descriptionTextBox.Text.Trim(),
-                    //    ExamDate = Convert.ToDateTime(examDateDatePicker.Text)
-                    //};
-
-                    //SaveCourse(newcourse);
                 }
                 catch (Exception ex)
                 {
