@@ -1,8 +1,11 @@
-﻿using SchoolManagementSystem.Models;
+﻿using Newtonsoft.Json;
+using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Utilities;
+using SchoolManagementSystem.Views.AdminViews;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -14,9 +17,25 @@ namespace SchoolManagementSystem.ViewModels
     class SectionViewModel : ViewModelBase
     {
         public Section Section;
+        public DataTable dt = new DataTable();
         private ObservableCollection<Room> _RoomBoxRecord;
         private ObservableCollection<Section> _sectionRecord;
         private ObservableCollection<Course> _CourseRecord;
+        private ObservableCollection<Course> _courseBox;
+        public string courseBox1;
+        public string RoomIDBox;
+        public ObservableCollection<Course> courseBox
+        {
+            get
+            {
+                return _courseBox;
+            }
+            set
+            {
+                _courseBox = value;
+                OnPropertyChanged("courseBox");
+            }
+        }
         public ObservableCollection<Room> RoomBox
         {
             get
@@ -156,6 +175,19 @@ namespace SchoolManagementSystem.ViewModels
                 AllSections = roomDetails.Result.Content.ReadAsAsync<ObservableCollection<Section>>().Result;
             }
         }
+
+        public void GetSectionDetails()
+
+        {
+            var Section = WebAPI.GetCall(API_URIs.sections + "/FillDataGrid");
+
+            if (Section.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string result = Section.Result.Content.ReadAsStringAsync().Result;
+                dt = JsonConvert.DeserializeObject<DataTable>(result);
+            
+            }
+        }
         //[Route("api/sections/FillCourseBox")]
         public  void GetCourseDetails()
 
@@ -172,21 +204,36 @@ namespace SchoolManagementSystem.ViewModels
         public void GetRoomBox()
 
         {
-            var Course = WebAPI.GetCall(API_URIs.sections + "/FillRoomBox");
+            var Room = WebAPI.GetCall(API_URIs.sections + "/FillRoomBox");
 
-            if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (Room.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+                RoomBox = Room.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+            }
+        }
+       
+         public void getRoomIDD()
+        //
+        {
+            // MessageBox.Show("/getcourseIDD?CCodeBox=" + SectionScreen.CourseComboBox + "");
+            var Room = WebAPI.GetCall(API_URIs.sections + "/getRoomIDD?RoomNumBox=" + SectionScreen.RoomNumCBox+"");
+ 
+
+            if (Room.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                RoomIDBox = Room.Result.Content.ReadAsStringAsync().Result;
+    
             }
         }
         public void getcourseIDD()
-
+            //
         {
-            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD");
-
+           // MessageBox.Show("/getcourseIDD?CCodeBox=" + SectionScreen.CourseComboBox + "");
+            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD?CCodeBox="+SectionScreen.CourseComboBox+"");
             if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+                 courseBox1 = Course.Result.Content.ReadAsStringAsync().Result;
+             
             }
         }
        
@@ -208,11 +255,12 @@ namespace SchoolManagementSystem.ViewModels
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 ResponseMessage = newSection.SectionNum + "'s details has successfully been added!";
-                MessageBox.Show("created ");
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to update" + newSection.SectionNum + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
 
@@ -234,12 +282,14 @@ namespace SchoolManagementSystem.ViewModels
 
             var SectionDetails = WebAPI.PutCall(API_URIs.sections + "?id=" + updateSection.SectionID, updateSection);
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
-            {
+            {   
                 ResponseMessage = updateSection.SectionID + "'s details has successfully been updated!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to update" + updateSection.SectionID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
 
@@ -259,10 +309,12 @@ namespace SchoolManagementSystem.ViewModels
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = deleteSection.SectionID + "'s details has successfully been deleted!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to delete" + deleteSection.SectionID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
         #endregion

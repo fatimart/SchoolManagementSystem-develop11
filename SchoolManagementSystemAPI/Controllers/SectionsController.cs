@@ -88,14 +88,14 @@ namespace SchoolManagementSystemAPI.Controllers
                     using (SchoolMSEntities entities = new SchoolMSEntities())
                     {
                         var Section = entities.Sections.Where(y => y.SectionID == id).FirstOrDefault();
-                        if (Section != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(section.SectionID.ToString())) { 
-                                Section.SectionNum = section.SectionNum;
-                            Section.CourseID = section.CourseID;
-                            Section.RoomID = section.RoomID;
-                            Section.Time = section.Time;
-                        }
+                    if (Section != null)
+                    {
+                        //  if (!string.IsNullOrWhiteSpace(section.SectionID.ToString())) {
+                        Section.SectionNum = section.SectionNum;
+                        Section.CourseID = section.CourseID;
+                        Section.RoomID = section.RoomID;
+                        Section.Time = section.Time;
+                    
 
                             //if (year.YearID != 0 || year.YearID <= 0)
                             //   Year.YearID = year.YearID;
@@ -230,7 +230,7 @@ namespace SchoolManagementSystemAPI.Controllers
 
                     SqlDataAdapter sda = new SqlDataAdapter(command);
 
-                    DataTable dt = new DataTable("Section");
+                    DataTable dt = new DataTable();
                     con.Close();
                     sda.Fill(dt);
                     return Ok(dt);
@@ -260,14 +260,51 @@ namespace SchoolManagementSystemAPI.Controllers
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT CourseCode,CourseID from Course where CourseCode='" + CCodeBox + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT CourseID from Course where CourseCode='" + CCodeBox + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt); //db have all the courses names
 
               int courseID = Convert.ToInt32(dt.Rows[0]["CourseID"].ToString());
-                return Ok(courseID);
                 con.Close();
+                return Ok(courseID);
+
+              
+            }
+
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+
+            }
+        }
+
+
+        [Route("api/sections/getRoomIDD")]
+        [HttpGet]
+        public IHttpActionResult getRoomIDD(string RoomNumBox)
+        {
+
+            try
+            {
+                string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT RoomID from Room where RoomNum='" + RoomNumBox + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt); //db have all the courses names
+
+                int RoomID = Convert.ToInt32(dt.Rows[0]["RoomID"].ToString());
+                con.Close();
+                return Ok(RoomID);
+
+
             }
 
             catch (Exception ex)
