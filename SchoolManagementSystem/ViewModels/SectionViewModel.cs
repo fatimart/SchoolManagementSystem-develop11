@@ -22,7 +22,8 @@ namespace SchoolManagementSystem.ViewModels
         private ObservableCollection<Section> _sectionRecord;
         private ObservableCollection<Course> _CourseRecord;
         private ObservableCollection<Course> _courseBox;
-
+        public string courseBox1;
+        public string RoomIDBox;
         public ObservableCollection<Course> courseBox
         {
             get
@@ -203,22 +204,36 @@ namespace SchoolManagementSystem.ViewModels
         public void GetRoomBox()
 
         {
-            var Course = WebAPI.GetCall(API_URIs.sections + "/FillRoomBox");
+            var Room = WebAPI.GetCall(API_URIs.sections + "/FillRoomBox");
 
-            if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (Room.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                RoomBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
+                RoomBox = Room.Result.Content.ReadAsAsync<ObservableCollection<Room>>().Result;
             }
         }
-        
+       
+         public void getRoomIDD()
+        //
+        {
+            // MessageBox.Show("/getcourseIDD?CCodeBox=" + SectionScreen.CourseComboBox + "");
+            var Room = WebAPI.GetCall(API_URIs.sections + "/getRoomIDD?RoomNumBox=" + SectionScreen.RoomNumCBox+"");
+ 
+
+            if (Room.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                RoomIDBox = Room.Result.Content.ReadAsStringAsync().Result;
+    
+            }
+        }
         public void getcourseIDD()
             //
         {
-            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD?CCodeBox='"+SectionScreen.CourseComboBox+"'");
-
+           // MessageBox.Show("/getcourseIDD?CCodeBox=" + SectionScreen.CourseComboBox + "");
+            var Course = WebAPI.GetCall(API_URIs.sections + "/getcourseIDD?CCodeBox="+SectionScreen.CourseComboBox+"");
             if (Course.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                courseBox = Course.Result.Content.ReadAsAsync<ObservableCollection<Course>>().Result;
+                 courseBox1 = Course.Result.Content.ReadAsStringAsync().Result;
+             
             }
         }
        
@@ -240,11 +255,12 @@ namespace SchoolManagementSystem.ViewModels
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 ResponseMessage = newSection.SectionNum + "'s details has successfully been added!";
-                MessageBox.Show("created ");
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to update" + newSection.SectionNum + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
 
@@ -266,12 +282,14 @@ namespace SchoolManagementSystem.ViewModels
 
             var SectionDetails = WebAPI.PutCall(API_URIs.sections + "?id=" + updateSection.SectionID, updateSection);
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
-            {
+            {   
                 ResponseMessage = updateSection.SectionID + "'s details has successfully been updated!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to update" + updateSection.SectionID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
 
@@ -291,10 +309,12 @@ namespace SchoolManagementSystem.ViewModels
             if (SectionDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = deleteSection.SectionID + "'s details has successfully been deleted!";
+                MessageBox.Show(ResponseMessage);
             }
             else
             {
                 ResponseMessage = "Failed to delete" + deleteSection.SectionID + "'s details.";
+                MessageBox.Show(ResponseMessage);
             }
         }
         #endregion

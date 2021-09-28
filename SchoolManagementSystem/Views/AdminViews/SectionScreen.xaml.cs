@@ -22,6 +22,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         public static  int courseID;
         public static int roomID;
         public static string CourseComboBox;
+        public static string RoomNumCBox;
         public SectionScreen ()
         {
             InitializeComponent();
@@ -38,7 +39,12 @@ namespace SchoolManagementSystem.Views.AdminViews
             CourseComboBox = c;
             return CourseComboBox;
         }
-
+        
+       public static string RoomNumComboBox(string c)
+        {
+            RoomNumCBox = c;
+            return RoomNumCBox;
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,8 +62,8 @@ namespace SchoolManagementSystem.Views.AdminViews
                 try
                 {
                     sectionViewModel.CreateNewSection(Convert.ToInt32(sectionnumtxtbox.Text),
-                                                1,
-                                                2,
+                                                courseID,
+                                               roomID,
                                                 timetxtbox.Text.Trim().ToString()
                                                   );
 
@@ -197,13 +203,15 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         public void getroomIDD()
         {
-            sectionViewModel.GetRoomBox();
+            sectionViewModel.getRoomIDD();
+            roomID = Convert.ToInt32(sectionViewModel.RoomIDBox);
         }
         
         public void getcourseIDD ()
         {
-
+         
             sectionViewModel.getcourseIDD();
+            courseID = Convert.ToInt32(sectionViewModel.courseBox1);
         }
 
         private void FillDataGrid ()
@@ -224,19 +232,20 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private void course_code_combobox_DropDownClosed ( object sender, EventArgs e )
         {
-            if (course_code_combobox.Text != "")
-            {
+          //  if (course_code_combobox.Text != "")
+          //  {
                 CourseCodeComboBox(course_code_combobox.Text.ToString());
                 getcourseIDD();
-            }
-        }
+        //    }
+         }
 
         private void roomNo_combobox_DropDownClosed ( object sender, EventArgs e )
         {
-            if (roomNo_combobox.Text != "")
-            {
-               getroomIDD();
-            }
+           
+            
+                RoomNumComboBox(roomNo_combobox.Text.ToString());
+                getroomIDD();
+            
         }
 
         private bool fillNotEmpty()
