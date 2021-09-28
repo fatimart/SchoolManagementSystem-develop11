@@ -23,7 +23,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         CourseViewModel course = new CourseViewModel();
         public HttpClient apiClient;
 
-        public CourseListScreen2 ()
+        public CourseListScreen2()
         {
             InitializeComponent();
             InitielizeClient();
@@ -33,7 +33,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             FillDataGrid();
 
         }
-        private void InitielizeClient ()
+        private void InitielizeClient()
         {
             string api = ConfigurationManager.AppSettings["api"];
 
@@ -43,18 +43,18 @@ namespace SchoolManagementSystem.Views.AdminViews
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        private void Window_Loaded ( object sender, RoutedEventArgs e )
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //course.GetAll();
         }
-        public void Load ()
+        public void Load()
         {
             //course.GetAll();
             FillDataGrid();
         }
 
         //MARK: fill datagrid need for the selection
-        private void FillDataGrid ()
+        private void FillDataGrid()
 
         {
             string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
@@ -79,7 +79,7 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
 
         }
-        private void usersDataGrid_SelectionChanged ( object sender, SelectionChangedEventArgs e )
+        private void usersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;
@@ -138,13 +138,13 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         //}
 
-        private void Reset_Click ( object sender, RoutedEventArgs e )
+        private void Reset_Click(object sender, RoutedEventArgs e)
         {
             Clear();
 
         }
 
-        public void Clear ()
+        public void Clear()
         {
             courseIDTextBox.Text = "";
             courseCodeTextBox.Text = "";
@@ -154,7 +154,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         }
 
 
-        private void UpdateCourse_Click ( object sender, RoutedEventArgs e )
+        private void UpdateCourse_Click(object sender, RoutedEventArgs e)
         {
             if (courseIDtEmpty())
             {
@@ -198,7 +198,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         }
 
-        private  void AddNewCourse_Click ( object sender, RoutedEventArgs e )
+        private void AddNewCourse_Click(object sender, RoutedEventArgs e)
         {
             if (courseCodeTextBox.Text != "")
             {
@@ -206,7 +206,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 try
                 {
                     if (course.CheckCourseCode(courseCodeTextBox.Text.Trim().ToString()))
-                    {
+                    {//found true
                         MessageBox.Show("Course Already Exists");
 
                     }
@@ -251,7 +251,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         }
 
-        private async void SaveCourse ( Course course )
+        private async void SaveCourse(Course course)
         {
 
             HttpResponseMessage response = await apiClient.PostAsJsonAsync("Course", course);
@@ -262,9 +262,9 @@ namespace SchoolManagementSystem.Views.AdminViews
         }
 
 
-        public bool courseIDtEmpty ()
+        public bool courseIDtEmpty()
         {
-            if (courseIDTextBox.Text.Length>0)
+            if (courseIDTextBox.Text.Length > 0)
             {
                 return true;
             }
@@ -275,7 +275,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         }
 
 
-        public void getCourseByID ()
+        public void getCourseByID()
         {
             try
             {
@@ -318,13 +318,13 @@ namespace SchoolManagementSystem.Views.AdminViews
             }
         }
 
-        private void find_button_Click ( object sender, RoutedEventArgs e )
+        private void find_button_Click(object sender, RoutedEventArgs e)
         {
             getCourseByID();
         }
 
         //For Upload File
-        private void btnBrowse_Click ( object sender, RoutedEventArgs e )
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog fdlg = new System.Windows.Forms.OpenFileDialog();
             fdlg.Title = "Select File";
@@ -342,7 +342,7 @@ namespace SchoolManagementSystem.Views.AdminViews
 
 
         // To read the excel data into datagridView
-        private void btnImport_Click ( object sender, RoutedEventArgs e )
+        private void btnImport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -364,7 +364,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 System.Windows.MessageBox.Show(ex.Message);
             }
         }
-        private void savetry2_Click ( object sender, RoutedEventArgs e )
+        private void savetry2_Click(object sender, RoutedEventArgs e)
         {
             string CourseName = "";
             string CourseCode = "";
@@ -410,7 +410,7 @@ namespace SchoolManagementSystem.Views.AdminViews
         }
 
 
-        private async void DeleteYear ( int CourseID )
+        private async void DeleteYear(int CourseID)
         {
 
             await apiClient.DeleteAsync("Course/" + CourseID);
@@ -419,20 +419,21 @@ namespace SchoolManagementSystem.Views.AdminViews
 
         private void DeleteCourse_Click_1(object sender, RoutedEventArgs e)
         {
-            if (courseIDtEmpty()) { 
+            if (courseIDtEmpty())
+            {
                 //delete button 
                 if (System.Windows.MessageBox.Show("Confirm delete of this record?", "Course", MessageBoxButton.YesNo)
             == MessageBoxResult.Yes)
-            {
-                
-                
+                {
+
+
                     try
                     {
-                     
-                            if (!string.IsNullOrEmpty(courseIDTextBox.Text))
-                            {
-                        course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
-                        //DeleteYear(Convert.ToInt32(courseIDTextBox.Text));
+
+                        if (!string.IsNullOrEmpty(courseIDTextBox.Text))
+                        {
+                            course.DeleteCourseDetails(Convert.ToInt32(courseIDTextBox.Text));
+                            //DeleteYear(Convert.ToInt32(courseIDTextBox.Text));
 
                         }
                         else

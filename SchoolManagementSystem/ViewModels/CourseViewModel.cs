@@ -7,10 +7,10 @@ using System.Windows;
 
 namespace SchoolManagementSystem.ViewModels
 {
-    class CourseViewModel : ViewModelBase 
+    class CourseViewModel : ViewModelBase
     {
         private ObservableCollection<Course> _courseRecords;
-        public  ObservableCollection<Course> AllCourses
+        public ObservableCollection<Course> AllCourses
         {
             get
             {
@@ -36,10 +36,10 @@ namespace SchoolManagementSystem.ViewModels
             get { return _CourseName; }
             set
             {
-               
-                    _CourseName = value;
-                    OnPropertyChanged("CourseName");
-                
+
+                _CourseName = value;
+                OnPropertyChanged("CourseName");
+
             }
         }
 
@@ -50,8 +50,8 @@ namespace SchoolManagementSystem.ViewModels
             set
             {
                 _CourseCode = value;
-                    OnPropertyChanged("CourseCode");
-                
+                OnPropertyChanged("CourseCode");
+
             }
         }
 
@@ -64,8 +64,8 @@ namespace SchoolManagementSystem.ViewModels
             {
 
                 _Description = value;
-                    OnPropertyChanged("Description");
-                
+                OnPropertyChanged("Description");
+
             }
         }
 
@@ -76,8 +76,8 @@ namespace SchoolManagementSystem.ViewModels
             set
             {
                 _ExamDate = value;
-                    OnPropertyChanged("ExamDate");
-                
+                OnPropertyChanged("ExamDate");
+
             }
         }
 
@@ -97,16 +97,21 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Check Course Code
         /// </summary>
-        public bool CheckCourseCode ( string courseCode)
+        public bool CheckCourseCode(string courseCode)
 
         {
-            var courseDetails = WebAPI.GetCall(API_URIs.courses + "/CheckCourseCode?CourseCode='" + courseCode + "'");
-            if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            var courseDetails1 = WebAPI.GetCall(API_URIs.courses + "/CheckCourseCode?CourseCode=" + courseCode + "");
+         //  MessageBox.Show(API_URIs.courses + "/CheckCourseCode?CourseCode=" + courseCode + "");
+            //Result.Content.ReadAsStringAsync().Result.ToString()
+            if (courseDetails1.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                
+                MessageBox.Show("FOUND");
                 return true;
             }
             else
             {
+                MessageBox.Show("NOT FOUND");
                 return false;
             }
         }
@@ -115,7 +120,7 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Fetches Course details
         /// </summary>
-        public void GetCourseDetails ()
+        public void GetCourseDetails()
 
         {
             var courseDetails = WebAPI.GetCall(API_URIs.courses);
@@ -128,7 +133,7 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Adds new Course
         /// </summary>
-        public void CreateNewCourse ( string courseName, string courseCode, string description, DateTime examDate )
+        public void CreateNewCourse(string courseName, string courseCode, string description, DateTime examDate)
         {
             Course newCourse = new Course()
             {
@@ -145,7 +150,7 @@ namespace SchoolManagementSystem.ViewModels
             }
             else
             {
-                MessageBox.Show("Failed to update" + newCourse.CourseID + "'s details.");
+                MessageBox.Show("Failed to add" + newCourse.CourseID + "'s details.");
             }
         }
 
@@ -154,7 +159,7 @@ namespace SchoolManagementSystem.ViewModels
         /// Updates Course's record
         /// </summary>
         /// <param name="courses"></param>
-        public void UpdateCourseDetails ( int CourseID, string courseName, string courseCode, string description, DateTime examDate )
+        public void UpdateCourseDetails(int CourseID, string courseName, string courseCode, string description, DateTime examDate)
         {
             Course updateCourse = new Course()
             {
@@ -170,6 +175,7 @@ namespace SchoolManagementSystem.ViewModels
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = updateCourse.CourseID + "'s details has successfully been updated!";
+
             }
             else
             {
@@ -180,7 +186,7 @@ namespace SchoolManagementSystem.ViewModels
         /// <summary>
         /// Deletes Course's record
         /// </summary>
-        public void DeleteCourseDetails ( int CourseID )
+        public void DeleteCourseDetails(int CourseID)
         {
 
             Course deleteCourse = new Course()
@@ -190,12 +196,12 @@ namespace SchoolManagementSystem.ViewModels
 
             };
             MessageBox.Show(deleteCourse.CourseID.ToString());
-           
+
             var courseDetails = WebAPI.DeleteCall(API_URIs.courses + "?id=" + deleteCourse.CourseID);
             MessageBox.Show(courseDetails.ToString());
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-               ResponseMessage = deleteCourse.CourseID + "'s details has successfully been deleted!";
+                ResponseMessage = deleteCourse.CourseID + "'s details has successfully been deleted!";
                 MessageBox.Show(ResponseMessage);
             }
             else

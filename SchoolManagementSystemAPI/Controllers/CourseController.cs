@@ -14,6 +14,7 @@ namespace SchoolManagementSystemAPI.Controllers
     public class CourseController : ApiController
     {
         private readonly Course courseModel = new Course();
+        public SchoolMSEntities ty = new SchoolMSEntities();
 
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -33,29 +34,37 @@ namespace SchoolManagementSystemAPI.Controllers
             }
         }
 
-        // GET api/<controller>/5
-        [Route("api/courses/CheckCourseCode/")]
+
+        [Route("api/course/CheckCourseCode")]
         [HttpGet]
-        public IHttpActionResult Get(string CourseCode)
+        public HttpResponseMessage Get(string CourseCode)
         {
+          
             try
             {
                 var result = courseModel.GetCourseCode(CourseCode);
 
                 if (result == null)
                 {
-                    return Content(HttpStatusCode.NotFound, "course with Course Code: " + CourseCode + " not found");
+                  //  Found = "false";
+                   // return Ok(Found);
+                     return Request.CreateResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
+                }
+                else
+                {
+                   // Found = "true";
+                    return Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
+                 //   return Ok(Found);
                 }
 
-                return Ok(result);
+
             }
             catch (Exception ex)
             {
-                return Content(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
 
             }
         }
-
 
 
         // POST api/<controller>
@@ -95,15 +104,15 @@ namespace SchoolManagementSystemAPI.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + id + " is not found!");
                 }
-                
+
             }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
-      
-     
+
+
 
         // DELETE api/<controller>/5
         [HttpDelete]
@@ -120,8 +129,8 @@ namespace SchoolManagementSystemAPI.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id " + id + " is not found!");
                 }
-                }
-            
+            }
+
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
