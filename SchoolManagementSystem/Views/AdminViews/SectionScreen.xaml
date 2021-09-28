@@ -14,12 +14,12 @@
         <Button Content="CLEAR" HorizontalAlignment="Left" Margin="584,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Clear" Height="26"/>
         <Button Content="UPDATE" HorizontalAlignment="Left" Margin="357,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click3" Height="26"/>
         <Button Content="DELETE" HorizontalAlignment="Left" Margin="470,190,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click4" Height="26"/>
-        <DataGrid x:Name="sectionDataGrid"  ItemsSource="{Binding AllSections, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="90,245,46,61" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="sectionDataGrid_SelectionChanged">
+        <DataGrid x:Name="sectionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="90,245,46,61" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="sectionDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="sectionIDColumn" Binding="{Binding SectionID, UpdateSourceTrigger=PropertyChanged}" Header="Section ID" IsReadOnly="True" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="sectionNumColumn" Binding="{Binding SectionNum, UpdateSourceTrigger=PropertyChanged}" Header="Section Number" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="courseIDColumn" Binding="{Binding CourseCode, UpdateSourceTrigger=PropertyChanged}" Header="Course Code" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="roomIDColumn" Binding="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged}" Header="Room Number" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="roomIDColumn" Binding="{Binding Path='RoomNum'}"  Header="Room Number" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="timeColumn" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Header="Time" Width="Auto"/>
 
             </DataGrid.Columns>

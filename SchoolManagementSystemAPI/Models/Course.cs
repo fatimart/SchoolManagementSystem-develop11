@@ -78,9 +78,10 @@ namespace SchoolManagementSystemAPI.Models
         public Course GetCourseCode ( string CourseCode)
         {
             return ty.Courses
-                      .Where(s => s.CourseCode == CourseCode)
-                      .FirstOrDefault() as Course;
+                .Where(s => s.CourseCode == CourseCode)
+                .FirstOrDefault() as Course;
         }
+
 
         public List<Course> GetAll1 ()
         {

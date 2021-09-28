@@ -101,12 +101,16 @@ namespace SchoolManagementSystem.ViewModels
 
         {
             var courseDetails = WebAPI.GetCall(API_URIs.courses + "/CheckCourseCode?CourseCode='" + courseCode + "'");
+            MessageBox.Show(courseDetails.Result.StatusCode.ToString());
+
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                MessageBox.Show("FOUND");
                 return true;
             }
-            else
+            else 
             {
+                MessageBox.Show("NOT FLOUND");
                 return false;
             }
         }
@@ -145,7 +149,7 @@ namespace SchoolManagementSystem.ViewModels
             }
             else
             {
-                MessageBox.Show("Failed to update" + newCourse.CourseID + "'s details.");
+                MessageBox.Show("Failed to add" + newCourse.CourseID + "'s details.");
             }
         }
 
@@ -170,6 +174,7 @@ namespace SchoolManagementSystem.ViewModels
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ResponseMessage = updateCourse.CourseID + "'s details has successfully been updated!";
+
             }
             else
             {

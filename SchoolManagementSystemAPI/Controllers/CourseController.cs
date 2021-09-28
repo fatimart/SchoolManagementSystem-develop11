@@ -14,6 +14,7 @@ namespace SchoolManagementSystemAPI.Controllers
     public class CourseController : ApiController
     {
         private readonly Course courseModel = new Course();
+        public SchoolMSEntities ty = new SchoolMSEntities();
 
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -36,7 +37,7 @@ namespace SchoolManagementSystemAPI.Controllers
         // GET api/<controller>/5
         [Route("api/courses/CheckCourseCode/")]
         [HttpGet]
-        public IHttpActionResult Get(string CourseCode)
+        public HttpResponseMessage Get ( string CourseCode )
         {
             try
             {
@@ -44,18 +45,22 @@ namespace SchoolManagementSystemAPI.Controllers
 
                 if (result == null)
                 {
-                    return Content(HttpStatusCode.NotFound, "course with Course Code: " + CourseCode + " not found");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
+                }
+                else
+                {
+                    return  Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
+
                 }
 
-                return Ok(result);
+
             }
             catch (Exception ex)
             {
-                return Content(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
 
             }
         }
-
 
 
         // POST api/<controller>

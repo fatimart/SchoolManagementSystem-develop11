@@ -35,5 +35,7 @@ namespace SchoolManagementSystemAPI.Models
         public virtual DbSet<TimeTable> TimeTables { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Year> Years { get; set; }
+
+
     }
 }

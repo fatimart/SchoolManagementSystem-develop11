@@ -206,7 +206,7 @@ namespace SchoolManagementSystem.Views.AdminViews
                 try
                 {
                     if (course.CheckCourseCode(courseCodeTextBox.Text.Trim().ToString()))
-                    {
+                    {//found true
                         MessageBox.Show("Course Already Exists");
 
                     }

@@ -48,8 +48,25 @@ namespace SchoolManagementSystemAPI.Models
            
         }
 
+        public List<Year> list ()
+        {
+            List<Year> years = null;
 
-        public void GetAll ()
+            using (var ctx = new SchoolMSEntities())
+            {
+                years = ctx.Years
+                            .Select(s => new Year()
+                            {
+                                YearID = s.YearID,
+                                YearNum = s.YearNum
+                            }).ToList<Year>();
+            }
+
+            return years;
+        }
+
+
+        public ObservableCollection<Year> GetAll ()
         {
             AllYears = new ObservableCollection<Year>();
             GetAll1().ForEach(data => AllYears.Add(new Year()
@@ -59,6 +76,7 @@ namespace SchoolManagementSystemAPI.Models
 
             }));
 
+            return AllYears;
         }
 
         //MARK: DataAccess Functions

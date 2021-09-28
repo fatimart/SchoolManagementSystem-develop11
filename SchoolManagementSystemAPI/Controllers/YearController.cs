@@ -14,24 +14,24 @@ namespace SchoolManagementSystemAPI.Controllers
 
         List<Year> year = new List<Year>();
     
-        public List<Year> Get()
-        {
-            using (var db = new SchoolMSEntities())
-            {
-                var query = from year in db.Years
-                            orderby year.YearID
-                            select year;
+        //public List<Year> Get()
+        //{
+        //    using (var db = new SchoolMSEntities())
+        //    {
+        //        var query = from year in db.Years
+        //                    orderby year.YearID
+        //                    select year;
 
 
-                foreach (var item in query)
-                {
-                    //yield return ("YearID: " + item.YearID + ", Year Number: " + item.YearNum);
+        //        foreach (var item in query)
+        //        {
+        //            //yield return ("YearID: " + item.YearID + ", Year Number: " + item.YearNum);
 
-                    year.Add(new Year { YearID = item.YearID, YearNum = item.YearNum });
-                }
-                return year;
-            }
-        }
+        //            year.Add(new Year { YearID = item.YearID, YearNum = item.YearNum });
+        //        }
+        //        return year;
+        //    }
+        //}
         // GET api/<controller>
         //public IEnumerable<string> Get()
         //{
@@ -61,6 +61,19 @@ namespace SchoolManagementSystemAPI.Controllers
             if (result == null)
             {
                 return Content(HttpStatusCode.NotFound, "Year with Id: " + id + " not found");
+            }
+
+            return Ok("pk found");
+        }
+
+        [HttpGet]
+        public IHttpActionResult Getall ( )
+        {
+            var result = yearModel.GetAll();
+
+            if (result == null)
+            {
+                return Content(HttpStatusCode.NotFound, " not found");
             }
 
             return Ok(result);
