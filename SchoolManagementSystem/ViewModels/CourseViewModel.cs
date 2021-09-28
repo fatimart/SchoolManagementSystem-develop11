@@ -1,4 +1,5 @@
-﻿using SchoolManagementSystem.Models;
+﻿using Newtonsoft.Json;
+using SchoolManagementSystem.Models;
 using SchoolManagementSystem.Utilities;
 using System;
 using System.Collections.ObjectModel;
@@ -101,8 +102,8 @@ namespace SchoolManagementSystem.ViewModels
 
         {
             var courseDetails = WebAPI.GetCall(API_URIs.courses + "/CheckCourseCode?CourseCode='" + courseCode + "'");
-            MessageBox.Show(courseDetails.Result.StatusCode.ToString());
 
+            
             if (courseDetails.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 MessageBox.Show("FOUND");
@@ -110,7 +111,7 @@ namespace SchoolManagementSystem.ViewModels
             }
             else 
             {
-                MessageBox.Show("NOT FLOUND");
+                
                 return false;
             }
         }

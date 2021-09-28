@@ -17,54 +17,27 @@ namespace SchoolManagementSystemAPI.Controllers
         public SchoolMSEntities ty = new SchoolMSEntities();
 
         // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            using (var db = new SchoolMSEntities())
-            {
-                var query = from Course in db.Courses
-                            orderby Course.CourseID
-                            select Course;
-
-
-                foreach (var item in query)
-                {
-                    yield return ("course: " + item.CourseID + ",course Code: " + item.CourseCode);
-
-                }
-            }
-        }
-
-        // GET api/<controller>/5
-        //[Route("api/courses/CheckCourseCode/")]
-        //[HttpGet]
-        //public HttpResponseMessage Get ( string CourseCode )
+        //public IEnumerable<string> Get()
         //{
-        //    try
+        //    using (var db = new SchoolMSEntities())
         //    {
-        //        var result = courseModel.GetCourseCode(CourseCode);
+        //        var query = from Course in db.Courses
+        //                    orderby Course.CourseID
+        //                    select Course;
 
-        //        if (result == null)
+
+        //        foreach (var item in query)
         //        {
-        //            return Request.CreateResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
-        //        }
-        //        else
-        //        {
-        //            return  Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
+        //            yield return ("course: " + item.CourseID + ",course Code: " + item.CourseCode);
 
         //        }
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-
         //    }
         //}
 
-        [Route("api/courses/CheckCourseCode/")]
+        //GET api/<controller>/5
+        [Route("api/Course/CheckCourseCode/")]
         [HttpGet]
-        public IHttpActionResult Get ( string CourseCode )
+        public HttpResponseMessage Get ( string CourseCode )
         {
             try
             {
@@ -72,11 +45,13 @@ namespace SchoolManagementSystemAPI.Controllers
 
                 if (result == null)
                 {
-                    return NotFound();
+
+                    var req = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Course with id" + CourseCode + " is not found!");
+                    return req;
                 }
                 else
                 {
-                    return Ok(CourseCode);
+                    return Request.CreateResponse(HttpStatusCode.OK, "Course with id" + CourseCode + " found");
 
                 }
 
@@ -84,10 +59,39 @@ namespace SchoolManagementSystemAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Content(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
 
             }
         }
+
+        //[Route("api/Course/CheckCourseCode/")]
+        //[HttpGet]
+        //public IHttpActionResult Get ( string CourseCode )
+        //{
+        //    try
+        //    {
+        //        var msg = false;
+        //        var result = courseModel.GetCourseCode(CourseCode);
+
+        //        if (result == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            return Ok("true");
+
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Content(HttpStatusCode.BadRequest, ex);
+
+        //    }
+        //}
+
         // POST api/<controller>
         [HttpPost]
         public HttpResponseMessage Post([FromBody] Course course)
